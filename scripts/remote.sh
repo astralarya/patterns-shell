@@ -26,8 +26,8 @@
 # DO NOT edit the examples in this file directly
 
 
-### EXAMPLE ###
 :'
+### EXAMPLE ###
 # copy the functions in this section and edit for your needs
 # vim substitutions:
 # s/myserver/server
@@ -89,8 +89,8 @@ then
 fi
 }
 
-'
 ### END EXAMPLE ###
+'
 
 
 # generic ssh

@@ -32,11 +32,11 @@
 
 # DB access function
 # can be tailored for administrators or users
-function mydbfunc {
+function mydb {
 if [ "$1" = "-h" ]
 then
  # show help
- echo "Usage: mydbfunc [OPTION] [queryfile]
+ echo "Usage: mydb [OPTION] [queryfile]
 Access DB.
 If a file is given as an argument, execute the queries in the file,
 otherwise start a psql session connected to DB.
@@ -55,10 +55,10 @@ fi
 
 # DB admin function
 # High level db management
-function mydbadminfunc {
+function mydbadmin {
 if [ -z "$1" ]
 then
- dated_backup_db "mysuperuser" "mybackupfileprefix"
+ dated_backup_db "mysuperuser" "mybackupdir/mydb"
 elif [ "$1" = "-b" -a "$2" ]
 then
  backup_db "mysuperuser" "$2"
@@ -78,6 +78,7 @@ fi
 # $2 Database user
 # $3 Query file
 # $4 Option
+#    -t time execution
 function pgdb {
 if [ "$4" = "-t" ]
 then
@@ -121,5 +122,5 @@ function restore_db { psql -f "$2" -U "$1" postgres | grep ERROR; }
 #
 # $1 Database superuser
 # $2 Backup prefix (path and/or file-prefix)
-function dated_backup_db { backup_db "$1" "$2`date +%F`.sql"; }
+function dated_backup_db { backup_db "$1" "$2_`date +%F`.sql"; }
 

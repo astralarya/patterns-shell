@@ -1,4 +1,4 @@
-# ssh/scp
+# remote
 # Patterns for managing a connection to an SSH server
 # and pushing and pulling files via SCP
 #
@@ -29,6 +29,10 @@
 ### EXAMPLE ###
 :'
 # copy the functions in this section and edit for your needs
+# vim substitutions:
+# s/myserver/server
+# s/myuser/username
+# s/myscpdir/remotedir (without slash)
 
 # SSH connection function
 function myserver {
@@ -65,7 +69,7 @@ Option		GNU long option		Meaning
 else
 then
  # execute normal
- push_to_server "myserver" "myuser" "myscpdir$1"
+ push_to_server "myserver" "myuser" "myscpdir/$1"
 fi
 }
 
@@ -81,7 +85,7 @@ Option		GNU long option		Meaning
 else
 then
  # execute normal
- pull_from_server "myserver" "myuser" "myscpdir$1"
+ pull_from_server "myserver" "myuser" "myscpdir/$1"
 fi
 }
 

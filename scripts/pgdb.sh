@@ -29,17 +29,21 @@
 ### EXAMPLE ###
 :'
 # copy the functions in this section and edit for your needs
+# vim substitutions:
+# s/mydb/database
+# s/myuser/username
+# s/mysuperuser/superuser
+# s/mybackupdir/pathtobackups (without slash)
 
 # DB access function
-# can be tailored for administrators or users
 function mydb {
 if [ "$1" = "-h" ]
 then
  # show help
  echo "Usage: mydb [OPTION] [queryfile]
-Access DB.
+Access mydb.
 If a file is given as an argument, execute the queries in the file,
-otherwise start a psql session connected to DB.
+otherwise start a psql session connected to mydb. 
 Option		GNU long option		Meaning
 -t		--time			Time the query or session
 -h		--help			Show this message"
@@ -58,7 +62,7 @@ fi
 function mydbadmin {
 if [ -z "$1" ]
 then
- dated_backup_db "mysuperuser" "mybackupdir/mydb"
+ dated_backup_db "mysuperuser" "mybackupdir/mydb_"
 elif [ "$1" = "-b" -a "$2" ]
 then
  backup_db "mysuperuser" "$2"
@@ -122,5 +126,5 @@ function restore_db { psql -f "$2" -U "$1" postgres | grep ERROR; }
 #
 # $1 Database superuser
 # $2 Backup prefix (path and/or file-prefix)
-function dated_backup_db { backup_db "$1" "$2_`date +%F`.sql"; }
+function dated_backup_db { backup_db "$1" "$2`date +%F`.sql"; }
 

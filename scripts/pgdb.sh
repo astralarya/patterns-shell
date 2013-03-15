@@ -18,8 +18,10 @@
 
 
 ### EXAMPLE ###
+# edit these for your needs
 
-# edit this for your needs
+# DB access function
+# can be tailored for administrators or users
 function mydbfunc {
 if [ "$1" = "-h" ]
 then
@@ -38,6 +40,21 @@ then
 else
  # execute with option
  pgdb "mydb" "myuser" $2 $1
+fi
+}
+
+# DB admin function
+# High level db management
+function mydbadminfunc {
+if [ -z "$1" ]
+then
+ dated_backup_db "mysuperuser" "mybackupfileprefix"
+elif [ "$1" = "-b" -a "$2" ]
+then
+ backup_db "mysuperuser" "$2"
+elif [ "$1" = "-r" -a -e "$2" ]
+then
+ restore_db "mysuperuser" "$2"
 fi
 }
 
@@ -75,3 +92,23 @@ then
  cat "$3"
  psql -f "$3" -U "$2" "$1"
 fi }
+
+# generic backup_db function
+# backs up all databases
+#
+# $1 Database superuser
+# $2 Output file
+function backup_db { pg_dumpall -c -U "$1" > "$2"; }
+
+# generic restore database
+#
+# $1 Database superuser
+# $2 Input file
+function restore_db { psql -f "$2" -U "$1" postgres | grep ERROR; }
+
+# generic dated backups
+#
+# $1 Database superuser
+# $2 Backup prefix (path and/or file-prefix)
+function dated_backup_db { backup_db "$1" "$2`date +%F`.sql"; }
+

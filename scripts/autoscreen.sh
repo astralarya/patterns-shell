@@ -24,6 +24,7 @@ then
  # start screen session
  screen -D -RR
  # close shell or connection after termination
+ clear
  echo "Screen terminated. Exiting. ^C to cancel..."
  sleep 2
  exit

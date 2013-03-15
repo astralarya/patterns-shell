@@ -19,6 +19,8 @@
 
 ### EXAMPLE ###
 # edit these for your needs
+# if you wish to temporarily disable comment highlighting
+# comment out the line below -v
 :'
 
 # DB access function

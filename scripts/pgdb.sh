@@ -18,6 +18,8 @@
 
 
 ### EXAMPLE ###
+<< EXAMPLE
+
 # edit these for your needs
 
 # DB access function
@@ -58,6 +60,7 @@ then
 fi
 }
 
+EXAMPLE
 ### END EXAMPLE ###
 
 

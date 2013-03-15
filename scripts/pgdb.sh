@@ -26,7 +26,7 @@
 # DO NOT edit the examples in this file directly
 
 
-:'
+: '
 ### EXAMPLE ###
 # copy the functions in this section and edit for your needs
 # vim substitutions:

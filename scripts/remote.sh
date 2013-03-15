@@ -51,7 +51,5 @@ fi
 # $1 Server
 # $2 Username
 # $3 File
-function pull_from_server {
-scp "$2@$1:$3" .
-}
+function pull_from_server { scp "$2@$1:$3" .; }
 

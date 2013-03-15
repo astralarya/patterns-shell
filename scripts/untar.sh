@@ -27,8 +27,10 @@ then
  mkdir -p "${1%.tar.gz}";
  tar -zxvf $1 -C "${1%.tar.gz}"/; 
 fi }
+
 function unzip {
 if [ "$1" -a -a "$1" ]
 then
  gzip -d "$1"
 fi }
+

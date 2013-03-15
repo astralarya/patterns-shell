@@ -1,5 +1,5 @@
 # pgdb
-# postgresql database macros
+# PostgreSQL database macros
 #
 # Copyright (C) 2013 Mara Kim
 #

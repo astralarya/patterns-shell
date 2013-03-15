@@ -82,9 +82,9 @@ fi
 # $2 Database user
 # $3 Query file
 # $4 Option
-#    -t time execution
+#    -t/--time time execution
 function pgdb {
-if [ "$4" = "-t" ]
+if [ "$4" = "-t" -o "$4" = "--time" ]
 then
  # Time execution
  date

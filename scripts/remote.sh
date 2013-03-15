@@ -19,79 +19,12 @@
 
 
 ### USAGE ###
+
 # Source this file in your shell's .*rc file
-# then copy the example functions below into a new file
-# and edit for your needs
-#
-# DO NOT edit the examples in this file directly
+# See ../templates/remote.sh for templates
 
 
-:'
-### EXAMPLE ###
-# copy the functions in this section and edit for your needs
-# vim substitutions:
-# s/myserver/server
-# s/myuser/username
-# s/myscpdir/remotedir (without slash)
-
-# SSH connection function
-function myserver {
-if [ "$1" = "-h" -o "$1" = "--help" ]
-then
- # show help
- echo "Usage: myserver [OPTION] [command]
-Connect via SSH to myserver
-If a command is given as an argument, execute it remotely,
-otherwise start an ssh session connected to myserver.
-Option		GNU long option		Meaning
--h		--help			Show this message
--X					Enable X11 forwarding"
-elif [ "$1" = "-X" ]
-then
- # enable X11 forwarding
- ssh_connection "myserver" "myuser" "$2" "$1"
-else
-then
- # execute normal
- ssh_connection "myserver" "myuser" "$1"
-fi
-}
-
-# SCP push function
-function push_myserver {
-if [ "$1" = "-h" -o "$1" = "--help" ]
-then
- # show help
- echo "Usage: push_myserver [file]
-Push file to myserver
-Option		GNU long option		Meaning
--h		--help			Show this message"
-else
-then
- # execute normal
- push_to_server "myserver" "myuser" "myscpdir/$1"
-fi
-}
-
-# SCP pull function
-function pull_myserver {
-if [ "$1" = "-h" -o "$1" = "--help" ]
-then
- # show help
- echo "Usage: push_myserver [file]
-Pull file from myserver
-Option		GNU long option		Meaning
--h		--help			Show this message"
-else
-then
- # execute normal
- pull_from_server "myserver" "myuser" "myscpdir/$1"
-fi
-}
-
-### END EXAMPLE ###
-'
-
+### FUNCTIONS ###
 
 # generic ssh
 #

@@ -19,7 +19,7 @@ Then you can easily get updates with
 License
 =======
 
-to - v1.0.1
+patterns-shell
 
 Copyright (C) 2013  Mara Kim
 

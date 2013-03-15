@@ -63,7 +63,7 @@ fi }
 #
 # $1 Database superuser
 # $2 Output file
-function backup_db { pg_dumpall -c -U "$1" > "$2" }
+function backup_db { pg_dumpall -c -U "$1" > "$2"; }
 
 # generic restore database
 #
@@ -80,5 +80,5 @@ fi
 #
 # $1 Database superuser
 # $2 Backup prefix (path and/or file-prefix)
-function dated_backup_db { backup_db "$1" "$2`date +%F`.sql" }
+function dated_backup_db { backup_db "$1" "$2`date +%F`.sql"; }
 

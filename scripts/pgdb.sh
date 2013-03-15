@@ -18,9 +18,8 @@
 
 
 ### EXAMPLE ###
-<< EXAMPLE
-
 # edit these for your needs
+:'
 
 # DB access function
 # can be tailored for administrators or users
@@ -60,7 +59,7 @@ then
 fi
 }
 
-EXAMPLE
+'
 ### END EXAMPLE ###
 
 

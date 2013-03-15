@@ -57,9 +57,8 @@ else
 fi
 }
 
-# DB admin function
-# High level db management
-function mydbadmin {
+# DB backup function
+function mydbbackup {
 if [ -z "$1" ]
 then
  dated_backup_db "mysuperuser" "mybackupdir/mydb_"
@@ -82,7 +81,7 @@ fi
 # $2 Database user
 # $3 Query file
 # $4 Option
-#    -t/--time time execution
+#    -t/--time  time execution
 function pgdb {
 if [ "$4" = "-t" -o "$4" = "--time" ]
 then
@@ -114,17 +113,26 @@ fi }
 #
 # $1 Database superuser
 # $2 Output file
-function backup_db { pg_dumpall -c -U "$1" > "$2"; }
+function backup_db {
+pg_dumpall -c -U "$1" > "$2"
+}
 
 # generic restore database
 #
 # $1 Database superuser
 # $2 Input file
-function restore_db { psql -f "$2" -U "$1" postgres | grep ERROR; }
+function restore_db {
+if [ -e "$2" ]
+then
+ psql -f "$2" -U "$1" postgres | grep ERROR
+fi
+}
 
 # generic dated backups
 #
 # $1 Database superuser
 # $2 Backup prefix (path and/or file-prefix)
-function dated_backup_db { backup_db "$1" "$2`date +%F`.sql"; }
+function dated_backup_db {
+backup_db "$1" "$2`date +%F`.sql"
+}
 

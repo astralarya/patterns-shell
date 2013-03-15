@@ -1,5 +1,5 @@
 # pgdb
-# PostgreSQL database macros
+# Patterns for managing a connection to a PostgreSQL database
 #
 # Copyright (C) 2013 Mara Kim
 #

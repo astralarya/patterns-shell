@@ -1,5 +1,6 @@
 # untar
-# untar and unzip archives into directories of the same name
+# untar and unzip archives
+# create directories for tarballs (overwrites any existing directory!)
 #
 # Copyright (C) 2013 Mara Kim
 #

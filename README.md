@@ -1,11 +1,9 @@
-patterns-shell
-==============
+# patterns-shell
 
 **patterns-shell** - Design patterns for shell scripts
 
 
-Installation
-============
+## Installation
 
 You can manually copy this repository, but it is better to clone it via `git` with
 
@@ -16,17 +14,15 @@ Then you can easily get updates with
 >git pull
 
 
-Patterns
-========
-
+## Patterns
+### Scripts
 * autoscreen - auto start a GNU screen session without inception
 * pgdb - manage PostgreSQL databases
 * remote - manage connections to remotes via SSH and SCP
 * untar - untar and unzip archives
 
 
-License
-=======
+## License
 
 patterns-shell
 

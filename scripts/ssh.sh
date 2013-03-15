@@ -1,5 +1,6 @@
-# ssh
-# Patterns for connecting to an ssh server
+# ssh/scp
+# Patterns for managing a connection to an SSH server
+# and pushing and pulling files via SCP
 #
 # Copyright (C) 2013 Mara Kim
 #
@@ -30,13 +31,13 @@
 # copy the functions in this section and edit for your needs
 
 # SSH connection function
-function mysshfunc {
+function myserver {
 if [ "$1" = "-h" -o "$1" = "--help" ]
 then
  # show help
- echo "Usage: mysshfunc [OPTION] [command]
+ echo "Usage: myserver [OPTION] [command]
 Connect via SSH to myserver
-If a command is given as an argument, execute the remotely,
+If a command is given as an argument, execute it remotely,
 otherwise start an ssh session connected to myserver.
 Option		GNU long option		Meaning
 -h		--help			Show this message
@@ -52,6 +53,38 @@ then
 fi
 }
 
+# SCP push function
+function push_myserver {
+if [ "$1" = "-h" -o "$1" = "--help" ]
+then
+ # show help
+ echo "Usage: push_myserver [file]
+Push file to myserver
+Option		GNU long option		Meaning
+-h		--help			Show this message"
+else
+then
+ # execute normal
+ push_to_server "myserver" "myuser" "myscpdir$1"
+fi
+}
+
+# SCP pull function
+function pull_myserver {
+if [ "$1" = "-h" -o "$1" = "--help" ]
+then
+ # show help
+ echo "Usage: push_myserver [file]
+Pull file from myserver
+Option		GNU long option		Meaning
+-h		--help			Show this message"
+else
+then
+ # execute normal
+ pull_from_server "myserver" "myuser" "myscpdir$1"
+fi
+}
+
 '
 ### END EXAMPLE ###
 
@@ -62,5 +95,26 @@ fi
 # $2 Username
 # $3 Command (optional)
 # $4 Option (optional)
-function ssh_connection { ssh "$4" "$2"@"$1" "$3"; }
+function ssh_connection { ssh "$4" "$2@$1" "$3"; }
+
+# generic scp push to server
+#
+# $1 Server
+# $2 Username
+# $3 File
+function push_to_server { 
+if [ "$3" -a -a "$3" ]
+then
+ scp "$3" "$2@$1:$3"; 
+fi
+}
+
+# generic scp pull from server
+#
+# $1 Server
+# $2 Username
+# $3 File
+function pull_from_server {
+scp "$2@$1:$3" .
+}
 

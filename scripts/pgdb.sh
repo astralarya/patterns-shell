@@ -16,8 +16,35 @@
 # You should have received a copy of the GNU General Public License along with
 # this program. If not, see http://www.gnu.org/licenses/.
 
+
+### EXAMPLE ###
+
+# edit this for your needs
+function mydbfunc {
+if [ "$1" = "-h" ]
+then
+ # show help
+ echo "Usage: mydbfunc [OPTION] [queryfile]
+Access DB.
+If a file is given as an argument, execute the queries in the file,
+otherwise start a psql session connected to DB.
+Option		GNU long option		Meaning
+-t		--time			Time the query or session
+-h		--help			Show this message"
+elif [ -z "$2" ]
+then
+ # execute normal
+ pgdb "mydb" "myuser" $1
+else
+ # execute with option
+ pgdb "mydb" "myuser" $2 $1
+fi
+}
+
+### END EXAMPLE ###
+
+
 # generic db function
-# Access database $1 as user $2
 #
 # $1 Database name
 # $2 Database user

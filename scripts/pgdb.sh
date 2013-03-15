@@ -17,11 +17,18 @@
 # this program. If not, see http://www.gnu.org/licenses/.
 
 
+### USAGE ###
+
+# Source this file in your shell's .*rc file
+# then copy the example functions below into a new file
+# and edit for your needs
+#
+# DO NOT edit the examples in this file directly
+
+
 ### EXAMPLE ###
-# edit these for your needs
-# if you wish to temporarily disable comment highlighting
-# comment out the line below -v
 :'
+# copy the functions in this section and edit for your needs
 
 # DB access function
 # can be tailored for administrators or users

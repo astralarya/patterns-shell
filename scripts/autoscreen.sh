@@ -30,7 +30,7 @@ then
  # close shell or connection after termination
  clear
  echo "Screen terminated. Exiting. ^C to cancel..."
- sleep 2
+ sleep 1
  exit
 fi
 

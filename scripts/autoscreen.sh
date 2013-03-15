@@ -1,5 +1,5 @@
 # autoscreen
-# auto start screen session without inception
+# auto start a GNU screen session without inception
 #
 # Copyright (C) 2013 Mara Kim
 #
@@ -16,7 +16,11 @@
 # You should have received a copy of the GNU General Public License along with
 # this program. If not, see http://www.gnu.org/licenses/.
 
-# source this after all other setup files
+
+### USAGE ###
+# source this file at the very end (important!)
+# of your shell's .*rc file
+
 if [ -z "$STY" ]
 then
  echo "Starting screen. ^C to cancel..."

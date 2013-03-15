@@ -72,5 +72,6 @@ then
 elif [ -e "$3" ]
 then
  # Execute query file
+ cat "$3"
  psql -f "$3" -U "$2" "$1"
 fi }

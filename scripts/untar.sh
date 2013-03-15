@@ -18,7 +18,7 @@
 
 
 ### USAGE ###
-# source this file in your shell's .*rc file
+# Source this file in your shell's .*rc file
 
 function untar {
 if [ "$1" -a -a "$1" ]

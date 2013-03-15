@@ -7,9 +7,13 @@ patterns-shell
 Installation
 ============
 
-You can manually copy this repository, but it is better to clone it via `git`
+You can manually copy this repository, but it is better to clone it via `git` with
 
 >git clone https://github.com/resultsreturned/patterns-shell.git
+
+Then you can easily get updates with
+
+>git pull
 
 
 License

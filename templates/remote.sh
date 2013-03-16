@@ -49,11 +49,10 @@ Option		GNU long option		Meaning
 elif [ "$1" = "-X" ]
 then
  # enable X11 forwarding
- ssh_connection "myserver" "myuser" "$2" "$1"
+ ssh-connection "myserver" "myuser" "$2" "$1"
 else
-then
  # execute normal
- ssh_connection "myserver" "myuser" "$1"
+ ssh-connection "myserver" "myuser" "$1"
 fi
 }
 
@@ -67,9 +66,8 @@ Push file to myscpdir/ at myserver
 Option		GNU long option		Meaning
 -h		--help			Show this message"
 else
-then
  # execute normal
- push_to_server "myserver" "myuser" "myscpdir/$1"
+ scp-push "myserver" "myuser" "myscpdir/$1"
 fi
 }
 
@@ -85,7 +83,7 @@ Option		GNU long option		Meaning
 else
 then
  # execute normal
- pull_from_server "myserver" "myuser" "myscpdir/$1"
+ scp-pull "myserver" "myuser" "myscpdir/$1"
 fi
 }
 

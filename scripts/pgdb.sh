@@ -20,7 +20,66 @@
 ### USAGE ###
 
 # Source this file in your shell's .*rc file
-# See ../templates/pgdb.sh for templates
+# Then use template-mydb and template-mydbbackup
+# to create your functions
+
+
+### TEMPLATES ###
+
+function template-mydb {
+
+local MYDB=$1
+local MYUSER=$2
+
+cat << TEMPLATE
+# $MYDB access function
+function $MYDB {
+if [ "\$1" = "-h" ]
+then
+ # show help
+ echo "Usage: $MYDB [OPTION] [queryfile]
+Access $MYDB.
+If a file is given as an argument, execute the queries in the file,
+otherwise start a psql session connected to $MYDB. 
+Option		GNU long option		Meaning
+-t		--time			Time the query or session
+-h		--help			Show this message"
+elif [ -z "\$2" ]
+then
+ pgdb "$MYDB" "$MYUSER" \$1
+else
+ # execute with option
+ pgdb "$MYDB" "$MYUSER" \$2 \$1
+fi
+}
+
+TEMPLATE
+} # function template-mydb
+
+
+function template-dbbackup {
+
+local MYDB=$1
+local MYSUPERUSER=$2
+local MYBACKUPDIR=$3
+
+cat << TEMPLATE
+# $MYDB backup function
+function ${MYDB}backup {
+if [ -z "\$1" ]
+then
+ dated_backup_db "$MYSUPERUSER" "$MYBACKUPDIR/${MYDB}_"
+elif [ "\$1" = "-b" -a "\$2" ]
+then
+ backup_db "$MYSUPERUSER" "\$2"
+elif [ "\$1" = "-r" -a -e "\$2" ]
+then
+ restore_db "$MYSUPERUSER" "\$2"
+fi
+}
+
+TEMPLATE
+} # function template-dbbackup
 
 
 ### FUNCTIONS ###

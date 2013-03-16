@@ -21,7 +21,74 @@
 ### USAGE ###
 
 # Source this file in your shell's .*rc file
-# See ../templates/remote.sh for templates
+# Then use template-remote to create your functions
+
+
+### TEMPLATE ###
+
+function template-remote {
+
+local MYCONNECTION=$1
+local MYSERVER=$2
+local MYUSER=$3
+local MYSCPDIR=$4
+
+cat << TEMPLATE 
+# SSH connection function
+function $MYCONNECTION {
+if [ "\$1" = "-h" -o "\$1" = "--help" ]
+then
+ # show help
+ echo "Usage: $MYCONNECTION [OPTION] [command]
+Connect via SSH to $MYSERVER
+If a command is given as an argument, execute it remotely,
+otherwise start an ssh session connected to $MYSERVER.
+Option		GNU long option		Meaning
+-h		--help			Show this message
+-X					Enable X11 forwarding"
+elif [ "\$1" = "-X" ]
+then
+ # enable X11 forwarding
+ ssh-connection "$MYSERVER" "$MYUSER" "\$2" "\$1"
+else
+ # execute normal
+ ssh-connection "$MYSERVER" "$MYUSER" "\$1"
+fi
+}
+
+# SCP push function
+function $MYCONNECTION-push {
+if [ "\$1" = "-h" -o "\$1" = "--help" ]
+then
+ # show help
+ echo "Usage: $MYCONNECTION-push [file]
+Push file to $MYSCPDIR/ at $MYSERVER
+Option		GNU long option		Meaning
+-h		--help			Show this message"
+else
+ # execute normal
+ scp-push "$MYSERVER" "$MYUSER" "$MYSCPDIR/\$1"
+fi
+}
+
+# SCP pull function
+function $MYCONNECTION-pull {
+if [ "\$1" = "-h" -o "\$1" = "--help" ]
+then
+ # show help
+ echo "Usage: $MYCONNECTION-pull [file]
+Pull file from $MYSCPDIR/ at $MYSERVER
+Option		GNU long option		Meaning
+-h		--help			Show this message"
+else
+then
+ # execute normal
+ scp-pull "$MYSERVER" "$MYUSER" "$MYSCPDIR/\$1"
+fi
+}
+TEMPLATE
+
+} # function template-remote
 
 
 ### FUNCTIONS ###

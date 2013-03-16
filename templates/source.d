@@ -19,18 +19,23 @@
 
 ### USAGE ###
 
-# then copy the example functions below into a new file
-# and edit for your needs
-#
-# DO NOT edit the examples in this file directly
+# Use template-source.d
+# to create your sourcer
 
 
 ### TEMPLATES ###
 
-# copy the functions in this section and edit for your needs
-# :s/mydir/relativepath (from sourcefile)
+function template-source.d {
 
-# source all files in mydir
-for f in $(dirname $BASH_SOURCE)/mydir/*
- do source $f
+local MYDIR=$1
+
+cat << TEMPLATE
+# source all files in $MYDIR
+for f in \$(dirname $BASH_SOURCE)/$MYDIR/*
+ do source \$f
 done
+
+TEMPLATE
+}
+
+

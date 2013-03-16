@@ -30,14 +30,20 @@ function template-mydb {
 
 local MYDB=$1
 local MYUSER=$2
+if [ "$3" ]
+then
+ local MYFUNC=$3
+else
+ local MYFUNC=$MYDB
+fi
 
 cat << TEMPLATE
 # $MYDB access function
-function $MYDB {
+function $MYFUNC {
 if [ "\$1" = "-h" ]
 then
  # show help
- echo "Usage: $MYDB [OPTION] [queryfile]
+ echo "Usage: $MYFUNC [OPTION] [queryfile]
 Access $MYDB.
 If a file is given as an argument, execute the queries in the file,
 otherwise start a psql session connected to $MYDB. 
@@ -62,10 +68,16 @@ function template-dbbackup {
 local MYDB=$1
 local MYSUPERUSER=$2
 local MYBACKUPDIR=$3
+if [ "$3" ]
+then
+ local MYFUNC=$3
+else
+ local MYFUNC=${MYDB}backup
+fi
 
 cat << TEMPLATE
 # $MYDB backup function
-function ${MYDB}backup {
+function $MYFUNC {
 if [ -z "\$1" ]
 then
  dated_backup_db "$MYSUPERUSER" "$MYBACKUPDIR/${MYDB}_"

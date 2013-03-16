@@ -24,20 +24,23 @@ Then you can easily get updates with
 
 ### Templates
 
-You can use templates to generate custom functions.  Several files include
+You can use templates to generate custom functions.  Several scripts include
 template-\* functions.  These functions take arguments and generate shell scripts
 based of templates. You can save this output, analyze it, and source it, or you
 can source it directly with process substitution:
 
->source &lt;(template-\* arg1 arg2 ... argn\)
+>source &lt;(template-\* arg1 arg2 ... argn)
 
 
 The templates available are:
+#### pgdb
 * template-db - generate a function to access a database
 * template-dbbackup - generate a function to backup a database
+#### remote
 * template-remote - generate functions to connect to a server via SSH, and push/pull files via SCP
+#### sourcedir
 * template-sourcedir - generate statements to source all files in a directory
-  * NOTE: sourcedir.sh template function does not behave correctly in this usage
+  * NOTE: this template function does not behave correctly in process substitution
 
 
 ## License

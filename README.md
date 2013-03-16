@@ -15,11 +15,21 @@ Then you can easily get updates with
 
 
 ## Patterns
+
 ### Scripts
 * autoscreen - auto start a GNU screen session without inception
 * pgdb - manage PostgreSQL databases
 * remote - manage connections to remotes via SSH and SCP
 * untar - untar and unzip archives
+
+### Templates
+
+You can use templates to generate custom functions.  Several files include
+template-\* functions.  These functions take arguments and generate shell scripts
+based of templates. You can save this output, analyze it, and source it, or you
+can source it directly with
+
+>source <(template-* arg1 arg2 ... argn)
 
 
 ## License

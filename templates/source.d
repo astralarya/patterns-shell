@@ -19,8 +19,8 @@
 
 ### USAGE ###
 
-# Use template-source.d
-# to create your sourcer
+# Use template-source.d to create your sourcer
+# See README.md for more info
 
 
 ### TEMPLATES ###

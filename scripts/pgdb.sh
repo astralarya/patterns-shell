@@ -22,6 +22,7 @@
 # Source this file in your shell's .*rc file
 # Then use template-mydb and template-mydbbackup
 # to create your functions
+# See README.md for more info
 
 
 ### TEMPLATES ###

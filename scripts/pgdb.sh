@@ -26,7 +26,7 @@
 
 ### TEMPLATES ###
 
-function template-mydb {
+function template-db {
 
 local MYDB=$1
 local MYUSER=$2

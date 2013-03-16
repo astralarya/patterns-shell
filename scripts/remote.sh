@@ -32,14 +32,14 @@
 # $2 Username
 # $3 Command (optional)
 # $4 Option (optional)
-function ssh_connection { ssh "$4" "$2@$1" "$3"; }
+function ssh-connection { ssh "$4" "$2@$1" "$3"; }
 
 # generic scp push to server
 #
 # $1 Server
 # $2 Username
 # $3 File
-function push_to_server { 
+function scp-push { 
 if [ "$3" -a -a "$3" ]
 then
  scp "$3" "$2@$1:$3"; 
@@ -51,5 +51,5 @@ fi
 # $1 Server
 # $2 Username
 # $3 File
-function pull_from_server { scp "$2@$1:$3" .; }
+function scp-pull { scp "$2@$1:$3" .; }
 

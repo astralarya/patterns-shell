@@ -32,7 +32,14 @@
 # $2 Username
 # $3 Command (optional)
 # $4 Option (optional)
-function ssh-connection { ssh "$4" "$2@$1" "$3"; }
+function ssh-connection {
+if [ "$4" ]
+then
+ ssh "$4" "$2@$1" "$3";
+else
+ ssh "$2@$1" "$3";
+fi
+}
 
 # generic scp push to server
 #

@@ -31,16 +31,31 @@ can source it directly with process substitution:
 
 >source &lt;(template-\* arg1 arg2 ... argn)
 
+The template functions are described below:
 
-The templates available are:
 #### pgdb
 * template-db - generate a function to access a database
+  * $1 database name
+  * $2 database user
+  * $3 generated function name (optional)
 * template-dbbackup - generate a function to backup a database
+  * $1 database name
+  * $2 database superuser
+  * $3 backup directory (absolute path, no trailing slash)
+  * $4 generated function name (optional)
+
 #### remote
 * template-remote - generate functions to connect to a server via SSH, and push/pull files via SCP
+  * $1 connection function name, as well as the base for the \*-push/pull functions
+  * $2 SSH/SCP server address
+  * $3 remote username
+  * $4 remote directory for SCP push/pull
+
 #### sourcedir
 * template-sourcedir - generate statements to source all files in a directory
+  * $1 directory to source
   * NOTE: this template function does not behave correctly in process substitution
+    Save the output to a file and source that instead
 
 
 ## License

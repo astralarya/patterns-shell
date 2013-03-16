@@ -51,7 +51,6 @@ then
  # enable X11 forwarding
  ssh-connection "$MYSERVER" "$MYUSER" "\$2" "\$1"
 else
- # execute normal
  ssh-connection "$MYSERVER" "$MYUSER" "\$1"
 fi
 }
@@ -66,7 +65,6 @@ Push file to $MYSCPDIR/ at $MYSERVER
 Option		GNU long option		Meaning
 -h		--help			Show this message"
 else
- # execute normal
  scp-push "$MYSERVER" "$MYUSER" "$MYSCPDIR/\$1"
 fi
 }
@@ -81,8 +79,6 @@ Pull file from $MYSCPDIR/ at $MYSERVER
 Option		GNU long option		Meaning
 -h		--help			Show this message"
 else
-then
- # execute normal
  scp-pull "$MYSERVER" "$MYUSER" "$MYSCPDIR/\$1"
 fi
 }

@@ -29,17 +29,17 @@
 ### TEMPLATES ###
 
 # copy the functions in this section and edit for your needs
-# vim substitutions:
-# s/myserver/server
-# s/myuser/username
-# s/myscpdir/remotedir (without slash)
+# :s/myconnection/connectionname
+# :s/myserver/server
+# :s/myuser/username
+# :s/myscpdir/remotedir (without slash)
 
 # SSH connection function
-function myserver {
+function myconnectfunc {
 if [ "$1" = "-h" -o "$1" = "--help" ]
 then
  # show help
- echo "Usage: myserver [OPTION] [command]
+ echo "Usage: myconnectfunc  [OPTION] [command]
 Connect via SSH to myserver
 If a command is given as an argument, execute it remotely,
 otherwise start an ssh session connected to myserver.
@@ -58,12 +58,12 @@ fi
 }
 
 # SCP push function
-function push_myserver {
+function myconnection-push {
 if [ "$1" = "-h" -o "$1" = "--help" ]
 then
  # show help
- echo "Usage: push_myserver [file]
-Push file to myserver
+ echo "Usage: myconnection-push [file]
+Push file to myscpdir/ at myserver
 Option		GNU long option		Meaning
 -h		--help			Show this message"
 else
@@ -74,12 +74,12 @@ fi
 }
 
 # SCP pull function
-function pull_myserver {
+function myconnection-pull {
 if [ "$1" = "-h" -o "$1" = "--help" ]
 then
  # show help
- echo "Usage: push_myserver [file]
-Pull file from myserver
+ echo "Usage: myconnection-pull [file]
+Pull file from myscpdir/ at myserver
 Option		GNU long option		Meaning
 -h		--help			Show this message"
 else

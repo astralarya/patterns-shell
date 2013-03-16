@@ -1,4 +1,4 @@
-# source.d
+# sourcedir
 # source all the files in a directory
 #
 # Copyright (C) 2013 Mara Kim
@@ -25,7 +25,7 @@
 
 ### TEMPLATES ###
 
-function template-source.d {
+function template-sourcedir {
 
 local MYDIR=$1
 

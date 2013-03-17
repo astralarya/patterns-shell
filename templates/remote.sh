@@ -27,6 +27,16 @@
 
 ### TEMPLATE ###
 
+# output three function definitons
+# * access server via SSH
+# * push file to server via SCP
+# * pull file from server via SCP
+# ex.
+# source <(template-remote "myconnection" "myserver" "myuser" "myscpdir")
+# * myconnection [OPTION] [command]
+# * myconnection-push [OPTION] [file]
+# * myconnection-pull [OPTION] [file]
+# all functions are self documenting (-h)
 function template-remote {
 
 local MYCONNECTION=$1
@@ -61,7 +71,7 @@ function $MYCONNECTION-push {
 if [ "\$1" = "-h" -o "\$1" = "--help" ]
 then
  # show help
- echo "Usage: $MYCONNECTION-push [file]
+ echo "Usage: $MYCONNECTION-push [OPTION] [file]
 Push file to $MYSCPDIR/ at $MYSERVER
 Option		GNU long option		Meaning
 -h		--help			Show this message"
@@ -75,7 +85,7 @@ function $MYCONNECTION-pull {
 if [ "\$1" = "-h" -o "\$1" = "--help" ]
 then
  # show help
- echo "Usage: $MYCONNECTION-pull [file]
+ echo "Usage: $MYCONNECTION-pull [OPTION] [file]
 Pull file from $MYSCPDIR/ at $MYSERVER
 Option		GNU long option		Meaning
 -h		--help			Show this message"

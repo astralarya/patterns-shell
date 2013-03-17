@@ -27,6 +27,12 @@
 
 ### TEMPLATES ###
 
+# output function definition
+# to access a database
+# ex.
+# source <(template-db "mydb" "myuser" "myfunc")
+# * myfunc [OPTION] [queryfile]
+# self documenting (-h)
 function template-db {
 
 local MYDB=$1
@@ -64,6 +70,12 @@ TEMPLATE
 } # function template-mydb
 
 
+# output function definition
+# to backup a database
+# ex.
+# source <(template-dbbackup "mydb" "mysuperuser" "mybackupdir" "myfunc")
+# * myfunc [OPTION] [file]
+# self documenting (-h)
 function template-dbbackup {
 
 local MYDB=$1
@@ -82,6 +94,16 @@ function $MYFUNC {
 if [ -z "\$1" ]
 then
  dated_backup_db "$MYSUPERUSER" "$MYBACKUPDIR/${MYDB}_"
+elif [ "\$1" = "-h" ]
+then
+ echo "Usage: $MYFUNC [OPTION] [file]
+Backup or restore $MYDB.
+If no arguments given, make dated backup in $MYBACKUPDIR,
+otherwise, execute according the options below.
+Option		GNU long option		Meaning
+-b		--backup		Backup $MYDB to file
+-r		--restore		Restore $MYDB from file
+-h		--help			Show this message"
 elif [ "\$1" = "-b" -a "\$2" ]
 then
  backup_db "$MYSUPERUSER" "\$2"

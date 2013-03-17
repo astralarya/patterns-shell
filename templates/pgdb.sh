@@ -27,12 +27,11 @@
 
 ### TEMPLATES ###
 
-# output function definition
+# generate function definition
 # to access a database
 # ex.
 # source <(template-db "mydb" "myuser" "myfunc")
 # * myfunc [OPTION] [queryfile]
-# self documenting (-h)
 function template-db {
 
 local MYDB=$1
@@ -75,7 +74,6 @@ TEMPLATE
 # ex.
 # source <(template-dbbackup "mydb" "mysuperuser" "mybackupdir" "myfunc")
 # * myfunc [OPTION] [file]
-# self documenting (-h)
 function template-dbbackup {
 
 local MYDB=$1

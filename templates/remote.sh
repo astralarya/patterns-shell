@@ -36,7 +36,6 @@
 # * myconnection [OPTION] [command]
 # * myconnection-push [OPTION] [file]
 # * myconnection-pull [OPTION] [file]
-# all functions are self documenting (-h)
 function template-remote {
 
 local MYCONNECTION=$1

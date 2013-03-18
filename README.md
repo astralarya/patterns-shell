@@ -17,10 +17,10 @@ Then you can easily get updates with
 ## Patterns
 
 ### Scripts
-* autoscreen - auto start a GNU screen session without inception
-* pgdb - manage PostgreSQL databases
-* remote - manage connections to remotes via SSH and SCP
-* untar - untar and unzip archives
+* *autoscreen* - auto start a GNU screen session without inception
+* *pgdb* - manage PostgreSQL databases
+* *remote* - manage connections to remotes via SSH and SCP
+* *untar* - untar and unzip archives
 
 ### Templates
 

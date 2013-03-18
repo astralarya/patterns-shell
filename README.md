@@ -48,7 +48,7 @@ The template functions are listed below:
           Save the output to a file and source that instead
 
 For detailed descriptions of these functions and the code they generate,  
-see templates/README.md
+see `templates/README.md`
 
 ## License
 

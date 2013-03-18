@@ -38,7 +38,7 @@ All generated functions are self documenting.  You can view this documentation w
 The template functions are listed below:
 
 * **pgdb**
-    * *template-db* - Generate function to access a database
+    * *template-db* - Generate function to access a database as a user
     * *template-dbbackup* - Generate function to backup and restore a database
 * **remote**
     * *template-remote* - Generate functions to connect to a server via SSH, and push/pull files via SCP

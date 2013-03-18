@@ -21,9 +21,14 @@
 ### USAGE ###
 
 # Source this file in your shell's .*rc file
-# Then use template-remote in ../templates/remotes.sh
+# Then use template-remote in ../templates/remote.sh
 # to create your functions
 # See README.md for more info
+
+### END USAGE ###
+
+# source templates
+source $(dirname $BASH_SOURCE)/../templates/$(basename $BASH_SOURCE)
 
 
 ### FUNCTIONS ###

@@ -25,6 +25,13 @@
 # See README.md for more info
 
 
+### END USAGE ###
+
+
+# source pgdb templates
+source $(dirname $BASH_SOURCE)/../templates/$(basename $BASH_SOURCE)
+
+
 ### FUNCTIONS ###
 
 # generic db function

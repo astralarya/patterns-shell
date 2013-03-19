@@ -22,6 +22,9 @@ Then you can easily get updates with
 * *remote* - manage connections to remotes via SSH and SCP
 * *untar* - untar and unzip archives
 
+For detailed descriptions of these scripts,  
+see `scripts/README.md`
+
 ### Templates
 
 You can use templates to generate code.  Several scripts include

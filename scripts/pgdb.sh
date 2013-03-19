@@ -52,6 +52,7 @@ then
   psql -U "$2" "$1"
  else [ -e "$3" ]
   # Execute query file
+  echo "$3"
   psql -f "$3" -U "$2" "$1"
  fi
  date
@@ -62,6 +63,7 @@ then
 elif [ -e "$3" ]
 then
  # Execute query file
+  echo "$3"
  psql -f "$3" -U "$2" "$1"
 fi }
 

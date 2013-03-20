@@ -19,7 +19,7 @@
 
 ### USAGE ###
 
-# Source ../scripts/pgdb.sh in your shell's .*rc file
+# Source this file in your shell's .*rc file
 # Then use template-mydb and template-mydbbackup
 # to create your functions
 # See README.md for more info
@@ -46,7 +46,16 @@ fi
 cat << TEMPLATE
 # $MYDB access function
 function $MYFUNC {
-if [ "\$1" = "-h" ]
+if [ "\$1" = -* ]
+then
+ # execute with option
+ local FILE=\$2
+ local OPTION=\$1
+else
+ local FILE=\$1
+fi
+
+if [ "\$OPTION" = "-h" -o "\$OPTION" = "--help" ]
 then
  # show help
  echo "Usage: $MYFUNC [OPTION] [queryfile]
@@ -56,15 +65,31 @@ otherwise start a psql session connected to $MYDB.
 Option		GNU long option		Meaning
 -t		--time			Time the query or session
 -h		--help			Show this message"
-elif [ -z "\$2" ]
+elif [ "\$OPTION" = "-t" -o "\$OPTION" = "--time" ]
 then
- pgdb "$MYDB" "$MYUSER" \$1
-else
- # execute with option
- pgdb "$MYDB" "$MYUSER" \$2 \$1
-fi
+ # Time execution
+ date
+ if [ -z "\$FILE" ]
+ then
+  # Open psql session
+  psql -U "$MYUSER" "$MYDB"
+ else [ -e "\$FILE" ]
+  # Execute query file
+  echo "\$FILE"
+  psql -f "\$FILE" -U "$MYUSER" "$MYDB"
+ fi
+ date
+elif [ -z "\$FILE" ]
+then
+ # Open psql session
+ psql -U "$MYUSER" "$MYDB"
+elif [ -e "\$FILE" ]
+then
+ # Execute query file
+  echo "\$FILE"
+ psql -f "\$FILE" -U "$MYUSER" "$MYDB"
+fi }
 }
-
 TEMPLATE
 } # function template-mydb
 
@@ -91,7 +116,8 @@ cat << TEMPLATE
 function $MYFUNC {
 if [ -z "\$1" ]
 then
- dated_backup_db "$MYSUPERUSER" "$MYBACKUPDIR/${MYDB}_"
+ # make dated backup
+ pg_dumpall -c -U "$MYSUPERUSER" > "$MYBACKUPDIR/${MYDB}_`date +%F`.sql"
 elif [ "\$1" = "-h" ]
 then
  echo "Usage: $MYFUNC [OPTION] [file]
@@ -104,13 +130,12 @@ Option		GNU long option		Meaning
 -h		--help			Show this message"
 elif [ "\$1" = "-b" -a "\$2" ]
 then
- backup_db "$MYSUPERUSER" "\$2"
+ pg_dumpall -c -U "$MYSUPERUSER" > "\$2"; }
 elif [ "\$1" = "-r" -a -e "\$2" ]
 then
- restore_db "$MYSUPERUSER" "\$2"
+ psql -f "\$2" -U "$MYSUPERUSER" postgres | grep ERROR
 fi
 }
-
 TEMPLATE
 } # function template-dbbackup
 

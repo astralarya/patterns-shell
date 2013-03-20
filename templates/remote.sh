@@ -65,6 +65,12 @@ else
 fi
 }
 
+# SSH key function
+function $MYCONNECTION-key {
+ ssh-add -L || ssh-keygen -f ~/.ssh/id_rsa
+ ssh-copy-id $MYUSER@$MYSERVER
+}
+
 # SCP push function
 function $MYCONNECTION-push {
 if [ "\$1" = "-h" -o "\$1" = "--help" ]
@@ -75,7 +81,7 @@ Push file to $MYSCPDIR/ at $MYSERVER
 Option		GNU long option		Meaning
 -h		--help			Show this message"
 else
- scp-push "$MYSERVER" "$MYUSER" "$MYSCPDIR/\$1"
+ scp-push "$MYSERVER" "$MYUSER" "\$1" "$MYSCPDIR/\$1"
 fi
 }
 

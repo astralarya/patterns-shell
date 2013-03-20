@@ -53,12 +53,8 @@ fi
 # $1 Server
 # $2 Username
 # $3 File
-function scp-push { 
-if [ "$3" -a -a "$3" ]
-then
- scp "$3" "$2@$1:$3"; 
-fi
-}
+# $4 Destination folder
+function scp-push { scp "$3" "$2@$1:$4"; }
 
 # generic scp pull from server
 #

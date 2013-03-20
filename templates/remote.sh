@@ -74,29 +74,72 @@ function $MYCONNECTION-keygen {
 
 # SCP push function
 function $MYCONNECTION-push {
-if [ "\$1" = "-h" -o "\$1" = "--help" ]
+if [[ "\$1" = "-*" ]]
+then
+ local option="\$1"
+ local file="\$2"
+ local destination="\$3"
+else
+ local file="\$1"
+ local dest="\$2"
+fi
+if [ -z "\$dest" ]
+then
+ local dest="$MYSCPDIR/\$file"
+elif [[ "\$dest" = /* ]]
+then
+ local dest="\$dest"
+else
+ local dest="$MYSCPDIR/\$dest"
+fi
+
+if [ "\$option" = "-h" -o "\$option" = "--help" ]
 then
  # show help
- echo "Usage: $MYCONNECTION-push [OPTION] [file]
-Push file to $MYSCPDIR/ at $MYSERVER
+ echo "Usage: $MYCONNECTION-push [OPTION] [file] [destination]
+Push file to destination \(default $MYSCPDIR/\) at $MYSERVER
 Option		GNU long option		Meaning
 -h		--help			Show this message"
-else
- scp "\$1" "$MYUSER@$MYSERVER:$MYSCPDIR/\$1"
+elif [ -e "\$file" ]
+then
+ scp "\$file" "$MYUSER@$MYSERVER:\$dest"
 fi
 }
 
 # SCP pull function
 function $MYCONNECTION-pull {
-if [ "\$1" = "-h" -o "\$1" = "--help" ]
+if [[ "\$1" = -* ]]
+then
+ local option="\$1"
+ local file="\$2"
+ local destination="\$3"
+else
+ local file="\$1"
+ local dest="\$2"
+fi
+
+if [[ "\$file" = /* ]]
+then
+ local file="\$file"
+else
+ local file="$MYSCPDIR/\$file"
+fi
+if [ -z "\$dest" ]
+then
+ local dest="."
+else
+ local dest="\$dest"
+fi
+
+if [ "\$option" = "-h" -o "\$option" = "--help" ]
 then
  # show help
- echo "Usage: $MYCONNECTION-pull [OPTION] [file]
+ echo "Usage: $MYCONNECTION-pull [OPTION] [file] [destination]
 Pull file from $MYSCPDIR/ at $MYSERVER
 Option		GNU long option		Meaning
 -h		--help			Show this message"
 else
- scp "$MYUSER@$MYSERVER:$MYSCPDIR/\$1" .
+  scp "$MYUSER@$MYSERVER:\$file" "\$dest"
 fi
 }
 TEMPLATE

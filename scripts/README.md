@@ -20,14 +20,6 @@ Then use `template-db` and `template-dbbackup`
 in `../templates/pgdb.sh` (automatically sourced)
 to generate your custom database management functions.
 
-## remote
-Manage connections to remotes via SSH and SCP
-
-Source `remote.sh` in your .*rc file.
-
-Then use `template-remote` in `../templates/remote.sh` (automatically sourced)
-to generate your custom remote management functions.
-
 ## untar
 Untar and unzip archives
 

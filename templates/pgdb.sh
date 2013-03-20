@@ -1,4 +1,4 @@
-# pgdb templates
+# pgdb
 # Template functions for managing a connection to a PostgreSQL database
 #
 # Copyright (C) 2013 Mara Kim

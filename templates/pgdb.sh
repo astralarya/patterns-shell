@@ -88,7 +88,7 @@ then
  # Execute query file
   echo "\$FILE"
  psql -f "\$FILE" -U "$MYUSER" "$MYDB"
-fi }
+fi 
 }
 TEMPLATE
 } # function template-mydb

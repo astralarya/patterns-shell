@@ -1,4 +1,4 @@
-# remote templates
+# remote
 # Template functions for managing a connection to an SSH server
 # and pushing and pulling files via SCP
 #
@@ -20,7 +20,7 @@
 
 ### USAGE ###
 
-# Source ../scripts/remote.sh in your shell's .*rc file
+# Source this file in your shell's .*rc file
 # Then use template-remote to create your functions
 # See README.md for more info
 
@@ -59,15 +59,16 @@ Option		GNU long option		Meaning
 elif [ "\$1" = "-X" ]
 then
  # enable X11 forwarding
- ssh-connection "$MYSERVER" "$MYUSER" "\$2" "\$1"
+ ssh "\$1" "$MYUSER@$MYSERVER" "\$2"
 else
- ssh-connection "$MYSERVER" "$MYUSER" "\$1"
+ ssh "$MYUSER@$MYSERVER" "\$1"
 fi
 }
 
 # SSH key function
 function $MYCONNECTION-keygen {
- ssh-connection-keygen "$MYSERVER" "$MYUSER" 
+ ssh-add -L || ssh-keygen -f ~/.ssh/id_rsa
+ ssh '-o PasswordAuthentication=no' "$MYUSER@$MYSERVER" ':' || ssh-copy-id "$MYUSER@$MYSERVER"
 }
 
 # SCP push function
@@ -80,7 +81,7 @@ Push file to $MYSCPDIR/ at $MYSERVER
 Option		GNU long option		Meaning
 -h		--help			Show this message"
 else
- scp-push "$MYSERVER" "$MYUSER" "\$1" "$MYSCPDIR/\$1"
+ scp "\$1" "$MYUSER@$MYSERVER:$MYSCPDIR/\$1"
 fi
 }
 
@@ -94,7 +95,7 @@ Pull file from $MYSCPDIR/ at $MYSERVER
 Option		GNU long option		Meaning
 -h		--help			Show this message"
 else
- scp-pull "$MYSERVER" "$MYUSER" "$MYSCPDIR/\$1"
+ scp "$MYUSER@$MYSERVER:$MYSCPDIR/\$1" .
 fi
 }
 TEMPLATE

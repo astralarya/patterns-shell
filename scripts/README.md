@@ -11,15 +11,6 @@ When you start your shell, you will be notified that you are about to enter
 a screen session (^C to cancel).  When your screen session ends, you will be
 notified that your shell will exit (^C to cancel).
 
-## pgdb
-Manage PostgreSQL databases
-
-Source `pgdb.sh` in your .*rc file.
-
-Then use `template-db` and `template-dbbackup`
-in `../templates/pgdb.sh` (automatically sourced)
-to generate your custom database management functions.
-
 ## untar
 Untar and unzip archives
 

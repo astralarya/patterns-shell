@@ -18,7 +18,6 @@ Then you can easily get updates with
 
 ### Scripts
 * *autoscreen* - auto start a GNU screen session without inception
-* *pgdb* - manage PostgreSQL databases
 * *untar* - untar and unzip archives
 
 For detailed descriptions of these scripts,  

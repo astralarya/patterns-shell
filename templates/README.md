@@ -2,8 +2,7 @@
 
 **patterns-shell/templates** - Code generators for shell patterns
 
-If you wish to use a template, you should source its respective script file in `../scripts/`.  
-That will automatically source the respective template file.
+If you wish to use a template, you should source its *.sh file.
 
 ## pgdb
 ### template-db

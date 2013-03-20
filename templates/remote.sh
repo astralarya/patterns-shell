@@ -68,9 +68,18 @@ fi
 
 # SSH key function
 function $MYCONNECTION-keygen {
+if [ "\$1" = "-h" -o "\$1" = "--help" ]
+then
+ # show help
+ echo "Usage: $MYCONNECTION-keygen [OPTION]
+Check and set up key authentication for $MYCONNECTION.
+Option		GNU long option		Meaning
+-h		--help			Show this message"
+else
  echo "Testing key"
  ssh-add -L || ssh-keygen -f ~/.ssh/id_rsa
  ssh '-o PasswordAuthentication=no' "$MYUSER@$MYSERVER" ':' || ssh-copy-id "$MYUSER@$MYSERVER"
+fi
 }
 
 

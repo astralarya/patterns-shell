@@ -66,7 +66,7 @@ fi
 }
 
 # SSH key function
-function $MYCONNECTION-key {
+function $MYCONNECTION-keygen {
  ssh-add -L || ssh-keygen -f ~/.ssh/id_rsa
  ssh-copy-id $MYUSER@$MYSERVER
 }

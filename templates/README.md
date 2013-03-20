@@ -63,5 +63,3 @@ Usage: **template-sourcedir** *dir*
 Generate statements to source all files in a directory  
 * $1 directory to source
 
-NOTE: this template function does not behave correctly in process substitution
-Save the output to a file and source that instead

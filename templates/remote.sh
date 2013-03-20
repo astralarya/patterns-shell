@@ -67,8 +67,7 @@ fi
 
 # SSH key function
 function $MYCONNECTION-keygen {
- ssh-add -L || ssh-keygen -f ~/.ssh/id_rsa
- ssh-connection "$MYSERVER" "$MYUSER" ':' '-o PasswordAuthentication=no' || ssh-copy-id $MYUSER@$MYSERVER
+ ssh-connection-keygen "$MYSERVER" "$MYUSER" 
 }
 
 # SCP push function

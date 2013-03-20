@@ -48,6 +48,14 @@ else
 fi
 }
 
+# generic ssh keygen
+#
+# $1 Server
+# $2 Username
+function ssh-connection-keygen {
+ ssh-add -L || ssh-keygen -f ~/.ssh/id_rsa
+ ssh '-o PasswordAuthentication=no' "$2@$1" ':' || ssh-copy-id "$2@$1"
+}
 # generic scp push to server
 #
 # $1 Server

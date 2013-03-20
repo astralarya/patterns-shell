@@ -130,7 +130,7 @@ Option		GNU long option		Meaning
 -h		--help			Show this message"
 elif [ "\$1" = "-b" -a "\$2" ]
 then
- pg_dumpall -c -U "$MYSUPERUSER" > "\$2"; }
+ pg_dumpall -c -U "$MYSUPERUSER" > "\$2"
 elif [ "\$1" = "-r" -a -e "\$2" ]
 then
  psql -f "\$2" -U "$MYSUPERUSER" postgres | grep ERROR

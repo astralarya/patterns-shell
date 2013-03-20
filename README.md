@@ -44,7 +44,7 @@ The template functions are listed below:
     * *template-db* - Generate function to access a database as a user
     * *template-dbbackup* - Generate function to backup and restore a database
 * **remote**
-    * *template-remote* - Generate functions to connect to a server via SSH, and push/pull files via SCP
+    * *template-remote* - Generate functions to connect to a server via SSH, push/pull files via SCP, and setup key authorization.
 * **sourcedir**
     * *template-sourcedir* - Generate script to source all files in a directory
         * NOTE: this template function does not behave correctly in process substitution  

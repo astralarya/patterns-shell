@@ -1,6 +1,6 @@
 # patterns-shell
 
-**patterns-shell** - Design patterns for shell scripts
+**patterns-shell** - Tempate patterns for shell scripts
 
 
 ## Installation

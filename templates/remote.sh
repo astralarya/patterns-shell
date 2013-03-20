@@ -65,12 +65,14 @@ else
 fi
 }
 
+
 # SSH key function
 function $MYCONNECTION-keygen {
  echo "Testing key"
  ssh-add -L || ssh-keygen -f ~/.ssh/id_rsa
  ssh '-o PasswordAuthentication=no' "$MYUSER@$MYSERVER" ':' || ssh-copy-id "$MYUSER@$MYSERVER"
 }
+
 
 # SCP push function
 function $MYCONNECTION-push {
@@ -105,6 +107,7 @@ then
  scp "\$file" "$MYUSER@$MYSERVER:\$dest"
 fi
 }
+
 
 # SCP pull function
 function $MYCONNECTION-pull {
@@ -143,6 +146,5 @@ else
 fi
 }
 TEMPLATE
-
 } # function template-remote
 

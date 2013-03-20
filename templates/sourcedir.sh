@@ -31,7 +31,7 @@ local MYDIR=$1
 
 cat << TEMPLATE
 # source all files in $MYDIR
-for f in \$(dirname \$BASH_SOURCE)/$MYDIR/*
+for f in $MYDIR/*
  do source \$f
 done
 

@@ -21,7 +21,7 @@
 # source this file at the very end (important!)
 # of your shell's .*rc file
 
-if [ -z "$STY" ]
+if [ -z "$STY" -a "$TERM" != "dumb" ]
 then
  echo "Starting screen. ^C to cancel..."
  sleep 2

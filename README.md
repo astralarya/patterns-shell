@@ -19,7 +19,6 @@ Then you can easily get updates with
 ### Scripts
 * *autoscreen* - auto start a GNU screen session without inception
 * *pgdb* - manage PostgreSQL databases
-* *remote* - manage connections via SSH and SCP
 * *untar* - untar and unzip archives
 
 For detailed descriptions of these scripts,  
@@ -27,8 +26,7 @@ see `scripts/README.md`
 
 ### Templates
 
-You can use templates to generate code.  Several scripts include
-template-\* functions.  These functions take arguments and generate shell scripts
+You can use templates to generate code. These functions take arguments and generate shell scripts
 based off templates. You can save this output, analyze it, and source it, or you
 can source it directly with process substitution:
 

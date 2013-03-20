@@ -19,7 +19,7 @@ Then you can easily get updates with
 ### Scripts
 * *autoscreen* - auto start a GNU screen session without inception
 * *pgdb* - manage PostgreSQL databases
-* *remote* - manage connections to remotes via SSH and SCP
+* *remote* - manage connections via SSH and SCP
 * *untar* - untar and unzip archives
 
 For detailed descriptions of these scripts,  

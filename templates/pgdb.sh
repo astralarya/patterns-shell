@@ -46,7 +46,7 @@ fi
 cat << TEMPLATE
 # $MYDB access function
 function $MYFUNC {
-if [ "\$1" = -* ]
+if [[ "\$1" = -* ]]
 then
  # execute with option
  local FILE=\$2

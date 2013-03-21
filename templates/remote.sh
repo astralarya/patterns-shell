@@ -85,7 +85,7 @@ else
  # check if key auth already enabled
  ssh '-o PasswordAuthentication=no' "$MYUSER@$MYSERVER" ':' ||
  # if not set up remote key 
- ( ssh-add -L | ssh "$MYUSER@$MYSERVER" 'cat \$(: \$(mkdir -p ~/.ssh)) >> ~/.ssh/authorized_keys' &&
+ ( ssh-add -L | ssh "$MYUSER@$MYSERVER" '\$(: \$(mkdir -p ~/.ssh)) cat >> ~/.ssh/authorized_keys' &&
  echo "Now try logging into the machine, with \"$MYCONNECTION\", and check in:
 
   ~/.ssh/authorized_keys

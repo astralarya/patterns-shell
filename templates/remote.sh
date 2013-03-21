@@ -92,7 +92,7 @@ Put \"eval \\\$(ssh-agent) in your ~/.*rc\" file to fix"
  if [ \$status -eq 1 ]
  then
   # check if key file exists
-  if [ -e ~/.ssh/id_rsh ]
+  if [ -e ~/.ssh/id_rsa ]
   then
    ssh-add
   else

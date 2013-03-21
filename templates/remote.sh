@@ -89,8 +89,20 @@ else
  fi
  if [ \$status -eq 1 ]
  then
-  # if not, generate one
-  ssh-keygen -f ~/.ssh/id_rsa
+  # check if key file exists
+  if [ -e ~/.ssh/id_rsh ]
+  then
+   ssh-add ~/.ssh/id_rsh
+  else
+   # if not, generate one
+   ssh-keygen -f ~/.ssh/id_rsa
+   ssh-add -L
+   local status=\$?
+   if [ \$status -eq 1 ]
+   then
+    ssh-add ~/.ssh/id_rsh
+   fi
+  fi
  fi
 
  # check if key auth already enabled

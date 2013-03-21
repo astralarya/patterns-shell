@@ -77,8 +77,22 @@ Option		GNU long option		Meaning
 -h		--help			Show this message"
 else
  echo "Testing key"
- ssh-add -L || ssh-keygen -f ~/.ssh/id_rsa
- ssh '-o PasswordAuthentication=no' "$MYUSER@$MYSERVER" ':' || ssh-copy-id "$MYUSER@$MYSERVER"
+ # see if we already have a key
+ ssh-add -L ||
+ # if not, generate one
+ ssh-keygen -f ~/.ssh/id_rsa
+
+ # check if key auth already enabled
+ ssh '-o PasswordAuthentication=no' "$MYUSER@$MYSERVER" ':' ||
+ # if not set up remote key 
+ ( ssh-add -L | ssh "$MYUSER@$MYSERVER" 'cat \$(: \$(mkdir -p ~/.ssh)) >> ~/.ssh/authorized_keys' &&
+ echo "Now try logging into the machine, with \"$MYCONNECTION\", and check in:
+
+  ~/.ssh/authorized_keys
+
+to make sure we haven't added extra keys that you weren't expecting." )
+
+ echo "Key authentication enabled"
 fi
 }
 

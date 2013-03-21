@@ -92,7 +92,7 @@ else
   # check if key file exists
   if [ -e ~/.ssh/id_rsh ]
   then
-   ssh-add ~/.ssh/id_rsh
+   ssh-add
   else
    # if not, generate one
    ssh-keygen -f ~/.ssh/id_rsa
@@ -100,7 +100,7 @@ else
    local status=\$?
    if [ \$status -eq 1 ]
    then
-    ssh-add ~/.ssh/id_rsh
+    ssh-add
    fi
   fi
  fi

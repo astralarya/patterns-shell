@@ -83,6 +83,8 @@ else
  if [ \$status -eq 2 ]
  then
   # start ssh-agent if not started
+  echo "It appears your ssh-agent does not start automatically.
+Put \"eval \\\$(ssh-agent) in your ~/.*rc\" file to fix"
   eval \$(ssh-agent)
   ssh-add -L
   local status=\$?

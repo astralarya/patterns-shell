@@ -78,9 +78,20 @@ Option		GNU long option		Meaning
 else
  echo "Testing key"
  # see if we already have a key
- ssh-add -L ||
- # if not, generate one
- ssh-keygen -f ~/.ssh/id_rsa
+ ssh-add -L
+ local status=\$?
+ if [ \$status -eq 2 ]
+ then
+  # start ssh-agent if not started
+  eval \$(ssh-agent)
+  ssh-add -L
+  local status=\$?
+ fi
+ if [ \$status -eq 1 ]
+ then
+  # if not, generate one
+  ssh-keygen -f ~/.ssh/id_rsa
+ fi
 
  # check if key auth already enabled
  ssh '-o PasswordAuthentication=no' "$MYUSER@$MYSERVER" ':' ||

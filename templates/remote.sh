@@ -38,6 +38,18 @@
 # * myconnection-pull [OPTION] [file]
 function template-remote {
 
+if [ "$1" = "-h" -o "$1" = "--help" ]
+then
+ echo "Usage: template-remote [connection] [server] [user] [scpdir]
+Output code for a four functions named [connection], [connection]-keygen
+[connection]-push, [connection]-pull, to connect to server via SSH,
+push/pull files via SCP (default remote dir as [scpdir], and set up key
+authentication as [user]@[server].
+Option		GNU long option		Meaning
+-h		--help			Show this message"
+ return 0
+fi
+
 local MYCONNECTION=$1
 local MYSERVER=$2
 local MYUSER=$3

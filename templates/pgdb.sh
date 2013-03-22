@@ -34,6 +34,16 @@
 # * myfunc [OPTION] [queryfile]
 function template-db {
 
+if [ "$1" = "-h" -o "$1" = "--help" ]
+then
+ echo "Usage: template-db [db] [user] [FUNCNAME]
+Output code for a function named [FUNCNAME] (default [db])
+to access [db] as [user].
+Option		GNU long option		Meaning
+-h		--help			Show this message"
+ return 0
+fi
+
 local MYDB=$1
 local MYUSER=$2
 if [ "$3" ]
@@ -59,7 +69,7 @@ if [ "\$OPTION" = "-h" -o "\$OPTION" = "--help" ]
 then
  # show help
  echo "Usage: $MYFUNC [OPTION] [queryfile]
-Access $MYDB.
+Access $MYDB as $MYUSER.
 If a file is given as an argument, execute the queries in the file,
 otherwise start a psql session connected to $MYDB. 
 Option		GNU long option		Meaning
@@ -101,6 +111,16 @@ TEMPLATE
 # * myfunc [OPTION] [file]
 function template-dbbackup {
 
+if [ "$1" = "-h" -o "$1" = "--help" ]
+then
+ echo "Usage: template-dbbackup [db] [superuser] [backupdir] [FUNCNAME]
+Output code for a function named [FUNCNAME] (default [db]backup)
+to backup [db] as [superuser]. Backups placed in [backupdir] by default.
+Option		GNU long option		Meaning
+-h		--help			Show this message"
+ return 0
+fi
+
 local MYDB=$1
 local MYSUPERUSER=$2
 local MYBACKUPDIR=$3
@@ -121,7 +141,7 @@ then
 elif [ "\$1" = "-h" ]
 then
  echo "Usage: $MYFUNC [OPTION] [file]
-Backup or restore $MYDB.
+Backup or restore $MYDB as $MYSUPERUSER.
 If no arguments given, make dated backup in $MYBACKUPDIR,
 otherwise, execute according the options below.
 Option		GNU long option		Meaning

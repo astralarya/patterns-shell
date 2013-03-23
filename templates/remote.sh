@@ -58,7 +58,16 @@ local MYSCPDIR=$4
 cat << TEMPLATE 
 # SSH connection function
 function $MYCONNECTION {
-if [ "\$1" = "-h" -o "\$1" = "--help" ]
+
+if [[ "\$1" = "-*" ]]
+then
+ local option="\$1"
+ local command="\$2"
+else
+ local command="\$1"
+ local option="\$2"
+fi
+if [ "\$option" = "-h" -o "\$option" = "--help" ]
 then
  # show help
  echo "Usage: $MYCONNECTION [OPTION] [command]
@@ -67,13 +76,9 @@ If a command is given as an argument, execute it remotely,
 otherwise start an ssh session connected to $MYSERVER.
 Option		GNU long option		Meaning
 -h		--help			Show this message
--X					Enable X11 forwarding"
-elif [ "\$1" = "-X" ]
-then
- # enable X11 forwarding
- ssh "\$1" "$MYUSER@$MYSERVER" "\$2"
+-*					SSH option (see man ssh)"
 else
- ssh "$MYUSER@$MYSERVER" "\$1"
+ ssh "\$option" "$MYUSER@$MYSERVER" "\$command"
 fi
 }
 
@@ -95,8 +100,11 @@ else
  if [ \$status -eq 2 ]
  then
   # start ssh-agent if not started
-  echo "It appears your ssh-agent does not start automatically.
-Put \"eval \\\$(ssh-agent); ssh-add;\" in your ~/.*rc file to fix"
+  echo "It appears your ssh-agent does not start automatically. Put 
+
+  eval \\\$(ssh-agent); ssh-add;
+
+in your ~/.*rc file to fix"
   eval \$(ssh-agent)
   ssh-add -L
   local status=\$?
@@ -144,7 +152,9 @@ then
 else
  local file="\$1"
  local dest="\$2"
+ local option="\$3"
 fi
+
 if [ -z "\$dest" ]
 then
  local dest="$MYSCPDIR/\$file"
@@ -161,10 +171,11 @@ then
  echo "Usage: $MYCONNECTION-push [OPTION] [file] [destination]
 Push file to destination \(default $MYSCPDIR/\) at $MYSERVER
 Option		GNU long option		Meaning
--h		--help			Show this message"
+-h		--help			Show this message
+-*					SCP option (see man scp)"
 elif [ -e "\$file" ]
 then
- scp "\$file" "$MYUSER@$MYSERVER:\$dest"
+ scp \$option "\$file" "$MYUSER@$MYSERVER:\$dest"
 fi
 }
 
@@ -175,10 +186,11 @@ if [[ "\$1" = -* ]]
 then
  local option="\$1"
  local file="\$2"
- local destination="\$3"
+ local dest="\$3"
 else
  local file="\$1"
  local dest="\$2"
+ local option="\$3"
 fi
 
 if [[ "\$file" = /* ]]
@@ -200,9 +212,10 @@ then
  echo "Usage: $MYCONNECTION-pull [OPTION] [file] [destination]
 Pull file from $MYSCPDIR/ at $MYSERVER
 Option		GNU long option		Meaning
--h		--help			Show this message"
+-h		--help			Show this message
+-*					SCP option (see man scp)"
 else
-  scp "$MYUSER@$MYSERVER:\$file" "\$dest"
+  scp \$option "$MYUSER@$MYSERVER:\$file" "\$dest"
 fi
 }
 TEMPLATE

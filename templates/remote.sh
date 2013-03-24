@@ -78,7 +78,7 @@ Option		GNU long option		Meaning
 -h		--help			Show this message
 -*					SSH option (see man ssh)"
 else
- ssh "\$option" "$MYUSER@$MYSERVER" "\$command"
+ ssh \$option "$MYUSER@$MYSERVER" "\$command"
 fi
 }
 

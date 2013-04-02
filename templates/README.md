@@ -2,7 +2,17 @@
 
 **patterns-shell/templates** - Code generators for shell patterns
 
-If you wish to use a template, you should source its *.sh file.
+If you wish to use a template, you should source its \*.sh file.
+
+## autoscreen
+### template-autoscreen
+Usage: **template-autoscreen** [hostname]  
+Output code to automatically start a GNU screen  
+session without inception.  
+Optionally, check whether hostname = HOSTNAME  
+before starting.  
+  * $1 hostname (useful for clusters where you  
+    only want the screen specific gateways)
 
 ## pgdb
 ### template-db

@@ -17,6 +17,7 @@ Then you can easily get updates with
 ## Patterns
 
 ### Scripts
+* *history* - persistent shell history with advanced search
 * *untar* - untar and unzip archives
 
 For detailed descriptions of these scripts,  

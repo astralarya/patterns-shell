@@ -124,9 +124,9 @@ fi
 local MYDB=$1
 local MYSUPERUSER=$2
 local MYBACKUPDIR=$3
-if [ "$3" ]
+if [ "$4" ]
 then
- local MYFUNC=$3
+ local MYFUNC=$4
 else
  local MYFUNC=${MYDB}backup
 fi

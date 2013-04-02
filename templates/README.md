@@ -14,6 +14,13 @@ before starting.
   * $1 hostname (useful for clusters where you  
     only want the screen specific gateways)
 
+Source the output of this function at the very **END** of your .\*rc file.
+
+When you start your shell, you will be notified that you are about to enter
+a screen session (^C to cancel).  When your screen session ends, you will be
+notified that your shell will exit (^C to cancel).
+
+
 ## pgdb
 ### template-db
 Usage: **template-db** *name* *user* [funcname]  

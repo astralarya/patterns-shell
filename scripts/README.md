@@ -2,15 +2,6 @@
 
 **patterns-shell/scripts** - Scripts for common shell tasks
 
-## autoscreen
-Automatically start a GNU screen session without inception
-
-Source `autoscreen.sh` at the very **END** of your .*rc file.
-
-When you start your shell, you will be notified that you are about to enter
-a screen session (^C to cancel).  When your screen session ends, you will be
-notified that your shell will exit (^C to cancel).
-
 ## untar
 Untar and unzip archives
 

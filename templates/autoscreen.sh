@@ -37,13 +37,13 @@ fi
 
 if [ "$1" ]
 then
- local MYTEST="\"\$(hostname)\" = $1 -a"
+ local MYTEST="\"\$(hostname)\" = $1 &&"
 else
  local MYTEST=""
 fi
 
 cat << TEMPLATE
-if [[ $MYTEST -z "\$STY" -a "\$TERM" != "dumb" ]]
+if [[ $MYTEST -z "\$STY" && "\$TERM" != "dumb" ]]
 then
  echo "Starting screen. ^C to cancel..."
  sleep 2

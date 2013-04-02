@@ -54,7 +54,7 @@ see `templates/README.md`
 
 patterns-shell
 
-Copyright (C) 2013  Mara Kim
+Copyright (C) 2013  Mara Kim, Kris McGary
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

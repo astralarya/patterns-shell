@@ -9,8 +9,7 @@ If you wish to use a template, you should source its \*.sh file.
 Usage: **template-autoscreen** [hostname]  
 Output code to automatically start a GNU screen session without inception.  
 Optionally, check whether hostname = HOSTNAME before starting.  
-  * $1 hostname (useful for clusters where you  
-    only want the screen on specific gateways)
+  * $1 hostname guard pattern (useful for clusters where you only want the screen on specific gateways)
 
 Source the output of this function at the very **END** of your .\*rc file.
 

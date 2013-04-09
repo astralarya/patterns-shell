@@ -214,23 +214,65 @@ scp \$option \$file "$MYUSER@$MYSERVER:\$dest"
 
 # SCP pull function
 function $MYCONNECTION-pull {
-if [[ "\$1" = -* ]]
+local file
+local option
+local dest
+local state
+local good="good"
+for arg in "\$@"
+do
+ if [ "\$state" = "file" ]
+ then
+  if [[ "\$arg" = /* ]]
+  then
+   local file="\$file $MYUSER@$MYSERVER:\$arg"
+  else
+   local file="\$file $MYUSER@$MYSERVER:$MYSCPDIR/\$arg"
+  fi
+ elif [ "\$state" = "dest" ]
+ then
+  if [ -d "\$arg" ]
+  then
+   dest="\$arg"
+  else
+   good="bad"
+  fi
+  state=""
+ elif [ "\$arg" = "-h" -o "\$arg" = "--help" ]
+ then
+  # show help
+  echo "Usage: $MYCONNECTION-push [OPTION] [file]...
+Pull files from $MYSERVER. Relative paths resolve from $MYSCPDIR.
+Option		GNU long option		Meaning
+-h		--help			Show this message
+-d		--destination		Specify the local destination
+-*					SCP option (see man scp)"
+  return 0
+ elif [ "\$arg" = "-d" -o "\$arg" = "--destination" ]
+ then
+  state="dest"
+ elif [ "\$arg" = "--" ]
+ then
+  state="file"
+ elif [[ "\$arg" = "-*" ]]
+ then
+  option="\$option \$arg"
+ else
+  if [[ "\$arg" = /* ]]
+  then
+   local file="\$file $MYUSER@$MYSERVER:\$arg"
+  else
+   local file="\$file $MYUSER@$MYSERVER:$MYSCPDIR/\$arg"
+  fi
+ fi
+done
+
+if [ "\$good" != "good" ]
 then
- local option="\$1"
- local file="\$2"
- local dest="\$3"
-else
- local file="\$1"
- local dest="\$2"
- local option="\$3"
+ echo "Abort"
+ return 1
 fi
 
-if [[ "\$file" = /* ]]
-then
- local file="\$file"
-else
- local file="$MYSCPDIR/\$file"
-fi
 if [ -z "\$dest" ]
 then
  local dest="."
@@ -238,17 +280,7 @@ else
  local dest="\$dest"
 fi
 
-if [ "\$option" = "-h" -o "\$option" = "--help" ]
-then
- # show help
- echo "Usage: $MYCONNECTION-pull [OPTION] [file] [destination]
-Pull file from $MYSCPDIR/ at $MYSERVER
-Option		GNU long option		Meaning
--h		--help			Show this message
--*					SCP option (see man scp)"
-else
-  scp \$option "$MYUSER@$MYSERVER:\$file" "\$dest"
-fi
+scp \$option \$file "\$dest"
 }
 TEMPLATE
 } # function template-remote

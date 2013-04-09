@@ -34,8 +34,8 @@
 # ex.
 # source <(template-remote "myconnection" "myserver" "myuser" "myscpdir")
 # * myconnection [OPTION] [command]
-# * myconnection-push [OPTION] [file]
-# * myconnection-pull [OPTION] [file]
+# * myconnection-push [OPTION] [file]...
+# * myconnection-pull [OPTION] [file]...
 function template-remote {
 
 if [ "$1" = "-h" -o "$1" = "--help" ]
@@ -168,10 +168,10 @@ do
  then
   # show help
   echo "Usage: $MYCONNECTION-push [OPTION] [file]...
-Push file to destination \(default $MYSCPDIR/\) at $MYSERVER
+Push file to remote directory (default $MYSCPDIR/) on $MYSERVER as $MYUSER
 Option		GNU long option		Meaning
 -h		--help			Show this message
--d		--destination		Specify the remote destination
+-d		--destination		Specify the remote destination (absolute or relative to $MYSCPDIR/)
 -*					SCP option (see man scp)"
   return 0
  elif [ "\$arg" = "-d" -o "\$arg" = "--destination" ]
@@ -235,6 +235,7 @@ do
   then
    dest="\$arg"
   else
+   echo "Bad destination: \$arg"
    good="bad"
   fi
   state=""
@@ -242,7 +243,7 @@ do
  then
   # show help
   echo "Usage: $MYCONNECTION-push [OPTION] [file]...
-Pull files from $MYSERVER. Relative paths resolve from $MYSCPDIR.
+Pull files from $MYSERVER as $MYUSER. Relative remote paths resolve from $MYSCPDIR/.
 Option		GNU long option		Meaning
 -h		--help			Show this message
 -d		--destination		Specify the local destination

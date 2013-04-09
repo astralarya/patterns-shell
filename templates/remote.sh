@@ -172,6 +172,7 @@ Push file to remote directory (default $MYSCPDIR/) on $MYSERVER as $MYUSER
 Option		GNU long option		Meaning
 -h		--help			Show this message
 -d		--destination		Specify the remote destination (absolute or relative to $MYSCPDIR/)
+--					Treat all following arguments as files
 -*					SCP option (see man scp)"
   return 0
  elif [ "\$arg" = "-d" -o "\$arg" = "--destination" ]
@@ -247,6 +248,7 @@ Pull files from $MYSERVER as $MYUSER. Relative remote paths resolve from $MYSCPD
 Option		GNU long option		Meaning
 -h		--help			Show this message
 -d		--destination		Specify the local destination
+--					Treat all following arguments as files
 -*					SCP option (see man scp)"
   return 0
  elif [ "\$arg" = "-d" -o "\$arg" = "--destination" ]

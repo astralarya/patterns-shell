@@ -144,20 +144,63 @@ fi
 
 # SCP push function
 function $MYCONNECTION-push {
-if [[ "\$1" = "-*" ]]
+local file
+local option
+local dest
+local state
+local good="good"
+for arg in "\$@"
+do
+ if [ "\$state" = "file" ]
+ then
+  if [ -e "\$arg" ]
+  then
+   file="\$file \$arg"
+  else
+   echo "Cannot find file: \$arg"
+   good="bad"
+  fi
+ elif [ "\$state" = "dest" ]
+ then
+  dest="\$arg"
+  state=""
+ elif [ "\$arg" = "-h" -o "\$arg" = "--help" ]
+ then
+  # show help
+  echo "Usage: $MYCONNECTION-push [OPTION] [file]...
+Push file to destination \(default $MYSCPDIR/\) at $MYSERVER
+Option		GNU long option		Meaning
+-h		--help			Show this message
+-d		--destination		Specify the remote destination
+-*					SCP option (see man scp)"
+  return 0
+ elif [ "\$arg" = "-d" -o "\$arg" = "--destination" ]
+ then
+  state="dest"
+ elif [ "\$arg" = "--" ]
+ then
+  state="file"
+ elif [[ "\$arg" = "-*" ]]
+ then
+  option="\$option \$arg"
+ elif [ -e "\$arg" ]
+ then
+  file="\$file \$arg"
+ else
+  echo "Cannot find file: \$arg"
+  good="bad"
+ fi
+done
+
+if [ "\$good" != "good" ]
 then
- local option="\$1"
- local file="\$2"
- local destination="\$3"
-else
- local file="\$1"
- local dest="\$2"
- local option="\$3"
+ echo "Abort"
+ return 1
 fi
 
 if [ -z "\$dest" ]
 then
- local dest="$MYSCPDIR/\$file"
+ local dest="$MYSCPDIR/"
 elif [[ "\$dest" = /* ]]
 then
  local dest="\$dest"
@@ -165,18 +208,7 @@ else
  local dest="$MYSCPDIR/\$dest"
 fi
 
-if [ "\$option" = "-h" -o "\$option" = "--help" ]
-then
- # show help
- echo "Usage: $MYCONNECTION-push [OPTION] [file] [destination]
-Push file to destination \(default $MYSCPDIR/\) at $MYSERVER
-Option		GNU long option		Meaning
--h		--help			Show this message
--*					SCP option (see man scp)"
-elif [ -e "\$file" ]
-then
- scp \$option "\$file" "$MYUSER@$MYSERVER:\$dest"
-fi
+scp \$option \$file "$MYUSER@$MYSERVER:\$dest"
 }
 
 

@@ -30,6 +30,8 @@ else
 fi
 }
 
+# Change to directory or directory containing
+# search results
 function seekto {
 if [ "$1" ]
 then

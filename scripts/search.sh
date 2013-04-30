@@ -21,7 +21,7 @@
 # Source this file in your shell's .*rc file
 
 # search using find
-function search {
+function seek {
 if [ "$1" ]
 then
     find . -name "$1*"
@@ -30,7 +30,7 @@ else
 fi
 }
 
-function searchto {
+function seekto {
 if [ "$1" ]
 then
     local targets

@@ -30,7 +30,7 @@ else
 fi
 }
 
-function goto {
+function searchto {
 if [ "$1" ]
 then
     local targets
@@ -42,15 +42,32 @@ then
     if [ "${#targets[@]}" -lt 1 ]
     then
         printf 'Not found: %b\n' "$1"
-    elif [ "${#targets[@]}" -gt 1 ]
-    then
-        printf '%b\n' "${targets[@]}"
     else
+        local good="good"
         if [ -f "$targets" ]
         then
-            targets="$(dirname "$targets")"
+            target="$(dirname "$targets")"
+        else
+            target="$targets"
         fi
-        cd "$targets"
+        for i in "${targets[@]}"
+        do
+            if [ -f "$i" ]
+            then
+                i="$(dirname "$i")"
+            fi
+            if [ "$target" != "$i" ]
+            then
+                good="bad"
+                break
+            fi
+        done
+        if [ "$good" = "good" ]
+        then
+            cd "$target"
+        else
+            printf '%b\n' "${targets[@]}"
+        fi
     fi
 fi
 }

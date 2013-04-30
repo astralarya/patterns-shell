@@ -1,5 +1,5 @@
-# search
-# Search directories
+# seek
+# Search directories for file
 #
 # Copyright (C) 2013 Mara Kim, Kris McGary
 #

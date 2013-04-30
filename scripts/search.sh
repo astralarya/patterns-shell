@@ -22,10 +22,35 @@
 
 # search using find
 function search {
-if [ $1 ]
+if [ "$1" ]
 then
-    find $PWD -name "$1"
+    find . -name "$1*"
 else
-    find $PWD
+    find .
+fi
+}
+
+function goto {
+if [ "$1" ]
+then
+    local targets
+    local target
+    while read -r -d '' target
+    do
+        targets+=( "$target" )
+    done < <(\find "$PWD" -name "$1*" -print0)
+    if [ "${#targets[@]}" -lt 1 ]
+    then
+        printf 'Not found: %b\n' "$1"
+    elif [ "${#targets[@]}" -gt 1 ]
+    then
+        printf '%b\n' "${targets[@]}"
+    else
+        if [ -f "$targets" ]
+        then
+            targets="$(dirname "$targets")"
+        fi
+        cd "$targets"
+    fi
 fi
 }

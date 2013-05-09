@@ -116,7 +116,7 @@ then
   fullname="\${fullname%.tar.gz}"
   mkdir -p "\$fullname";
   tar -zxvf "\$1"*.tar.gz -C "\$fullname"/; 
-  ln -s "\$fullname" "\$1"
+  ln -s "\$fullname/" "\$1"
   cd "\$1"
   make
 else

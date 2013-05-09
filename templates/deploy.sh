@@ -61,6 +61,15 @@ then
  $MYSERVER-push "\$name"*.tar.gz
  $MYSERVER "$MYREMOTEFUNC \$name" 
 fi }
+
+function $MYFUNC-full {
+local name="\$(make name | tail -1)"
+make tar;
+if [ -e "\$name"*.tar.gz ]
+then
+ $MYSERVER-push "\$name"*.tar.gz
+ $MYSERVER "$MYREMOTEFUNC-full \$name" 
+fi }
 TEMPLATE
 } # function template-deploy-client
 

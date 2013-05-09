@@ -29,10 +29,11 @@ function template-deploy-client {
 if [ "$1" = "-h" -o "$1" = "--help" ]
 then
  echo "Usage: template-deploy-client [server] [FUNCNAME] [REMOTEFUNC]
-Output code for a function named [FUNCNAME] (default deploy)
+Output code for two functions named [FUNCNAME] (default deploy) and [FUNCNAME]-full
 to find the name of a makefile project (via make name) and
 create a tarball of the project (via make tar) and copy to [server]
-(via [server]-push) and then call [REMOTEFUNC] (default [FUNCNAME]).
+(via [server]-push) and then call [REMOTEFUNC] (default [FUNCNAME])
+or [REMOTEFUNC]-full for [FUNCNAME]-full.
 Option		GNU long option		Meaning
 -h		--help			Show this message"
  return 0

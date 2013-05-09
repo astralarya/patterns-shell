@@ -25,14 +25,14 @@
 # to create your functions
 # See README.md for more info
 
-# TODO
 function template-deploy-client {
 if [ "$1" = "-h" -o "$1" = "--help" ]
 then
  echo "Usage: template-deploy-client [server] [FUNCNAME] [REMOTEFUNC]
 Output code for a function named [FUNCNAME] (default deploy)
-to copy a tarball of the project to [server] and then
-call [REMOTEFUNC] (default [FUNCNAME]).
+to find the name of a makefile project (via make name) and
+create a tarball of the project (via make tar) and copy to [server]
+(via [server]-push) and then call [REMOTEFUNC] (default [FUNCNAME]).
 Option		GNU long option		Meaning
 -h		--help			Show this message"
  return 0
@@ -63,3 +63,45 @@ then
 fi }
 TEMPLATE
 } # function template-deploy-client
+
+function template-deploy-server {
+if [ "$1" = "-h" -o "$1" = "--help" ]
+then
+ echo "Usage: template-deploy-server [bindir] [scpdir] [FUNCNAME]
+Output code for a function named [FUNCNAME] (default deploy)
+to deploy a program tarball located in [scpdir] (default ~/scp)
+to [bindir], overwriting any previous deployment. It then builds
+and links a stable name to deployed program.
+Option		GNU long option		Meaning
+-h		--help			Show this message"
+ return 0
+fi
+
+local MYBINDIR="$1"
+if [ "$2" ]
+then
+ local MYSCPDIR="$2"
+else
+ local MYSCPDIR="~/scp"
+fi
+if [ "$3" ]
+then
+ local MYFUNC="$3"
+else
+ local MYFUNC="deploy"
+fi
+
+cat << TEMPLATE
+function $MYFUNC {
+if [ "\$1" -a -a $MYSCPDIR/"\$1"*.tar.gz ]
+then
+  cd $MYBINDIR
+  rm -r "\$1"*
+  mv $MYSCPDIR/"\$1"*.tar.gz .
+  untar "\$1"*.tar.gz
+  ln -s \$1*/ "\$1"
+  cd "\$1"
+  make
+fi }
+TEMPLATE
+} # function template-deploy-server

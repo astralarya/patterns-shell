@@ -77,13 +77,13 @@ TEMPLATE
 function template-deploy-server {
 if [ "$1" = "-h" -o "$1" = "--help" ]
 then
- echo "Usage: template-deploy-server [stagedir] [livedir] [scpdir] [FUNCNAME] [LIVEFUNCNAME]
+ echo "Usage: template-deploy-server [stagedir] [livedir] [scpdir] [FUNCNAME]
 Output code for two functions named [FUNCNAME] (default deploy)
-and [LIVEFUNCNAME] (default [FUNCNAME]-full).
+and [FUNCNAME]-full.
 [FUNCNAME] deploys a program tarball located in [scpdir] (default ~/scp)
 to [stagedir], overwriting any previous deployment. It then builds
 and links a stable name to deployed program.
-[LIVEFUNCNAME] calls [FUNCNAME], then copies the deployment from
+[FUNCNAME]-full calls [FUNCNAME], then copies the deployment from
 [stagedir] to [livedir].
 Option		GNU long option		Meaning
 -h		--help			Show this message"

@@ -60,7 +60,7 @@ make tar;
 if [ -e "\$name"*.tar.gz ]
 then
  $MYSERVER-push "\$name"*.tar.gz
- $MYSERVER "$MYREMOTEFUNC \$name" 
+ $MYSERVER "$MYREMOTEFUNC \"\$name\"" 
 fi }
 
 function $MYFUNC-full {
@@ -69,7 +69,7 @@ make tar;
 if [ -e "\$name"*.tar.gz ]
 then
  $MYSERVER-push "\$name"*.tar.gz
- $MYSERVER "$MYREMOTEFUNC-full \$name" 
+ $MYSERVER "$MYREMOTEFUNC-full \"\$name\"" 
 fi }
 TEMPLATE
 } # function template-deploy-client
@@ -111,11 +111,11 @@ if [ "\$1" -a -a $MYSCPDIR/"\$1"*.tar.gz ]
 then
   cd $MYSTAGEDIR
   rm -r "\$1"*
-  mv $MYSCPDIR/"\$1"*.tar.gz .
+  mv "$MYSCPDIR/\$1"*.tar.gz .
   local fullname=( \$1*.tar.gz )
   fullname="\${fullname%.tar.gz}"
   mkdir -p "\$fullname";
-  tar -zxvf "\$1"*.tar.gz -C "\$fullname"/; 
+  tar -zxvf "\$1"*.tar.gz -C "\$fullname/"; 
   ln -s "\$fullname/" "\$1"
   cd "\$1"
   make
@@ -128,8 +128,8 @@ deploy "\$1"
 local status="\$?"
 if [ "\$status" -eq 0 ]
 then
-  rm -r $MYLIVEDIR/"\$1"*
-  cp -r $MYSTAGEDIR/"\$1"* $MYLIVEDIR/
+  rm -r "$MYLIVEDIR/\$1"*
+  cp -r "$MYSTAGEDIR/\$1"* "$MYLIVEDIR/"
 fi }
 TEMPLATE
 } # function template-deploy-server

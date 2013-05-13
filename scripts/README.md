@@ -8,8 +8,8 @@ Persistent shell history with advanced search
 Source `history.sh` in your .\*rc file.
 
 Then you will have access to these three functions:
-* **hg** *pattern*
-  * Search history for *pattern*
+* **gh** [pattern]
+  * Search history for pattern
 * **dh** [pattern]
   * Show history of commands in this directory and subdirectories and optionally filter with pattern
 * **ldh** [pattern]

@@ -111,11 +111,11 @@ if [ "\$1" -a -a $MYSCPDIR/"\$1"*.tar.gz ]
 then
   cd $MYSTAGEDIR
   rm -r "\$1"*
-  mv "$MYSCPDIR/\$1"*.tar.gz .
-  local fullname=( \$1*.tar.gz )
-  fullname="\${fullname%.tar.gz}"
+  mv $MYSCPDIR/"\$1"*.tar.gz .
+  local archive=( \$MYSCPDIR/"$1"*.tar.gz )
+  fullname="\${archive%.tar.gz}"
   mkdir -p "\$fullname";
-  tar -zxvf "\$1"*.tar.gz -C "\$fullname/"; 
+  tar -zxvf "\$archive" -C "\$fullname/"; 
   ln -s "\$fullname/" "\$1"
   cd "\$1"
   make

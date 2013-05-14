@@ -112,9 +112,9 @@ then
   cd $MYSTAGEDIR
   rm -r "\$1"*
   mv $MYSCPDIR/"\$1"*.tar.gz .
-  mkdir -p "\$fullname";
   local archive=( "\$1"*.tar.gz )
   local fullname="\${archive%.tar.gz}"
+  mkdir -p "\$fullname";
   tar -zxvf "\$archive" -C "\$fullname/"; 
   ln -s "\$fullname/" "\$1"
   cd "\$1"

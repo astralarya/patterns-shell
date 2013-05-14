@@ -128,8 +128,8 @@ deploy "\$1"
 local status="\$?"
 if [ "\$status" -eq 0 ]
 then
-  rm -r "$MYLIVEDIR/\$1"*
-  cp -r "$MYSTAGEDIR/\$1"* "$MYLIVEDIR/"
+  rm -r $MYLIVEDIR/"\$1"*
+  cp -r $MYSTAGEDIR/"\$1"* "$MYLIVEDIR/"
 fi }
 TEMPLATE
 } # function template-deploy-server

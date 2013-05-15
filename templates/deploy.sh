@@ -128,9 +128,7 @@ else
 fi }
 
 function $MYFUNC-full {
-deploy "\$1"
-local status="\$?"
-if [ "\$status" -eq 0 ]
+if deploy "\$1"
 then
   rm -r $MYLIVEDIR/"\$1"*
   cp -r $MYSTAGEDIR/"\$1"* "$MYLIVEDIR/"

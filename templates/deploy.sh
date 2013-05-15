@@ -60,7 +60,8 @@ local status="\$?"
 if [ "\$status" -eq 0 ]
 then
  make tar;
- if [ -e "\$name"*.tar.gz ]
+ status="\$?"
+ if [ "\$status" -eq 0 -a -e "\$name"*.tar.gz ]
  then
   $MYSERVER-push "\$name"*.tar.gz
   $MYSERVER "$MYREMOTEFUNC \"\$name\"" 
@@ -73,7 +74,8 @@ local status="\$?"
 if [ "\$status" -eq 0 ]
 then
  make tar;
- if [ -e "\$name"*.tar.gz ]
+ status="\$?"
+ if [ "\$status" -eq 0 -a -e "\$name"*.tar.gz ]
  then
   $MYSERVER-push "\$name"*.tar.gz
   $MYSERVER "$MYREMOTEFUNC-full \"\$name\"" 

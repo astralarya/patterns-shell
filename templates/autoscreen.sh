@@ -37,7 +37,7 @@ fi
 
 if [ "$1" ]
 then
- local MYTEST="\"\$(hostname)\" = $1 &&"
+ local MYTEST="\"\$HOSTNAME\" = $1 &&"
 else
  local MYTEST=""
 fi

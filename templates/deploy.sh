@@ -128,7 +128,7 @@ then
   tar -zxvf "\$archive" -C "\$fullname/"; 
   ln -s "\$fullname/" "\$1"
   cd "\$1"
-  make
+  make || return 1
 else
   return 1
 fi }

@@ -186,7 +186,7 @@ Option		GNU long option		Meaning
  elif [ "\$arg" = "--" ]
  then
   state="file"
- elif [[ "\$arg" = "-*" ]]
+ elif [[ "\$arg" = -* ]]
  then
   option="\$option \$arg"
  elif [ -e "\$arg" ]
@@ -262,7 +262,7 @@ Option		GNU long option		Meaning
  elif [ "\$arg" = "--" ]
  then
   state="file"
- elif [[ "\$arg" = "-*" ]]
+ elif [[ "\$arg" = -* ]]
  then
   option="\$option \$arg"
  else

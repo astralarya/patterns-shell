@@ -56,20 +56,28 @@ fi
 cat << TEMPLATE
 function $MYFUNC {
 local name="\$(make name | tail -1)"
-make tar;
-if [ -e "\$name"*.tar.gz ]
+local status="\$?"
+if [ "\$?" -eq 0 ]
 then
- $MYSERVER-push "\$name"*.tar.gz
- $MYSERVER "$MYREMOTEFUNC \"\$name\"" 
+ make tar;
+ if [ -e "\$name"*.tar.gz ]
+ then
+  $MYSERVER-push "\$name"*.tar.gz
+  $MYSERVER "$MYREMOTEFUNC \"\$name\"" 
+ fi
 fi }
 
 function $MYFUNC-full {
 local name="\$(make name | tail -1)"
-make tar;
-if [ -e "\$name"*.tar.gz ]
+local status="\$?"
+if [ "\$?" -eq 0 ]
 then
- $MYSERVER-push "\$name"*.tar.gz
- $MYSERVER "$MYREMOTEFUNC-full \"\$name\"" 
+ make tar;
+ if [ -e "\$name"*.tar.gz ]
+ then
+  $MYSERVER-push "\$name"*.tar.gz
+  $MYSERVER "$MYREMOTEFUNC-full \"\$name\"" 
+ fi
 fi }
 TEMPLATE
 } # function template-deploy-client

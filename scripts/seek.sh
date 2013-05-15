@@ -24,9 +24,9 @@
 function seek {
 if [ "$1" ]
 then
-    find . -name "$1*"
+    \find . -name "$1*"
 else
-    find .
+    \find .
 fi
 }
 
@@ -37,18 +37,18 @@ if [ "$1" ]
 then
     local targets
     local target
-    while read -r -d '' target
+    while \read -r -d '' target
     do
         targets+=( "$target" )
     done < <(\find "$PWD" -name "$1*" -print0)
     if [ "${#targets[@]}" -lt 1 ]
     then
-        printf 'Not found: %b\n' "$1"
+        \printf 'Not found: %b\n' "$1"
     else
         local good="good"
         if [ -f "$targets" ]
         then
-            target="$(dirname "$targets")"
+            target="$(\dirname "$targets")"
         else
             target="$targets"
         fi
@@ -56,7 +56,7 @@ then
         do
             if [ -f "$i" ]
             then
-                i="$(dirname "$i")"
+                i="$(\dirname "$i")"
             fi
             if [ "$target" != "$i" ]
             then
@@ -66,9 +66,9 @@ then
         done
         if [ "$good" = "good" ]
         then
-            cd "$target"
+            \cd "$target"
         else
-            printf '%b\n' "${targets[@]}"
+            \printf '%b\n' "${targets[@]}"
         fi
     fi
 fi

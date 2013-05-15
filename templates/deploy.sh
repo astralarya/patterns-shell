@@ -111,18 +111,17 @@ fi
 
 cat << TEMPLATE
 function $MYFUNC {
-if [ "\$1" -a -a $MYSCPDIR/"\$1"*.tar.gz ]
+if [ "\$1" -a -a $MYSCPDIR/"\$1"*.tar.gz ] && cd $MYSTAGEDIR
 then
-  cd $MYSTAGEDIR
   rm -r "\$1"*
   mv $MYSCPDIR/"\$1"*.tar.gz .
   local archive=( "\$1"*.tar.gz )
   local fullname="\${archive%.tar.gz}"
-  mkdir -p "\$fullname";
-  tar -zxvf "\$archive" -C "\$fullname/"; 
-  ln -s "\$fullname/" "\$1"
-  cd "\$1"
-  make || return 1
+  mkdir -p "\$fullname" &&
+  tar -zxvf "\$archive" -C "\$fullname/" &&
+  ln -s "\$fullname/" "\$1" &&
+  cd "\$1" &&
+  make && return 0 || return 1
 else
   return 1
 fi }

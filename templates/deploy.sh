@@ -55,13 +55,11 @@ fi
 
 cat << TEMPLATE
 function $MYFUNC {
-local name="\$(make name | tail -1)"
+local name="\$(make -s name)"
 local status="\$?"
 if [ "\$status" -eq 0 ]
 then
- make tar;
- status="\$?"
- if [ "\$status" -eq 0 -a -e "\$name"*.tar.gz ]
+ if make tar && [ -e "\$name"*.tar.gz ]
  then
   $MYSERVER-push "\$name"*.tar.gz
   $MYSERVER "$MYREMOTEFUNC \"\$name\"" 
@@ -69,13 +67,11 @@ then
 fi }
 
 function $MYFUNC-full {
-local name="\$(make name | tail -1)"
+local name="\$(make -s name)"
 local status="\$?"
 if [ "\$status" -eq 0 ]
 then
- make tar;
- status="\$?"
- if [ "\$status" -eq 0 -a -e "\$name"*.tar.gz ]
+ if make tar && [ -e "\$name"*.tar.gz ]
  then
   $MYSERVER-push "\$name"*.tar.gz
   $MYSERVER "$MYREMOTEFUNC-full \"\$name\"" 

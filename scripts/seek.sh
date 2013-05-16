@@ -40,7 +40,7 @@ function seek {
         then
             \printf 'Usage: seek [OPTION] [PATTERN]
 Search the current directory and any children for files matching PATTERN
-Option		Meaning
+  Option	Meaning
   -cd, -to, -	Change to the directory containing search results if unambiguous
   -h		Show help
 '

@@ -24,7 +24,7 @@
 function seek {
 if [ "$1" ]
 then
-    \find . -name "$1*"
+    \find . -wholename "*$1*"
 else
     \find .
 fi
@@ -40,7 +40,7 @@ then
     while \read -r -d '' target
     do
         targets+=( "$target" )
-    done < <(\find "$PWD" -name "$1*" -print0)
+    done < <(\find "$PWD" -wholename "*$1*" -print0)
     if [ "${#targets[@]}" -lt 1 ]
     then
         \printf 'Not found: %b\n' "$1"

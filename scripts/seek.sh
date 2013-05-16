@@ -77,7 +77,7 @@ Search the current directory and any children for files matching PATTERN
         while \read -r -d '' target
         do
             targets+=( "$target" )
-        done < <(\find "$PWD" "${input[@]}" -print0)
+        done < <(\find . "${input[@]}" -print0)
         if [ "${#targets[@]}" -lt 1 ]
         then
             \printf 'Not found: %b\n' "${rawinput[@]}"

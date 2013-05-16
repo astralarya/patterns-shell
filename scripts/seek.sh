@@ -56,7 +56,10 @@ Option		Meaning
         fi
     done
 
-    if [ "$option" = "-to" -o "$option" = "-cd" -o "$option" = "-" ]
+    if [ -z "$input" ]
+    then
+        \find .
+    elif [ "$option" = "-to" -o "$option" = "-cd" -o "$option" = "-" ]
     then
         local targets
         local target
@@ -94,11 +97,8 @@ Option		Meaning
                 \printf '%b\n' "${targets[@]}"
             fi
         fi
-    elif [ "$input" ]
-    then
-        \find . -wholename "*$input*"
     else
-        \find .
+        \find . -wholename "*$input*"
     fi
 }
 

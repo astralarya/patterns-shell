@@ -33,7 +33,7 @@ function seek {
     do
         if [ "$state" = "input" ]
         then
-            input+=("$appender" "-wholename" "*$arg*")
+            input+=("$appender" -wholename "*$arg*")
             rawinput+=("$arg")
             appender='-o'
         elif [ "$arg" = "-h" -o "$arg" = "--help" ]
@@ -57,7 +57,7 @@ Search the current directory and any children for files matching PATTERN
                 \printf 'Ignored option: %q\n' "$arg"
             fi
         else
-            input+=("$appender" "-wholename" "*$arg*")
+            input+=("$appender" -wholename "*$arg*")
             rawinput+=("$arg")
             appender='-o'
         fi

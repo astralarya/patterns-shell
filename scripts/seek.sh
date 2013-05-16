@@ -25,12 +25,17 @@ function seek {
     # read arguments
     local option
     local input
+    local rawinput
     local state
+    local appender
+    appender='('
     for arg in "$@"
     do
         if [ "$state" = "input" ]
         then
-            input+=("$arg")
+            input+=("$appender" "-wholename" "*$arg*")
+            rawinput+=("$arg")
+            appender='-o'
         elif [ "$arg" = "-h" -o "$arg" = "--help" ]
         then
             \printf 'Usage: seek [OPTION] [PATTERN]
@@ -52,24 +57,30 @@ Option		Meaning
                 \printf 'Ignored option: %q\n' "$arg"
             fi
         else
-            input+=("$arg")
+            input+=("$appender" "-wholename" "*$arg*")
+            rawinput+=("$arg")
+            appender='-o'
         fi
     done
 
     if [ -z "$input" ]
     then
         \find .
-    elif [ "$option" = "-to" -o "$option" = "-cd" -o "$option" = "-" ]
+        return 0
+    fi
+    input+=( ')' )
+
+    if [ "$option" = "-to" -o "$option" = "-cd" -o "$option" = "-" ]
     then
         local targets
         local target
         while \read -r -d '' target
         do
             targets+=( "$target" )
-        done < <(\find "$PWD" -wholename "*$input*" -print0)
+        done < <(\find "$PWD" "${input[@]}" -print0)
         if [ "${#targets[@]}" -lt 1 ]
         then
-            \printf 'Not found: %b\n' "$input"
+            \printf 'Not found: %b\n' "${rawinput[@]}"
         else
             local good="good"
             if [ -f "$targets" ]
@@ -98,7 +109,7 @@ Option		Meaning
             fi
         fi
     else
-        \find . -wholename "*$input*"
+        \find . "${input[@]}"
     fi
 }
 

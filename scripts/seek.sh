@@ -22,54 +22,83 @@
 
 # search using find
 function seek {
-if [ "$1" ]
-then
-    \find . -wholename "*$1*"
-else
-    \find .
-fi
+    # read arguments
+    local option
+    local input
+    local state
+    for arg in "$@"
+    do
+        if [ "$state" = "input" ]
+        then
+            input+=("$arg")
+        elif [ "$arg" = "-h" -o "$arg" = "--help" ]
+        then
+            \printf 'Usage: seek [OPTION] [PATTERN]
+Search the current directory and any children for files matching PATTERN
+Option		Meaning
+  -cd, -to, -	Change to the directory containing search results if unambiguous
+  -h		Show help
+'
+            return 0
+        elif [ "$arg" = "--" ]
+        then
+            state="input"
+        elif [ -z "${arg/-*/}" ]
+        then
+            if [ ! "$option" ]
+            then
+                option="$arg"
+            else
+                \printf 'Ignored option: %q\n' "$arg"
+            fi
+        else
+            input+=("$arg")
+        fi
+    done
+
+    if [ "$option" = "-to" -o "$option" = "-cd" -o "$option" = "-" ]
+    then
+        local targets
+        local target
+        while \read -r -d '' target
+        do
+            targets+=( "$target" )
+        done < <(\find "$PWD" -wholename "*$input*" -print0)
+        if [ "${#targets[@]}" -lt 1 ]
+        then
+            \printf 'Not found: %b\n' "$input"
+        else
+            local good="good"
+            if [ -f "$targets" ]
+            then
+                target="$(\dirname "$targets")"
+            else
+                target="$targets"
+            fi
+            for i in "${targets[@]}"
+            do
+                if [ -f "$i" ]
+                then
+                    i="$(\dirname "$i")"
+                fi
+                if [ "$target" != "$i" ]
+                then
+                    good="bad"
+                    break
+                fi
+            done
+            if [ "$good" = "good" ]
+            then
+                \cd "$target"
+            else
+                \printf '%b\n' "${targets[@]}"
+            fi
+        fi
+    elif [ "$input" ]
+    then
+        \find . -wholename "*$input*"
+    else
+        \find .
+    fi
 }
 
-# Change to directory or directory containing
-# search results
-function seekto {
-if [ "$1" ]
-then
-    local targets
-    local target
-    while \read -r -d '' target
-    do
-        targets+=( "$target" )
-    done < <(\find "$PWD" -wholename "*$1*" -print0)
-    if [ "${#targets[@]}" -lt 1 ]
-    then
-        \printf 'Not found: %b\n' "$1"
-    else
-        local good="good"
-        if [ -f "$targets" ]
-        then
-            target="$(\dirname "$targets")"
-        else
-            target="$targets"
-        fi
-        for i in "${targets[@]}"
-        do
-            if [ -f "$i" ]
-            then
-                i="$(\dirname "$i")"
-            fi
-            if [ "$target" != "$i" ]
-            then
-                good="bad"
-                break
-            fi
-        done
-        if [ "$good" = "good" ]
-        then
-            \cd "$target"
-        else
-            \printf '%b\n' "${targets[@]}"
-        fi
-    fi
-fi
-}

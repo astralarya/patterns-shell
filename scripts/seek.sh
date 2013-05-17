@@ -77,10 +77,10 @@ Patterns automatically wildcard slashes (ie. / = */* )
         return 0
     fi
 
-    # search with parameters
     input+=( ')' )
     if [ "$op_cd" ]
     then
+        # find lowest unambiguous subdiretory containing all matches
         local targets
         local target
         while \read -r -d '' target
@@ -113,6 +113,7 @@ Patterns automatically wildcard slashes (ie. / = */* )
             \printf '%b\n' "${targets[@]}"
         fi
     else
+        # search with parameters
         \find $preoption "$PWD" "${input[@]}" "${option[@]}"
     fi
 }

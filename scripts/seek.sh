@@ -104,13 +104,19 @@ Patterns automatically wildcard slashes (ie. / = */* )
                 target="${target#$trimmer}"
             done
             local filter
-            filter="${targets[@]##$finder$trimmer}"
+            filter="${targets[@]#$targets}"
             if [ -z "$target" -a -d "$finder$trimmer" -a -z "$(\printf '%b' "${filter##/*}")" ]
             then
                 finder+="$trimmer"
             fi
-            \cd -- "$finder"
+
             \printf '%b\n' "${targets[@]}"
+            if [ "$(\readlink -e -- "$finder")" != "$(\readlink -e -- "$PWD")" ]
+            then
+                \cd -- "$finder"
+            else
+                return 1
+            fi
         fi
     else
         # search with parameters

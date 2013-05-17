@@ -100,8 +100,8 @@ Patterns automatically wildcard slashes (ie. / = */* )
                 target="${target#$trimmer}"
             done
             local filter
-            filter="${targets[@]##$finder}"
-            if [ -z "$target" -a -d "$finder$trimmer" -a -z "$(\printf '%b' "${filter##$trimmer/*}")" ]
+            filter="${targets[@]##$finder$trimmer}"
+            if [ -z "$target" -a -d "$finder$trimmer" -a -z "$(\printf '%b' "${filter##/*}")" ]
             then
                 finder+="$trimmer"
             fi

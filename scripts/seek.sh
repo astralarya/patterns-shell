@@ -84,36 +84,28 @@ Search the current directory and any children for files matching PATTERN
         do
             targets+=( "$target" )
         done < <(\find . "${input[@]}" -print0)
+
         if [ "${#targets[@]}" -lt 1 ]
         then
             \printf 'Not found: %b\n' "${rawinput[@]}"
         else
-            local good="good"
-
-            if [ -f "$targets" ]
-            then
-                target="$(\dirname "$targets")"
-            else
-                target="$targets"
-            fi
-            for i in "${targets[@]}"
+            local finder
+            local trimmer
+            target="$targets"
+            trimmer="${target/%\/*//}"
+            target="${target#$trimmer}"
+            while [ -z "$(\printf '%b' "${targets[@]##$finder$trimmer*}")" -a "$target" ]
             do
-                if [ -f "$i" ]
-                then
-                    i="$(\dirname "$i")"
-                fi
-                if [ "$target" != "$i" ]
-                then
-                    good="bad"
-                    break
-                fi
+                finder+="$trimmer"
+                trimmer="${target/%\/*//}"
+                target="${target#$trimmer}"
             done
-            if [ "$good" = "good" ]
+            if [ -f "$finder" ]
             then
-                \cd "$target"
-            else
-                \printf '%b\n' "${targets[@]}"
+                finder="$(\dirname -- "$finder")"
             fi
+            \cd "$finder"
+            \printf '%b\n' "${targets[@]}"
         fi
     else
         \find . "${input[@]}"

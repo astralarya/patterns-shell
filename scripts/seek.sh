@@ -106,7 +106,7 @@ Search the current directory and any children for files matching PATTERN
             then
                 finder="$(\dirname -- "$finder")"
             fi
-            \cd "$finder"
+            \cd -- "$finder"
             \printf '%b\n' "${targets[@]}"
         fi
     else

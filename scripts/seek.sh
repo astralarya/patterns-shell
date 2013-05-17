@@ -41,7 +41,7 @@ function seek {
             \printf 'Usage: seek [OPTION] [PATTERN]
 Search the current directory and any children for files matching PATTERN
   Option	Meaning
-  -cd, -to, -	Change to the directory containing search results if unambiguous
+  -cd, -to, -	Change directory to the lowest unambiguous directory containing all matches
   -h		Show help
 '
             return 0
@@ -63,13 +63,15 @@ Search the current directory and any children for files matching PATTERN
         fi
     done
 
+    # search using find
     if [ -z "$input" ]
     then
         \find .
         return 0
     fi
-    input+=( ')' )
 
+    # search with parameters
+    input+=( ')' )
     if [ "$option" = "-to" -o "$option" = "-cd" -o "$option" = "-" ]
     then
         local targets

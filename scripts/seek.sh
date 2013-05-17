@@ -54,10 +54,8 @@ Search the current directory and any children for files matching PATTERN
             if [ "$arg" = "-" -o "$arg" = "-cd" -o "$arg" = "-to" ]
             then
                 op_cd="1"
-            elif [ ! "$option" ]
-            then
-                option="$arg"
             else
+                option+=("$arg")
                 \printf 'Ignored option: %q\n' "$arg"
             fi
         else

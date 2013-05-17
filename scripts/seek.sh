@@ -52,7 +52,7 @@ Patterns automatically wildcard slashes (ie. / = */* )
         elif [ "$arg" = "--" ]
         then
             state="input"
-        elif [ -z "${arg/#-*/}" ]
+        elif [ -z "${arg##-*}" ]
         then
             if [ "$arg" = "-" -o "$arg" = "-cd" -o "$arg" = "-to" ]
             then

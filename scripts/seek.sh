@@ -40,7 +40,8 @@ function seek {
         elif [ "$arg" = "-h" -o "$arg" = "--help" ]
         then
             \printf 'Usage: seek [OPTION] [PATTERN]
-Search the current directory and any children for files matching PATTERN
+Search the current directory and any children for files matching PATTERN.
+Patterns automatically wildcard slashes (ie. / = */* )
   Option	Meaning
   -, -cd, -to	Change current directory to the lowest unambiguous directory containing all matches
   -h		Show help

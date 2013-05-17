@@ -34,7 +34,7 @@ function seek {
     do
         if [ "$state" = "input" ]
         then
-            input+=("$appender" -wholename "*$arg*")
+            input+=("$appender" -path "*$arg*")
             rawinput+=("$arg")
             appender='-o'
         elif [ "$arg" = "-h" -o "$arg" = "--help" ]
@@ -59,7 +59,7 @@ Search the current directory and any children for files matching PATTERN
                 \printf 'Ignored option: %q\n' "$arg"
             fi
         else
-            input+=("$appender" -wholename "*$arg*")
+            input+=("$appender" -path "*$arg*")
             rawinput+=("$arg")
             appender='-o'
         fi
@@ -81,7 +81,7 @@ Search the current directory and any children for files matching PATTERN
         while \read -r -d '' target
         do
             targets+=( "$target" )
-        done < <(\find . "${input[@]}" -print0)
+        done < <(\find . "${input[@]}" -prune -print0)
 
         if [ "${#targets[@]}" -lt 1 ]
         then
@@ -98,6 +98,10 @@ Search the current directory and any children for files matching PATTERN
                 trimmer="${target/%\/*//}"
                 target="${target#$trimmer}"
             done
+            if [ -z "$target" ]
+            then
+                finder+="$trimmer"
+            fi
             if [ -f "$finder" ]
             then
                 finder="$(\dirname -- "$finder")"
@@ -106,7 +110,7 @@ Search the current directory and any children for files matching PATTERN
             \printf '%b\n' "${targets[@]}"
         fi
     else
-        \find . "${input[@]}"
+        \find . "${input[@]}" -prune
     fi
 }
 

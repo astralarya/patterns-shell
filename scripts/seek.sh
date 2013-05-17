@@ -24,6 +24,7 @@
 function seek {
     # read arguments
     local option
+    local op_cd
     local input
     local rawinput
     local state
@@ -41,7 +42,7 @@ function seek {
             \printf 'Usage: seek [OPTION] [PATTERN]
 Search the current directory and any children for files matching PATTERN
   Option	Meaning
-  -cd, -to, -	Change directory to the lowest unambiguous directory containing all matches
+  -, -cd, -to	Change current directory to the lowest unambiguous directory containing all matches
   -h		Show help
 '
             return 0
@@ -50,7 +51,10 @@ Search the current directory and any children for files matching PATTERN
             state="input"
         elif [ -z "${arg/-*/}" ]
         then
-            if [ ! "$option" ]
+            if [ "$arg" = "-" -o "$arg" = "-cd" -o "$arg" = "-to" ]
+            then
+                op_cd="1"
+            elif [ ! "$option" ]
             then
                 option="$arg"
             else
@@ -63,7 +67,7 @@ Search the current directory and any children for files matching PATTERN
         fi
     done
 
-    # search using find
+    # search using find, no parameters
     if [ -z "$input" ]
     then
         \find .
@@ -72,7 +76,7 @@ Search the current directory and any children for files matching PATTERN
 
     # search with parameters
     input+=( ')' )
-    if [ "$option" = "-to" -o "$option" = "-cd" -o "$option" = "-" ]
+    if [ "$op_cd" ]
     then
         local targets
         local target
@@ -85,6 +89,7 @@ Search the current directory and any children for files matching PATTERN
             \printf 'Not found: %b\n' "${rawinput[@]}"
         else
             local good="good"
+
             if [ -f "$targets" ]
             then
                 target="$(\dirname "$targets")"

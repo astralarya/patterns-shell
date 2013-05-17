@@ -58,7 +58,6 @@ Patterns automatically wildcard slashes (ie. / = */* )
                 op_cd="1"
             else
                 option+=( ${arg//:/ } )
-                \printf 'Ignored option: %q\n' "$arg"
             fi
         else
             input+=("$appender" '(' -name "*${arg##*/}*" -path "*${arg//\//*/*}*" ')' )

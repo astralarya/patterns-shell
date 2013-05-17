@@ -44,6 +44,7 @@ Search the current directory and any children for files matching PATTERN.
 Patterns automatically wildcard slashes (ie. / = */* )
   Option	Meaning
   -, -cd, -to	Change current directory to the lowest unambiguous directory containing all matches
+  -*		Pass argument to find. Colons are interpreted as spaces (ie. -type:d = -type d)
   -h		Show help
 '
             return 0
@@ -56,7 +57,7 @@ Patterns automatically wildcard slashes (ie. / = */* )
             then
                 op_cd="1"
             else
-                option+=("$arg")
+                option+=( ${arg//:/ } )
                 \printf 'Ignored option: %q\n' "$arg"
             fi
         else
@@ -69,7 +70,7 @@ Patterns automatically wildcard slashes (ie. / = */* )
     # search using find, no parameters
     if [ -z "$input" ]
     then
-        \find .
+        \find . "${option[@]}"
         return 0
     fi
 
@@ -82,7 +83,7 @@ Patterns automatically wildcard slashes (ie. / = */* )
         while \read -r -d '' target
         do
             targets+=( "$target" )
-        done < <(\find . "${input[@]}" -print0)
+        done < <(\find . "${input[@]}" "${option[@]}" -print0)
 
         if [ "${#targets[@]}" -lt 1 ]
         then
@@ -109,7 +110,7 @@ Patterns automatically wildcard slashes (ie. / = */* )
             \printf '%b\n' "${targets[@]}"
         fi
     else
-        \find . "${input[@]}"
+        \find . "${input[@]}" "${option[@]}"
     fi
 }
 

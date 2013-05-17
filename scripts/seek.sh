@@ -99,13 +99,11 @@ Patterns automatically wildcard slashes (ie. / = */* )
                 trimmer="${target/%\/*//}"
                 target="${target#$trimmer}"
             done
-            if [ -z "$target" ]
+            local filter
+            filter="${targets[@]##$finder}"
+            if [ -z "$target" -a -d "$finder$trimmer" -a -z "$(\printf '%b' "${filter##$trimmer/*}")" ]
             then
                 finder+="$trimmer"
-            fi
-            if [ -f "$finder" ]
-            then
-                finder="$(\dirname -- "$finder")"
             fi
             \cd -- "$finder"
             \printf '%b\n' "${targets[@]}"

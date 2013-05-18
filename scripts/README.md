@@ -15,17 +15,6 @@ Then you will have access to these three functions:
 * **ldh** [pattern]
   * Show history of commands in this directory only and optionally filter with pattern
 
-## seek
-Search directories
-
-Source `seek.sh` in your .\*rc file.
-
-Then you will have access to these two functions:
-* **seek** [pattern]
-  * Search the current directory (and subdirectories) for files and folders matching pattern
-* **seekto** [pattern]
-  * Search the current directory (and subdirectories) for files and folders matching pattern, if the results are contained in a single directory, change to that directory.
-
 ## untar
 Untar and unzip archives
 

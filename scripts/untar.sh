@@ -24,8 +24,7 @@
 function untar {
 if [ "$1" -a -a "$1" ]
 then
- \mkdir -p "${1%.tar.gz}";
- \tar -zxvf "$1" -C "${1%.tar.gz}"/; 
+ \tar -zxvf "$1"; 
 fi }
 
 function unzip {

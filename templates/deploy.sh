@@ -117,8 +117,7 @@ then
   mv $MYSCPDIR/"\$1"*.tar.gz .
   local archive=( "\$1"*.tar.gz )
   local fullname="\${archive%.tar.gz}"
-  mkdir -p "\$fullname" &&
-  tar -zxvf "\$archive" -C "\$fullname/" &&
+  tar -zxvf "\$archive" &&
   ln -s "\$fullname/" "\$1" &&
   cd "\$1" &&
   make && return 0 || return 1

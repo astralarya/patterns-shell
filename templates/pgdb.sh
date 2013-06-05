@@ -125,7 +125,7 @@ elif [ "\${#option[@]}" = 0 ]
 then
  psql -U "$MYUSER" -d "$MYDB" "\${file[@]}"
 else
- psql -U "$MYUSER" -d "$MYDB" "\${option[@]}" "\${file[@]}"
+ psql -U "$MYUSER" -d "$MYDB" "\${file[@]}" "\${option[@]}"
 fi
 
 if [ "\$op_time" ]

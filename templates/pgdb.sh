@@ -132,6 +132,7 @@ if [ "\$op_time" ]
 then
  # Time execution
  date
+fi
 }
 TEMPLATE
 } # function template-mydb

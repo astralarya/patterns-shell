@@ -113,11 +113,21 @@ if [ "\$op_time" ]
 then
  # Time execution
  date
- psql "\${option[@]}" "\${file[@]}" -U "$MYUSER" "$MYDB"
+ if [ "\${#file[@]}" = 0 ]
+ then
+  psql "\${option[@]}" -U "$MYUSER" "$MYDB"
+ else
+  psql "\${option[@]}" "\${file[@]}" -U "$MYUSER" "$MYDB"
+ fi
  date
 else
- # Execute query file
- psql "\${option[@]}" "\${file[@]}" -U "$MYUSER" "$MYDB"
+ if [ "\${#file[@]}" = 0 ]
+ then
+  psql "\${option[@]}" -U "$MYUSER" "$MYDB"
+ else
+  # Execute query file
+  psql "\${option[@]}" "\${file[@]}" -U "$MYUSER" "$MYDB"
+ fi
 fi
 }
 TEMPLATE

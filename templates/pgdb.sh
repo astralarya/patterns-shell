@@ -81,7 +81,7 @@ If a file is given as an argument, execute the queries in the file,
 otherwise start a psql session connected to $MYDB. 
 Option		GNU long option		Meaning
 		--time			Time the query or session
--h		--help			Show this message"
+-h		--help			Show this message
 -*		--*			Pass argument to psql (see man psql)"
   return 0
  elif [ "\$arg" = "--time" ]

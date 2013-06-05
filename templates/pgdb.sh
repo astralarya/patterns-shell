@@ -116,19 +116,19 @@ then
  if [ -z "\${file[*]}" ]
  then
   # Open psql session
-  psql -U "$MYUSER" "$MYDB" "\${option[@]}"
+  psql "\${option[@]}" -U "$MYUSER" "$MYDB"
  else [ -e "\$file" ]
   # Execute query file
-  psql "\${file[@]}" -U "$MYUSER" "$MYDB" "\${option[@]}"
+  psql "\${option[@]}" "\${file[@]}" -U "$MYUSER" "$MYDB"
  fi
  date
 elif [ -z "\${file[*]}" ]
 then
  # Open psql session
- psql -U "$MYUSER" "$MYDB" "\${option[@]}"
+ psql "\${option[@]}" -U "$MYUSER" "$MYDB"
 else
  # Execute query file
- psql "\${file[@]}" -U "$MYUSER" "$MYDB" "\${option[@]}"
+ psql "\${option[@]}" "\${file[@]}" -U "$MYUSER" "$MYDB"
 fi
 }
 TEMPLATE

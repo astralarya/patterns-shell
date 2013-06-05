@@ -117,15 +117,15 @@ fi
 
 if [ "\${#file[@]}" = 0 -a "\${#option[@]}" = 0 ]
 then
- psql -U "$MYUSER" "$MYDB"
+ psql -U "$MYUSER" -d "$MYDB"
 elif [ "\${#file[@]}" = 0 ]
 then
- psql "\${option[@]}" -U "$MYUSER" "$MYDB"
+ psql -U "$MYUSER" -d "$MYDB" "\${option[@]}"
 elif [ "\${#option[@]}" = 0 ]
 then
- psql "\${file[@]}" -U "$MYUSER" "$MYDB"
+ psql -U "$MYUSER" -d "$MYDB" "\${file[@]}"
 else
- psql "\${option[@]}" "\${file[@]}" -U "$MYUSER" "$MYDB"
+ psql -U "$MYUSER" -d "$MYDB" "\${option[@]}" "\${file[@]}"
 fi
 
 if [ "\$op_time" ]

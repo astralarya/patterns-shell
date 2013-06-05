@@ -113,19 +113,8 @@ if [ "\$op_time" ]
 then
  # Time execution
  date
- if [ -z "\${file[*]}" ]
- then
-  # Open psql session
-  psql "\${option[@]}" -U "$MYUSER" "$MYDB"
- else [ -e "\$file" ]
-  # Execute query file
-  psql "\${option[@]}" "\${file[@]}" -U "$MYUSER" "$MYDB"
- fi
+ psql "\${option[@]}" "\${file[@]}" -U "$MYUSER" "$MYDB"
  date
-elif [ -z "\${file[*]}" ]
-then
- # Open psql session
- psql "\${option[@]}" -U "$MYUSER" "$MYDB"
 else
  # Execute query file
  psql "\${option[@]}" "\${file[@]}" -U "$MYUSER" "$MYDB"

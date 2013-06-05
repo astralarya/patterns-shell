@@ -92,7 +92,7 @@ Option		GNU long option		Meaning
   state="file"
  elif [[ "\$arg" = -* ]]
  then
-  option="\$option \$arg"
+  option=( "\$arg" )
  elif [ -e "\$arg" ]
  then
   file+=( '-f' "\$arg" )
@@ -113,22 +113,25 @@ if [ "\$op_time" ]
 then
  # Time execution
  date
- if [ "\${#file[@]}" = 0 ]
- then
-  psql "\${option[@]}" -U "$MYUSER" "$MYDB"
- else
-  psql "\${option[@]}" "\${file[@]}" -U "$MYUSER" "$MYDB"
- fi
- date
-else
- if [ "\${#file[@]}" = 0 ]
- then
-  psql "\${option[@]}" -U "$MYUSER" "$MYDB"
- else
-  # Execute query file
-  psql "\${option[@]}" "\${file[@]}" -U "$MYUSER" "$MYDB"
- fi
 fi
+
+if [ "\${#file[@]}" = 0 -a "\${#option[@]}" = 0 ]
+then
+ psql -U "$MYUSER" "$MYDB"
+elif [ "\${#file[@]}" = 0 ]
+then
+ psql "\${option[@]}" -U "$MYUSER" "$MYDB"
+elif [ "\${#option[@]}" = 0 ]
+then
+ psql "\${file[@]}" -U "$MYUSER" "$MYDB"
+else
+ psql "\${option[@]}" "\${file[@]}" -U "$MYUSER" "$MYDB"
+fi
+
+if [ "\$op_time" ]
+then
+ # Time execution
+ date
 }
 TEMPLATE
 } # function template-mydb

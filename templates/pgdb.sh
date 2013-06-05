@@ -102,6 +102,12 @@ Option		GNU long option		Meaning
  fi
 done
 
+if [ "\$good" != "good" ]
+then
+ echo "Abort"
+ return 1
+fi
+
 
 if [ "\$op_time" ]
 then

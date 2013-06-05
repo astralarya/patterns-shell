@@ -56,48 +56,75 @@ fi
 cat << TEMPLATE
 # $MYDB access function
 function $MYFUNC {
-if [[ "\$1" = -* ]]
-then
- # execute with option
- local FILE=\$2
- local OPTION=\$1
-else
- local FILE=\$1
-fi
-
-if [ "\$OPTION" = "-h" -o "\$OPTION" = "--help" ]
-then
- # show help
- echo "Usage: $MYFUNC [OPTION] [queryfile]
+local file
+local option
+local op_cd
+local state
+local good="good"
+for arg in "\$@"
+do
+ if [ "\$state" = "file" ]
+ then
+  if [ -e "\$arg" ]
+  then
+   file="\$file \$arg"
+  else
+   echo "Cannot find file: \$arg"
+   good="bad"
+  fi
+ elif [ "\$arg" = "-h" -o "\$arg" = "--help" ]
+ then
+  # show help
+  echo "Usage: $MYFUNC [OPTION] [queryfile]
 Access $MYDB as $MYUSER.
 If a file is given as an argument, execute the queries in the file,
 otherwise start a psql session connected to $MYDB. 
 Option		GNU long option		Meaning
 -t		--time			Time the query or session
 -h		--help			Show this message"
-elif [ "\$OPTION" = "-t" -o "\$OPTION" = "--time" ]
+  return 0
+ elif [ "\$arg" = "--time" ]
+ then
+  op_cd="true"
+ elif [ "\$arg" = "--" ]
+ then
+  state="file"
+ elif [[ "\$arg" = -* ]]
+ then
+  option="\$option \$arg"
+ elif [ -e "\$arg" ]
+ then
+  file="\$file \$arg"
+ else
+  echo "Cannot find file: \$arg"
+  good="bad"
+ fi
+done
+
+
+if [ "\$op_time" ]
 then
  # Time execution
  date
- if [ -z "\$FILE" ]
+ if [ -z "\$file" ]
  then
   # Open psql session
-  psql -U "$MYUSER" "$MYDB"
- else [ -e "\$FILE" ]
+  psql -U "$MYUSER" "$MYDB" $option
+ else [ -e "\$file" ]
   # Execute query file
-  echo "\$FILE"
-  psql -f "\$FILE" -U "$MYUSER" "$MYDB"
+  echo "\$file"
+  psql -f "\$file" -U "$MYUSER" "$MYDB" $option
  fi
  date
-elif [ -z "\$FILE" ]
+elif [ -z "\$file" ]
 then
  # Open psql session
- psql -U "$MYUSER" "$MYDB"
-elif [ -e "\$FILE" ]
+ psql -U "$MYUSER" "$MYDB" $option
+elif [ -e "\$file" ]
 then
  # Execute query file
-  echo "\$FILE"
- psql -f "\$FILE" -U "$MYUSER" "$MYDB"
+  echo "\$file"
+ psql -f "\$file" -U "$MYUSER" "$MYDB" $option
 fi 
 }
 TEMPLATE

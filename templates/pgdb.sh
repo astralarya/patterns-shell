@@ -67,7 +67,7 @@ do
  then
   if [ -e "\$arg" ]
   then
-   file="\$file \$arg"
+   file+=( '-f' "\$arg" )
   else
    echo "Cannot find file: \$arg"
    good="bad"
@@ -95,7 +95,7 @@ Option		GNU long option		Meaning
   option="\$option \$arg"
  elif [ -e "\$arg" ]
  then
-  file="\$file \$arg"
+  file+=( '-f' "\$arg" )
  else
   echo "Cannot find file: \$arg"
   good="bad"
@@ -113,26 +113,23 @@ if [ "\$op_time" ]
 then
  # Time execution
  date
- if [ -z "\$file" ]
+ if [ -z "\${file[*]}" ]
  then
   # Open psql session
-  psql -U "$MYUSER" "$MYDB" $option
+  psql -U "$MYUSER" "$MYDB" "\${option[@]}"
  else [ -e "\$file" ]
   # Execute query file
-  echo "\$file"
-  psql -f "\$file" -U "$MYUSER" "$MYDB" $option
+  psql "\${file[@]}" -U "$MYUSER" "$MYDB" "\${option[@]}"
  fi
  date
-elif [ -z "\$file" ]
+elif [ -z "\${file[*]}" ]
 then
  # Open psql session
- psql -U "$MYUSER" "$MYDB" $option
-elif [ -e "\$file" ]
-then
+ psql -U "$MYUSER" "$MYDB" "\${option[@]}"
+else
  # Execute query file
-  echo "\$file"
- psql -f "\$file" -U "$MYUSER" "$MYDB" $option
-fi 
+ psql "\${file[@]}" -U "$MYUSER" "$MYDB" "\${option[@]}"
+fi
 }
 TEMPLATE
 } # function template-mydb

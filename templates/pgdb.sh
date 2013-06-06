@@ -58,7 +58,7 @@ cat << TEMPLATE
 function $MYFUNC {
 local file
 local option
-local op_cd
+local op_time
 local state
 local good="good"
 for arg in "\$@"
@@ -86,7 +86,7 @@ Option		GNU long option		Meaning
   return 0
  elif [ "\$arg" = "--time" ]
  then
-  op_cd="true"
+  op_time="true"
  elif [ "\$arg" = "--" ]
  then
   state="file"

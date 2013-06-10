@@ -118,7 +118,7 @@ then
   local archive=( "\$1"*.tar.gz )
   local fullname="\${archive%.tar.gz}"
   tar -zxvf "\$archive" &&
-  cd "\$1" &&
+  cd "\$fullname" &&
   make &&
   ln -s "\$fullname/\$1" "../\$1"
 else

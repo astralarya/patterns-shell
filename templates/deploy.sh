@@ -55,7 +55,7 @@ fi
 
 cat << TEMPLATE
 function $MYFUNC {
-local name="\$(make -s name)"
+local name="\$(make name)"
 if [ "\$name" ]
 then
  if make tar && [ -e "\$name"*.tar.gz ]
@@ -66,7 +66,7 @@ then
 fi }
 
 function $MYFUNC-full {
-local name="\$(make -s name)"
+local name="\$(make name)"
 if [ "\$name" ]
 then
  if make tar && [ -e "\$name"*.tar.gz ]

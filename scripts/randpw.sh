@@ -21,9 +21,9 @@
 # Source this file in your shell's .*rc file
 
 function randpw {
- head /dev/urandom | sha256sum
+ head /dev/urandom | sha256sum | sed 's/ .*$//'
 }
 
 function randpw-strong {
- head /dev/random | sha512sum
+ head /dev/random | sha512sum | sed 's/ .*$//'
 }

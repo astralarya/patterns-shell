@@ -25,5 +25,6 @@ function randpw {
 }
 
 function randpw-strong {
+ printf "Creating a cryptographically strong password. This could take a while...\n" 1>&2
  head /dev/random | sha512sum | sed 's/ .*$//'
 }

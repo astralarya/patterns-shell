@@ -4,18 +4,6 @@
 
 If you wish to use a template, you should source its \*.sh file.
 
-## autoscreen
-### template-autoscreen
-Usage: **template-autoscreen** [hostname]  
-Output code to automatically start a GNU screen session without inception.  
-Optionally, check whether hostname = HOSTNAME before starting.  
-  * $1 hostname guard pattern (useful for clusters where you only want the screen on specific gateways)
-
-Source the output of this function at the very **END** of your .\*rc file.
-
-When you start your shell, you will be notified that you are about to enter a screen session (^C to cancel).  
-When your screen session ends, you will be notified that your shell will exit (^C to cancel).
-
 ## deploy
 ### template-deploy-client
 Usage: **template-deploy-client** [server] [FUNCNAME] [REMOTEFUNC]  

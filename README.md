@@ -37,8 +37,6 @@ All generated functions are self documenting.  You can view this documentation w
 
 The template functions are listed below:
 
-* **autoscreen**
-    * *template-autoscreen* - auto start a GNU screen session without inception with optional hostname guard.
 * **pgdb**
     * *template-db* - Generate function to access a database as a user
     * *template-dbbackup* - Generate function to backup and restore a database

@@ -129,7 +129,7 @@ function $MYFUNC-full {
 if deploy "\$1"
 then
   rm -r $MYLIVEDIR/"\$1"*
-  cp -r $MYSTAGEDIR/"\$1"* "$MYLIVEDIR/"
+  cp -r $MYSTAGEDIR/"\$1"* "$MYLIVEDIR/" && echo "Deploy complete"
 fi }
 TEMPLATE
 } # function template-deploy-server

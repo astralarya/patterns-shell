@@ -177,7 +177,7 @@ then
  # move last monthly, delete previous month
  mkdir -p "$MYBACKUPDIR/monthly"
  mv "$MYBACKUPDIR/${MYDB}_\$(date -d"1 month ago" +%F).sql" "$MYBACKUPDIR/monthly" &&
- rm "$MYBACKUPDIR/${MYDB}_\$(date -d"1 month ago" +%Y-%m-)*.sql
+ rm "$MYBACKUPDIR/${MYDB}_\$(date -d"1 month ago" +%Y-%m-)*.sql"
 elif [ "\$1" = "-h" ]
 then
  echo "Usage: $MYFUNC [OPTION] [file]

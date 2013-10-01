@@ -20,5 +20,5 @@
 ### USAGE ###
 # Source this file in your shell's .*rc file
 
-PS1='\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[4;32;40m\]\u@\h:\w\[\033[0m\]\[\033[32;40m\]\$\[\033[0m\] '
+PS1='\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[4;31;40m\]\u\[\033[0;35;40m\]@\[\033[4;35;40m\]\h\[\033[0;34;40m\]:\w\[\033[0;32;40m\]\$\[\033[0m\] '
 PS2='\[\033[32;40m\]>\[\033[0m\] '

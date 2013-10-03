@@ -1,0 +1,3 @@
+alias v="vim"
+alias s="git status -sb"
+alias l="ls --color=auto"

@@ -24,5 +24,9 @@ PS1_USER_COLOR='\[\033[0;31;40m\]'
 PS1_HOST_COLOR='\[\033[0;35;40m\]'
 PS1_PATH_COLOR='\[\033[0;34;40m\]'
 PS1_PROMPT_COLOR='\[\033[0;32;40m\]'
-PS1="\\[\\e]0;\\u@\\h: \\w\\a\\]\${debian_chroot:+(\$debian_chroot)}$PS1_USER_COLOR\\u$PS1_HOST_COLOR@\\h$PS1_PATH_COLOR:\\w$PS1_PROMPT_COLOR (\$?)\\[\\033[0m\\]\n$PS1_PROMPT_COLOR\\$\\[\\033[0m\\] "
+PS1_PROMPT_INFO='git status -sb'
+
+
+PS1_PROMPT_INFO_CLEAN="\$(awk '{printf \"\\[\\033[0m\\]\\\\n$PS1_PROMPT_COLOR%s\",\$0}' <(\$PS1_PROMPT_INFO 2> /dev/null) )"
+PS1="\\[\\e]0;\\u@\\h: \\w\\a\\]\${debian_chroot:+(\$debian_chroot)}$PS1_USER_COLOR\\u$PS1_HOST_COLOR@\\h$PS1_PATH_COLOR:\\w$PS1_PROMPT_COLOR (\$?)$PS1_PROMPT_INFO_CLEAN\\[\\033[0m\\]\n$PS1_PROMPT_COLOR\\$\\[\\033[0m\\] "
 PS2="$PS1_PROMPT_COLOR>\\[\\033[0m\\] "

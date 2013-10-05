@@ -40,13 +40,11 @@ then
     PS1_PROMPT_COLOR='\[\033[0;32;40m\]'
 fi
 
-if [ -z "$PS1_PROMPT_INFO" ] && hash git &> /dev/null
+if [ -z "$PS1_COMMAND" ] && hash git &> /dev/null
 then
-    PS1_PROMPT_INFO='git status -sb'
+    PS1_COMMAND='git status -sb'
 fi
 
-
-
-PS1_PROMPT_INFO_CLEAN="\$(awk '{printf \"\\[\\033[0m\\]\\\\n$PS1_PROMPT_COLOR%s\",\$0}' <(\$PS1_PROMPT_INFO 2> /dev/null) )"
-PS1="\\[\\e]0;\\u@\\h: \\w\\a\\]\${debian_chroot:+(\$debian_chroot)}$PS1_USER_COLOR\\u$PS1_HOST_COLOR@\\h$PS1_PATH_COLOR:\\w$PS1_PROMPT_COLOR (\$?)$PS1_PROMPT_INFO_CLEAN\\[\\033[0m\\]\n$PS1_PROMPT_COLOR\\$\\[\\033[0m\\] "
+PS1_COMMAND_CLEAN="\$(awk '{printf \"\\[\\033[0m\\]\\\\n$PS1_PROMPT_COLOR%s\",\$0}' <(\$PS1_COMMAND 2> /dev/null) )"
+PS1="\\[\\e]0;\\u@\\h: \\w\\a\\]\${debian_chroot:+(\$debian_chroot)}$PS1_USER_COLOR\\u$PS1_HOST_COLOR@\\h$PS1_PATH_COLOR:\\w$PS1_PROMPT_COLOR (\$?)$PS1_COMMAND_CLEAN\\[\\033[0m\\]\n$PS1_PROMPT_COLOR\\$\\[\\033[0m\\] "
 PS2="$PS1_PROMPT_COLOR>\\[\\033[0m\\] "

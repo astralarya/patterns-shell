@@ -20,11 +20,31 @@
 ### USAGE ###
 # Source this file in your shell's .*rc file
 
-PS1_USER_COLOR='\[\033[0;31;40m\]'
-PS1_HOST_COLOR='\[\033[0;35;40m\]'
-PS1_PATH_COLOR='\[\033[0;34;40m\]'
-PS1_PROMPT_COLOR='\[\033[0;32;40m\]'
-PS1_PROMPT_INFO='git status -sb'
+if [ -z "$PS1_USER_COLOR" ]
+then
+    PS1_USER_COLOR='\[\033[0;31;40m\]'
+fi
+
+if [ -z "$PS1_HOST_COLOR" ]
+then
+    PS1_HOST_COLOR='\[\033[0;35;40m\]'
+fi
+
+if [ -z "$PS1_PATH_COLOR" ]
+then
+    PS1_PATH_COLOR='\[\033[0;34;40m\]'
+fi
+
+if [ -z "$PS1_PROMPT_COLOR" ]
+then
+    PS1_PROMPT_COLOR='\[\033[0;32;40m\]'
+fi
+
+if [ -z "$PS1_PROMPT_INFO" ]
+then
+    PS1_PROMPT_INFO='git status -sb'
+fi
+
 
 
 PS1_PROMPT_INFO_CLEAN="\$(awk '{printf \"\\[\\033[0m\\]\\\\n$PS1_PROMPT_COLOR%s\",\$0}' <(\$PS1_PROMPT_INFO 2> /dev/null) )"

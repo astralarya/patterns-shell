@@ -40,7 +40,7 @@ then
     PS1_PROMPT_COLOR='\[\033[0;32;40m\]'
 fi
 
-if [ -z "$PS1_COMMAND" ] && hash git &> /dev/null
+if [ -z "$PS1_COMMAND" ] && command -v git &> /dev/null
 then
     PS1_COMMAND='git status -sb'
 fi

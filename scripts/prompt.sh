@@ -20,6 +20,11 @@
 ### USAGE ###
 # Source this file in your shell's .*rc file
 
+if [ -z "$PS1_COMMAND" ] && command -v git &> /dev/null
+then
+    PS1_COMMAND='git status -sb'
+fi
+
 if [ -z "$PS1_USER_COLOR" ]
 then
     PS1_USER_COLOR='\[\033[0;31;40m\]'
@@ -35,16 +40,27 @@ then
     PS1_PATH_COLOR='\[\033[0;34;40m\]'
 fi
 
+if [ -z "$PS1_STATUS_GOOD_COLOR" ]
+then
+    PS1_STATUS_GOOD_COLOR='\[\033[0;32;40m\]'
+fi
+
+if [ -z "$PS1_STATUS_BAD_COLOR" ]
+then
+    PS1_STATUS_BAD_COLOR='\[\033[0;31;40m\]'
+fi
+
 if [ -z "$PS1_PROMPT_COLOR" ]
 then
     PS1_PROMPT_COLOR='\[\033[0;32;40m\]'
 fi
 
-if [ -z "$PS1_COMMAND" ] && command -v git &> /dev/null
+if [ -z "$PS1_COMMAND_COLOR" ]
 then
-    PS1_COMMAND='git status -sb'
+    PS1_COMMAND_COLOR="$PS1_PROMPT_COLOR"
 fi
 
-PS1_COMMAND_CLEAN="\$(awk '{printf \"\\[\\033[0m\\]\\\\n$PS1_PROMPT_COLOR%s\",\$0}' <(\$PS1_COMMAND 2> /dev/null) )"
-PS1="\\[\\e]0;\\u@\\h: \\w\\a\\]\${debian_chroot:+(\$debian_chroot)}$PS1_USER_COLOR\\u$PS1_HOST_COLOR@\\h$PS1_PATH_COLOR:\\w$PS1_PROMPT_COLOR (\$?)$PS1_COMMAND_CLEAN\\[\\033[0m\\]\n$PS1_PROMPT_COLOR\\$\\[\\033[0m\\] "
+
+PS1_COMMAND_CLEAN="\$(awk '{printf \"\\[\\033[0m\\]\\\\n$PS1_COMMAND_COLOR%s\",\$0}' <(\$PS1_COMMAND 2> /dev/null) )"
+PS1="\\[\\e]0;\\u@\\h: \\w\\a\\]\${debian_chroot:+(\$debian_chroot)}$PS1_USER_COLOR\\u$PS1_HOST_COLOR@\\h$PS1_PATH_COLOR:\\w \$(STATUS=\$?; if [ \$STATUS = 0 ]; then printf '$PS1_STATUS_GOOD_COLOR(%b)' \$STATUS; else printf '$PS1_STATUS_BAD_COLOR(%b)' \$STATUS; fi)$PS1_COMMAND_CLEAN\\[\\033[0m\\]\n$PS1_PROMPT_COLOR\\$\\[\\033[0m\\] "
 PS2="$PS1_PROMPT_COLOR>\\[\\033[0m\\] "

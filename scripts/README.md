@@ -2,7 +2,9 @@
 
 **patterns-shell/scripts** - Scripts for common shell tasks
 
+
 ## history
+
 Persistent shell history with advanced search
 
 Source `history.sh` in your .\*rc file.
@@ -14,6 +16,26 @@ Then you will have access to these three functions:
   * Show history of commands in this directory and subdirectories and optionally filter with pattern
 * **ldh** [pattern]
   * Show history of commands in this directory only and optionally filter with pattern
+
+
+## prompt
+
+Pretty bash prompt that colors fields and displays custom command output.
+
+Source `prompt.sh` in your .\*rc file.
+
+The prompt also outputs the result of `PS1_COMMAND`, suppressing any error messages.  By default, this is 'git status -sb' if git is present.
+
+You can change the colors used in the prompt by adjusting the following environment variables:
+
+* `PS1_USER_COLOR` - username color
+* `PS1_HOST_COLOR` - hostname color
+* `PS1_PATH_COLOR` - path color
+* `PS1_STATUS_GOOD_COLOR` - status color when 0
+* `PS1_STATUS_BAD_COLOR` - status color when not 0
+* `PS1_PROMPT_COLOR` - prompt symbol color
+* `PS1_COMMAND_COLOR` - color of the output of the `PS1_COMMAND`
+
 
 ## untar
 Untar and unzip archives

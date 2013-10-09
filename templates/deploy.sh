@@ -96,7 +96,7 @@ if [ "$3" ]
 then
  local MYSCPDIR="$3"
 else
- local MYSCPDIR="~/scp"
+ local MYSCPDIR="$HOME/scp"
 fi
 if [ "$4" ]
 then
@@ -108,7 +108,7 @@ fi
 cat << TEMPLATE
 function $MYFUNC {
 local fullname="\${1}_\${2}"
-if [ "\$1" -a "\$2" -a -a $MYSCPDIR/\$fullname.tar.gz ] && cd $MYSTAGEDIR
+if [ "\$1" -a "\$2" -a -a "$MYSCPDIR/\$fullname.tar.gz" ] && cd "$MYSTAGEDIR"
 then
   rm -r "\$1" "\${1}_"*
   mv "$MYSCPDIR/\$fullname.tar.gz" .
@@ -122,8 +122,8 @@ fi }
 function $MYFUNC-full {
 if deploy "\$1" "\$2"
 then
-  rm -r $MYLIVEDIR/"\$1" $MYLIVEDIR/"\${1}_"*
-  cp -r $MYSTAGEDIR/"\$1" $MYSTAGEDIR/"\${1}_"* "$MYLIVEDIR/" &&
+  rm -r "$MYLIVEDIR/\$1" "$MYLIVEDIR/\${1}_"*
+  cp -r "$MYSTAGEDIR/\$1" "$MYSTAGEDIR/\${1}_"* "$MYLIVEDIR/" &&
   echo "Deploy complete"
 fi }
 TEMPLATE

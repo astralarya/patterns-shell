@@ -107,13 +107,13 @@ fi
 
 cat << TEMPLATE
 function $MYFUNC {
-if [ "\$1" -a "\$2" -a -a "$MYSCPDIR/\$1_\$2.tar.gz" ] && cd $MYSTAGEDIR
+if [ "\$1" -a "\$2" -a -a "$MYSCPDIR/\$1\\_\$2.tar.gz" ] && cd $MYSTAGEDIR
 then
-  rm -r "\$1" "\$1_"*
-  mv "$MYSCPDIR/\$1_\$2.tar.gz" .
-  tar -zxvf "\$1_\$2.tar.gz" &&
-  cd "\$1_\$2" && make &&
-  ln -s "\$1_\$2/\$1" "../\$1"
+  rm -r "\$1" "\$1\\_"*
+  mv "$MYSCPDIR/\$1\\_\$2.tar.gz" .
+  tar -zxvf "\$1\\_\$2.tar.gz" &&
+  cd "\$1\\_\$2" && make &&
+  ln -s "\$1\\_\$2/\$1" "../\$1"
 else
   return 1
 fi }
@@ -121,8 +121,8 @@ fi }
 function $MYFUNC-full {
 if deploy "\$1"
 then
-  rm -r $MYLIVEDIR/"\$1" $MYLIVEDIR/"\$1_"*
-  cp -r $MYSTAGEDIR/"\$1" $MYSTAGEDIR/"\$1_"* "$MYLIVEDIR/" &&
+  rm -r $MYLIVEDIR/"\$1" $MYLIVEDIR/"\$1\\_"*
+  cp -r $MYSTAGEDIR/"\$1" $MYSTAGEDIR/"\$1\\_"* "$MYLIVEDIR/" &&
   echo "Deploy complete"
 fi }
 TEMPLATE

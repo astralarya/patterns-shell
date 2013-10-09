@@ -68,7 +68,7 @@ local name="\$(make name)"
 local tarname="\$(printf '%b_%b.tar.gz' \$name)"
 if [ "\$name" ] && make tar && [ -e "\$tarname" ]
 then
-  $MYSERVER-push "\$name"*.tar.gz &&
+  $MYSERVER-push "\$tarname" &&
   $MYSERVER "$MYREMOTEFUNC-full \$name" 
 fi }
 TEMPLATE

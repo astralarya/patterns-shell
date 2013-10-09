@@ -108,7 +108,7 @@ fi
 cat << TEMPLATE
 function $MYFUNC {
 local fullname="\${1}_\${2}"
-if [ "\$1" -a "\$2" -a -a "$MYSCPDIR/\$fullname.tar.gz" ] && cd $MYSTAGEDIR
+if [ "\$1" -a "\$2" -a -a $MYSCPDIR/\$fullname.tar.gz ] && cd $MYSTAGEDIR
 then
   rm -r "\$1" "\${1}_"*
   mv "$MYSCPDIR/\$fullname.tar.gz" .

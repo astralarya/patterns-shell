@@ -122,8 +122,8 @@ function $MYFUNC-full {
 if deploy "\$1"
 then
   rm -r $MYLIVEDIR/"\$1" $MYLIVEDIR/"\$1_"*
-  cp -r $MYSTAGEDIR/"\$1" $MYSTAGEDIR/"\$1_"* "$MYLIVEDIR/"
-  && echo "Deploy complete"
+  cp -r $MYSTAGEDIR/"\$1" $MYSTAGEDIR/"\$1_"* "$MYLIVEDIR/" &&
+  echo "Deploy complete"
 fi }
 TEMPLATE
 } # function template-deploy-server

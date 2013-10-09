@@ -1,2 +1,3 @@
 alias v="vim"
 alias l="ls --color=auto"
+--alias r="ssh user@hostname"

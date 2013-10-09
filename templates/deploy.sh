@@ -56,24 +56,20 @@ fi
 cat << TEMPLATE
 function $MYFUNC {
 local name="\$(make name)"
-if [ "\$name" ]
+local tarname="\$(printf '%b_%b.tar.gz' \$name)"
+if [ "\$name" ] && make tar && [ -e "\$tarname" ]
 then
- if make tar && [ -e "\$name"*.tar.gz ]
- then
-  $MYSERVER-push "\$name"*.tar.gz
-  $MYSERVER "$MYREMOTEFUNC \"\$name\"" 
- fi
+  $MYSERVER-push "\$tarname"
+  $MYSERVER "$MYREMOTEFUNC \$name"
 fi }
 
 function $MYFUNC-full {
 local name="\$(make name)"
-if [ "\$name" ]
+local tarname="\$(printf '%b_%b.tar.gz' \$name)"
+if [ "\$name" ] && make tar && [ -e "\$tarname" ]
 then
- if make tar && [ -e "\$name"*.tar.gz ]
- then
   $MYSERVER-push "\$name"*.tar.gz
   $MYSERVER "$MYREMOTEFUNC-full \"\$name\"" 
- fi
 fi }
 TEMPLATE
 } # function template-deploy-client
@@ -111,16 +107,13 @@ fi
 
 cat << TEMPLATE
 function $MYFUNC {
-if [ "\$1" -a -a $MYSCPDIR/"\$1"*.tar.gz ] && cd $MYSTAGEDIR
+if [ "\$1" -a -a $MYSCPDIR/"\$1"_"\$2".tar.gz ] && cd $MYSTAGEDIR
 then
-  rm -r "\$1"*
-  mv $MYSCPDIR/"\$1"*.tar.gz .
-  local archive=( "\$1"*.tar.gz )
-  local fullname="\${archive%.tar.gz}"
-  tar -zxvf "\$archive" &&
-  cd "\$fullname" &&
-  make &&
-  ln -s "\$fullname/\$1" "../\$1"
+  rm -r "\$1" "\$1_"*
+  mv "$MYSCPDIR/\$1_\$2.tar.gz" .
+  tar -zxvf "\$1_\$2.tar.gz"
+  && cd "\$1_\$2" && make
+  && ln -s "\$1_\$2/\$1" "../\$1"
 else
   return 1
 fi }
@@ -128,8 +121,9 @@ fi }
 function $MYFUNC-full {
 if deploy "\$1"
 then
-  rm -r $MYLIVEDIR/"\$1"*
-  cp -r $MYSTAGEDIR/"\$1"* "$MYLIVEDIR/" && echo "Deploy complete"
+  rm -r $MYLIVEDIR/"\$1" $MYLIVEDIR/"\$1_"*
+  cp -r $MYSTAGEDIR/"\$1" $MYSTAGEDIR/"\$1_"* "$MYLIVEDIR/"
+  && echo "Deploy complete"
 fi }
 TEMPLATE
 } # function template-deploy-server

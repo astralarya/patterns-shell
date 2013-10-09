@@ -107,13 +107,13 @@ fi
 
 cat << TEMPLATE
 function $MYFUNC {
-if [ "\$1" -a -a $MYSCPDIR/"\$1"_"\$2".tar.gz ] && cd $MYSTAGEDIR
+if [ "\$1" -a "\$2" -a -a "$MYSCPDIR/\$1_\$2.tar.gz" ] && cd $MYSTAGEDIR
 then
   rm -r "\$1" "\$1_"*
   mv "$MYSCPDIR/\$1_\$2.tar.gz" .
-  tar -zxvf "\$1_\$2.tar.gz"
-  && cd "\$1_\$2" && make
-  && ln -s "\$1_\$2/\$1" "../\$1"
+  tar -zxvf "\$1_\$2.tar.gz" &&
+  cd "\$1_\$2" && make &&
+  ln -s "\$1_\$2/\$1" "../\$1"
 else
   return 1
 fi }

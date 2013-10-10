@@ -71,6 +71,15 @@ then
   $MYSERVER-push "\$tarname" &&
   $MYSERVER "$MYREMOTEFUNC-full \$name" 
 fi }
+
+function $MYFUNC-check {
+local name=(\$(make name))
+if [ "\$name" ]
+then
+  diff <($MYSERVER "\$name -#" | tee >(cat >&2) ) \
+       <(make name && git rev-parse HEAD && printf '## ' && git rev-parse --abbrev-ref HEAD && git status --porcelain  && git diff) 
+fi
+}
 TEMPLATE
 } # function template-deploy-client
 

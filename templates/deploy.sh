@@ -76,8 +76,10 @@ function $MYFUNC-check {
 local name=(\$(make name))
 if [ "\$name" ]
 then
-  diff <($MYSERVER "\$name -#" | tee >(cat >&2) ) \
-       <(make name && git rev-parse HEAD && printf '## ' && git rev-parse --abbrev-ref HEAD && git status --porcelain  && git diff) 
+  diff <(make name && git rev-parse HEAD && printf '## ' && git rev-parse --abbrev-ref HEAD && git status --porcelain  && git diff) \
+       <($MYSERVER "\$name -#") -y
+else
+  return 1
 fi
 }
 TEMPLATE

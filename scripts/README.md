@@ -37,7 +37,22 @@ You can change the colors used in the prompt by adjusting the following environm
 * `PS1_COMMAND_COLOR` - color of the output of the `PS1_COMMAND`
 
 
+## randpw
+
+Generate random passwords
+
+Source `randpw.sh` in your .\*rc file.
+
+Then you will have access to these two functions:
+* **randpw**
+  * Creates a SHA256 hash of /dev/urandom output.
+* **randpw-strong**
+  * Creates a SHA512 hash of /dev/random output.  
+    Note that this may block for a long time.
+
+
 ## untar
+
 Untar and unzip archives
 
 Source `untar.sh` in your .\*rc file.

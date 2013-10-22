@@ -5,3 +5,7 @@ if command -v git &> /dev/null
 then
   alias d="git diff"
 fi
+if command -v python &> /dev/null
+then
+  alias p="python"
+fi

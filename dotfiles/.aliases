@@ -9,3 +9,7 @@ if command -v python &> /dev/null
 then
   alias p="python"
 fi
+if command -v make &> /dev/null
+then
+  alias m="make"
+fi

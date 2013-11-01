@@ -1,5 +1,11 @@
-alias v="vim"
-alias l="ls --color=auto"
+if command -v vim &> /dev/null
+then
+  alias v="vim"
+fi
+if command -v ls &> /dev/null
+then
+  alias l="ls --color=auto"
+fi
 # alias r="ssh user@hostname"
 if command -v git &> /dev/null
 then

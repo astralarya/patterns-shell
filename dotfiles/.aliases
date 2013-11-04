@@ -19,3 +19,7 @@ if command -v make &> /dev/null
 then
   alias m="make"
 fi
+if command -v gnome-open &> /dev/null
+then
+  alias o="gnome-open"
+fi

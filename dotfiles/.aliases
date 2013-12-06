@@ -9,7 +9,11 @@ fi
 # alias r="ssh user@hostname"
 if command -v git &> /dev/null
 then
-  alias d="git diff"
+  alias gd="git diff"
+  alias gc="git commit"
+  alias gca="git commit -a"
+  alias gp="git push"
+  alias gg="git pull"
 fi
 if command -v python &> /dev/null
 then
@@ -18,8 +22,4 @@ fi
 if command -v make &> /dev/null
 then
   alias m="make"
-fi
-if command -v gnome-open &> /dev/null
-then
-  alias o="gnome-open"
 fi

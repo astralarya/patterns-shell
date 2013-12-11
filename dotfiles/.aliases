@@ -23,3 +23,6 @@ if command -v make &> /dev/null
 then
   alias m="make"
 fi
+if command -v xdg-open &> /dev/null
+  alias o="xdg-open"
+fi

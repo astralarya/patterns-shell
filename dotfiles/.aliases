@@ -24,5 +24,6 @@ then
   alias m="make"
 fi
 if command -v xdg-open &> /dev/null
+then
   alias o="xdg-open"
 fi

@@ -2,11 +2,14 @@ if command -v vim &> /dev/null
 then
   alias v="vim"
 fi
+
 if command -v ls &> /dev/null
 then
   alias l="ls --color=auto"
 fi
+
 # alias r="ssh user@hostname"
+
 if command -v git &> /dev/null
 then
   alias gd="git diff"
@@ -15,14 +18,17 @@ then
   alias gp="git push"
   alias gg="git pull"
 fi
+
 if command -v python &> /dev/null
 then
   alias p="python"
 fi
+
 if command -v make &> /dev/null
 then
   alias m="make"
 fi
+
 if command -v xdg-open &> /dev/null
 then
   alias o="xdg-open"

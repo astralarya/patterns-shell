@@ -162,7 +162,7 @@ Option		GNU long option		Meaning
 -h		--help			Show this message"
 else
  echo "Starting proxy (^C to STOP)"
- ssh -D \$port -C "$MYUSER@$MYSERVER" "echo 'Success!'; cat"
+ ssh -D \$port -C "$MYUSER@$MYSERVER" "echo 'Success!'; cat > /dev/null"
 fi
 }
 

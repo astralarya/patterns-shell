@@ -146,6 +146,25 @@ to make sure we haven't added extra keys that you weren't expecting." )
 fi
 }
 
+# SSH proxy function
+function $MYCONNECTION-proxy {
+local port=\$1
+if [ -z "\$port" ]
+then
+ local port=9999
+fi
+if [ "\$1" = "-h" -o "\$1" = "--help" ]
+then
+ # show help
+ echo "Usage: $MYCONNECTION-proxy [OPTION] [PORT]
+Start a proxy on localhost using $MYUSER@$MYSERVER on PORT (default 9999).
+Option		GNU long option		Meaning
+-h		--help			Show this message"
+else
+ echo "Starting proxy (^C to STOP)"
+ ssh -D \$port -C "$MYUSER@$MYSERVER" "echo 'Success!'; cat"
+fi
+}
 
 # SCP push function
 function $MYCONNECTION-push {

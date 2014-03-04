@@ -27,9 +27,3 @@ then
  \tar -zxvf "$1"; 
 fi }
 
-function unzip {
-if [ "$1" -a -a "$1" ]
-then
- \gzip -d "$1"
-fi }
-

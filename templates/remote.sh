@@ -161,7 +161,7 @@ Start a proxy on localhost using $MYUSER@$MYSERVER on PORT (default 9999).
 Option		GNU long option		Meaning
 -h		--help			Show this message"
 else
- echo "Starting proxy (^C to STOP)"
+ echo "Starting SOCKS host to $MYUSER@$MYSERVER on localhost:\$port (^C to STOP)"
  ssh -D \$port -C "$MYUSER@$MYSERVER" "echo 'Success!'; cat > /dev/null"
 fi
 }

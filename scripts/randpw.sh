@@ -21,10 +21,22 @@
 # Source this file in your shell's .*rc file
 
 function randpw {
- head /dev/urandom | sha256sum | sed 's/ .*$//'
+ local length=64
+ if [ "$1" ]
+ then
+  length="$1"
+ fi
+ tr -dc A-Za-z0-9 </dev/urandom |  head -c $length
+ printf '\n' 1>&2
 }
 
 function randpw-strong {
  printf "Creating a cryptographically strong password. This could take a while...\n" 1>&2
- head /dev/random | sha512sum | sed 's/ .*$//'
+ local length=128
+ if [ "$1" ]
+ then
+  length="$1"
+ fi
+ tr -dc A-Za-z0-9 </dev/random |  head -c $length
+ printf '\n' 1>&2
 }

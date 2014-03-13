@@ -163,6 +163,7 @@ Option		GNU long option		Meaning
 else
  echo "Starting SOCKS host to $MYUSER@$MYSERVER on localhost:\$port (^C to STOP)"
  ssh -D \$port -C "$MYUSER@$MYSERVER" "echo 'Success!'; cat > /dev/null"
+ true
 fi
 }
 

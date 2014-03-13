@@ -21,95 +21,97 @@
 ### USAGE ###
 
 # Source this file in your shell's .*rc file
-# Then use template-remote to create your functions
+#
+# Requires the following arguments:
+# connection: the name of the connection
+# myuser@myserver: the SSH connection string
+# 
+# The following arguments are optional:
+# scpdir: default remote directory for SCP operations
+# 
+# Declares the following functions:
+# [connection]: to connect to server via SSH as [user@server]
+# [connection]-keygen: setup key authentication for this connection
+# [connection]-push, [connection]-pull: push/pull files via SCP, default remote dir [scpdir] (default ~/scp)
+# [connection]-proxy: start a SOCKS proxy using this connection"
+#
+# Example:
+#     source .../remote.sh "myremote" "myuser@myserver" "myscpdir"
+#
 # See README.md for more info
 
-
-### TEMPLATE ###
-
-# output three function definitons
-# * access server via SSH
-# * push file to server via SCP
-# * pull file from server via SCP
-# ex.
-# source <(template-remote "myconnection" "myserver" "myuser" "myscpdir")
-# * myconnection [OPTION] [command]
-# * myconnection-push [OPTION] [file]...
-# * myconnection-pull [OPTION] [file]...
-function template-remote {
-
-if [ "$1" = "-h" -o "$1" = "--help" ]
+if [ -z "$1" -o -z "$2" ]
 then
- echo "Usage: template-remote [connection] [server] [user] [scpdir]
-Output code for a four functions named [connection], [connection]-keygen
-[connection]-push, [connection]-pull, to connect to server via SSH,
-push/pull files via SCP (default remote dir as [scpdir] (default ~/scp), and set up key
-authentication as [user]@[server].
-Option		GNU long option		Meaning
--h		--help			Show this message"
+ echo "Usage: source .../remote.sh connection user@server [scpdir]
+Output code for functions to manage a remote connection.
+[connection]: to connect to server via SSH as [user@server]
+[connection]-keygen: setup key authentication for this connection
+[connection]-push, [connection]-pull: push/pull files via SCP, default remote dir [scpdir] (default ~/scp)
+[connection]-proxy: start a SOCKS proxy using this connection"
  return 0
 fi
 
-local MYCONNECTION=$1
-local MYSERVER=$2
-local MYUSER=$3
-if [ "$4" ]
+### TEMPLATE ###
+
+# $1 = connection name
+# $2 = user@connection
+# $3 = scpdir
+
+if [ -z "$3" ]
 then
- local MYSCPDIR=$4
-else
- local MYSCPDIR="~/scp"
+ set -- "${@:1:2}" "~/scp" "${@:4}"
 fi
 
-cat << TEMPLATE 
+eval "
 # SSH connection function
-function $MYCONNECTION {
+function $1 {
 
-if [[ "\$1" = "-*" ]]
+if [[ \"\$1\" = \"-*\" ]]
 then
- local option="\$1"
- local command="\$2"
+ local option=\"\$1\"
+ local command=\"\$2\"
 else
- local command="\$1"
- local option="\$2"
+ local command=\"\$1\"
+ local option=\"\$2\"
 fi
-if [ "\$option" = "-h" -o "\$option" = "--help" ]
+if [ \"\$option\" = \"-h\" -o \"\$option\" = \"--help\" ]
 then
  # show help
- echo "Usage: $MYCONNECTION [OPTION] [command]
-Connect via SSH to $MYSERVER
+ echo \"Usage: $1 [OPTION] [command]
+Connect via SSH to $2
 If a command is given as an argument, execute it remotely,
-otherwise start an ssh session connected to $MYSERVER.
+otherwise start an ssh session connected to $2
 Option		GNU long option		Meaning
 -h		--help			Show this message
--*					SSH option (see man ssh)"
+-*					SSH option (see man ssh)\"
 else
- ssh \$option "$MYUSER@$MYSERVER" "\$command"
+ ssh \$option \"$2\" \"\$command\"
 fi
 }
 
 
 # SSH key function
-function $MYCONNECTION-keygen {
-if [ "\$1" = "-h" -o "\$1" = "--help" ]
+function $1-keygen {
+if [ \"\$1\" = \"-h\" -o \"\$1\" = \"--help\" ]
 then
  # show help
- echo "Usage: $MYCONNECTION-keygen [OPTION]
-Check and set up key authentication for $MYCONNECTION.
+ echo \"Usage: $1-keygen [OPTION]
+Check and set up key authentication for $1.
 Option		GNU long option		Meaning
--h		--help			Show this message"
+-h		--help			Show this message\"
 else
- echo "Testing key"
+ echo \"Testing key\"
  # see if we already have a key
  ssh-add -L
  local status=\$?
  if [ \$status -eq 2 ]
  then
   # start ssh-agent if not started
-  echo "It appears your ssh-agent does not start automatically. Put 
+  echo \"It appears your ssh-agent does not start automatically. Put 
 
   eval \\\$(ssh-agent); ssh-add;
 
-in your ~/.*rc file to fix"
+in your ~/.*rc file to fix\"
   eval \$(ssh-agent)
   ssh-add -L
   local status=\$?
@@ -133,183 +135,182 @@ in your ~/.*rc file to fix"
  fi
 
  # check if key auth already enabled
- ssh '-o PasswordAuthentication=no' "$MYUSER@$MYSERVER" ':' ||
+ ssh '-o PasswordAuthentication=no' "$2" ':' ||
  # if not set up remote key 
- ( ssh-add -L | ssh "$MYUSER@$MYSERVER" '\$(: \$(mkdir -p ~/.ssh)) cat >> ~/.ssh/authorized_keys' &&
- echo "Now try logging into the machine, with \"$MYCONNECTION\", and check in:
+ ( ssh-add -L | ssh \"$2\" '\$(: \$(mkdir -p ~/.ssh)) cat >> ~/.ssh/authorized_keys' &&
+ echo \"Now try logging into the machine, with \\\"$1\\\", and check in:
 
   ~/.ssh/authorized_keys
 
-to make sure we haven't added extra keys that you weren't expecting." )
+to make sure we haven't added extra keys that you weren't expecting.\" )
 
- echo "Key authentication enabled"
+ echo \"Key authentication enabled\"
 fi
 }
 
 # SSH proxy function
-function $MYCONNECTION-proxy {
+function $1-proxy {
 local port=\$1
-if [ -z "\$port" ]
+if [ -z \"\$port\" ]
 then
  local port=9999
 fi
-if [ "\$1" = "-h" -o "\$1" = "--help" ]
+if [ \"\$1\" = \"-h\" -o \"\$1\" = \"--help\" ]
 then
  # show help
- echo "Usage: $MYCONNECTION-proxy [OPTION] [PORT]
-Start a proxy on localhost using $MYUSER@$MYSERVER on PORT (default 9999).
+ echo \"Usage: $1-proxy [OPTION] [PORT]
+Start a proxy on localhost using $2 on PORT (default 9999).
 Option		GNU long option		Meaning
--h		--help			Show this message"
+-h		--help			Show this message\"
 else
- echo "Starting SOCKS host to $MYUSER@$MYSERVER on localhost:\$port (^C to STOP)"
- ssh -D \$port -C "$MYUSER@$MYSERVER" "echo 'Success!'; cat > /dev/null"
+ echo \"Starting SOCKS host to $2 on localhost:\$port (^C to STOP)\"
+ ssh -D \$port -C \"$2\" \"echo 'Success!'; cat > /dev/null\"
  true
 fi
 }
 
 # SCP push function
-function $MYCONNECTION-push {
+function $1-push {
 local file
 local option
 local dest
 local state
-local good="good"
-for arg in "\$@"
+local good=\"good\"
+for arg in \"\$@\"
 do
- if [ "\$state" = "file" ]
+ if [ \"\$state\" = \"file\" ]
  then
-  if [ -e "\$arg" ]
+  if [ -e \"\$arg\" ]
   then
-   file="\$file \$arg"
+   file=\"\$file \$arg\"
   else
-   echo "Cannot find file: \$arg"
-   good="bad"
+   echo \"Cannot find file: \$arg\"
+   good=\"bad\"
   fi
- elif [ "\$state" = "dest" ]
+ elif [ \"\$state\" = \"dest\" ]
  then
-  dest="\$arg"
-  state=""
- elif [ "\$arg" = "-h" -o "\$arg" = "--help" ]
+  dest=\"\$arg\"
+  state=\"\"
+ elif [ \"\$arg\" = \"-h\" -o \"\$arg\" = \"--help\" ]
  then
   # show help
-  echo "Usage: $MYCONNECTION-push [OPTION] [file]...
-Push file to remote directory (default $MYSCPDIR/) on $MYSERVER as $MYUSER
+  echo \"Usage: $1-push [OPTION] [file]...
+Push file to remote directory (default $3/) on $2
 Option		GNU long option		Meaning
 -h		--help			Show this message
--d		--destination		Specify the remote destination (absolute or relative to $MYSCPDIR/)
+-d		--destination		Specify the remote destination (absolute or relative to $3/)
 --					Treat all following arguments as files
--*					SCP option (see man scp)"
+-*					SCP option (see man scp)\"
   return 0
- elif [ "\$arg" = "-d" -o "\$arg" = "--destination" ]
+ elif [ \"\$arg\" = \"-d\" -o \"\$arg\" = \"--destination\" ]
  then
-  state="dest"
- elif [ "\$arg" = "--" ]
+  state=\"dest\"
+ elif [ \"\$arg\" = \"--\" ]
  then
-  state="file"
- elif [[ "\$arg" = -* ]]
+  state=\"file\"
+ elif [[ \"\$arg\" = -* ]]
  then
-  option="\$option \$arg"
- elif [ -e "\$arg" ]
+  option=\"\$option \$arg\"
+ elif [ -e \"\$arg\" ]
  then
-  file="\$file \$arg"
+  file=\"\$file \$arg\"
  else
-  echo "Cannot find file: \$arg"
-  good="bad"
+  echo \"Cannot find file: \$arg\"
+  good=\"bad\"
  fi
 done
 
-if [ "\$good" != "good" ]
+if [ \"\$good\" != \"good\" ]
 then
- echo "Abort"
+ echo \"Abort\"
  return 1
 fi
 
-if [ -z "\$dest" ]
+if [ -z \"\$dest\" ]
 then
- local dest="$MYSCPDIR/"
-elif [[ "\$dest" = /* ]]
+ local dest=\"$3/\"
+elif [[ \"\$dest\" = /* ]]
 then
- local dest="\$dest"
+ local dest=\"\$dest\"
 else
- local dest="$MYSCPDIR/\$dest"
+ local dest=\"$3/\$dest\"
 fi
 
-scp \$option \$file "$MYUSER@$MYSERVER:\$dest"
+scp \$option \$file \"$2:\$dest\"
 }
 
 
 # SCP pull function
-function $MYCONNECTION-pull {
+function $1-pull {
 local file
 local option
 local dest
 local state
-local good="good"
-for arg in "\$@"
+local good=\"good\"
+for arg in \"\$@\"
 do
- if [ "\$state" = "file" ]
+ if [ \"\$state\" = \"file\" ]
  then
-  if [[ "\$arg" = /* ]]
+  if [[ \"\$arg\" = /* ]]
   then
-   local file="\$file $MYUSER@$MYSERVER:\$arg"
+   local file=\"\$file $2:\$arg\"
   else
-   local file="\$file $MYUSER@$MYSERVER:$MYSCPDIR/\$arg"
+   local file=\"\$file $2:$3/\$arg\"
   fi
- elif [ "\$state" = "dest" ]
+ elif [ \"\$state\" = \"dest\" ]
  then
-  if [ -d "\$arg" ]
+  if [ -d \"\$arg\" ]
   then
-   dest="\$arg"
+   dest=\"\$arg\"
   else
-   echo "Bad destination: \$arg"
-   good="bad"
+   echo \"Bad destination: \$arg\"
+   good=\"bad\"
   fi
-  state=""
- elif [ "\$arg" = "-h" -o "\$arg" = "--help" ]
+  state=\"\"
+ elif [ \"\$arg\" = \"-h\" -o \"\$arg\" = \"--help\" ]
  then
   # show help
-  echo "Usage: $MYCONNECTION-push [OPTION] [file]...
-Pull files from $MYSERVER as $MYUSER. Relative remote paths resolve from $MYSCPDIR/.
+  echo \"Usage: $1-push [OPTION] [file]...
+Pull files from ${2}. Relative remote paths resolve from $3/.
 Option		GNU long option		Meaning
 -h		--help			Show this message
 -d		--destination		Specify the local destination
 --					Treat all following arguments as files
--*					SCP option (see man scp)"
+-*					SCP option (see man scp)\"
   return 0
- elif [ "\$arg" = "-d" -o "\$arg" = "--destination" ]
+ elif [ \"\$arg\" = \"-d\" -o \"\$arg\" = \"--destination\" ]
  then
-  state="dest"
- elif [ "\$arg" = "--" ]
+  state=\"dest\"
+ elif [ \"\$arg\" = \"--\" ]
  then
-  state="file"
- elif [[ "\$arg" = -* ]]
+  state=\"file\"
+ elif [[ \"\$arg\" = -* ]]
  then
-  option="\$option \$arg"
+  option=\"\$option \$arg\"
  else
-  if [[ "\$arg" = /* ]]
+  if [[ \"\$arg\" = /* ]]
   then
-   local file="\$file $MYUSER@$MYSERVER:\$arg"
+   local file=\"\$file $2:\$arg\"
   else
-   local file="\$file $MYUSER@$MYSERVER:$MYSCPDIR/\$arg"
+   local file=\"\$file $2:$3/\$arg\"
   fi
  fi
 done
 
-if [ "\$good" != "good" ]
+if [ \"\$good\" != \"good\" ]
 then
- echo "Abort"
+ echo \"Abort\"
  return 1
 fi
 
-if [ -z "\$dest" ]
+if [ -z \"\$dest\" ]
 then
- local dest="."
+ local dest=\".\"
 else
- local dest="\$dest"
+ local dest=\"\$dest\"
 fi
 
-scp \$option \$file "\$dest"
+scp \$option \$file \"\$dest\"
 }
-TEMPLATE
-} # function template-remote
+"
 

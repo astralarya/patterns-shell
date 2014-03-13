@@ -57,11 +57,6 @@ fi
 # $2 = user@connection
 # $3 = scpdir
 
-if [ -z "$3" ]
-then
- set -- "${@:1:2}" "~/scp" "${@:4}"
-fi
-
 eval "
 # SSH connection function
 function $1 {
@@ -195,10 +190,10 @@ do
  then
   # show help
   echo \"Usage: $1-push [OPTION] [file]...
-Push file to remote directory (default $3/) on $2
+Push file to remote directory (default $(if [ -z "$3" ]; then printf '~/scp'; else printf "$3"; fi)) on $2
 Option		GNU long option		Meaning
 -h		--help			Show this message
--d		--destination		Specify the remote destination (absolute or relative to $3/)
+-d		--destination		Specify the remote destination (absolute or relative to $(if [ -z "$3" ]; then printf '~/scp'; else printf "$3"; fi)/)
 --					Treat all following arguments as files
 -*					SCP option (see man scp)\"
   return 0
@@ -228,12 +223,12 @@ fi
 
 if [ -z \"\$dest\" ]
 then
- local dest=\"$3/\"
+ local dest=\"$(if [ -z "$3" ]; then printf '~/scp'; else printf "$3"; fi)/\"
 elif [[ \"\$dest\" = /* ]]
 then
  local dest=\"\$dest\"
 else
- local dest=\"$3/\$dest\"
+ local dest=\"$(if [ -z "$3" ]; then printf '~/scp'; else printf "$3"; fi)/\$dest\"
 fi
 
 scp \$option \$file \"$2:\$dest\"
@@ -255,7 +250,7 @@ do
   then
    local file=\"\$file $2:\$arg\"
   else
-   local file=\"\$file $2:$3/\$arg\"
+   local file=\"\$file $2:$(if [ -z "$3" ]; then printf '~/scp'; else printf "$3"; fi)/\$arg\"
   fi
  elif [ \"\$state\" = \"dest\" ]
  then
@@ -271,7 +266,7 @@ do
  then
   # show help
   echo \"Usage: $1-push [OPTION] [file]...
-Pull files from ${2}. Relative remote paths resolve from $3/.
+Pull files from ${2}. Relative remote paths resolve from $(if [ -z "$3" ]; then printf '~/scp'; else printf "$3"; fi)/.
 Option		GNU long option		Meaning
 -h		--help			Show this message
 -d		--destination		Specify the local destination
@@ -292,7 +287,7 @@ Option		GNU long option		Meaning
   then
    local file=\"\$file $2:\$arg\"
   else
-   local file=\"\$file $2:$3/\$arg\"
+   local file=\"\$file $2:$(if [ -z "$3" ]; then printf '~/scp'; else printf "$3"; fi)/\$arg\"
   fi
  fi
 done

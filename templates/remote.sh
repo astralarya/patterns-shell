@@ -22,12 +22,10 @@
 
 # Source this file in your shell's .*rc file
 #
-# Requires the following arguments:
+# Accepts the following arguments:
 # connection: the name of the connection
 # myuser@myserver: the SSH connection string
-# 
-# The following arguments are optional:
-# scpdir: default remote directory for SCP operations
+# scpdir: Optional; default remote directory for SCP operations
 # 
 # Declares the following functions:
 # [connection]: to connect to server via SSH as [user@server]

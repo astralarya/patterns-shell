@@ -51,7 +51,7 @@ fi
 
 eval "
 # Database access function
-function $(if [ -z "$3" ]; then printf "$1"; else printf "$3"; fi) {
+$(if [ -z "$3" ]; then printf "$1"; else printf "$3"; fi) () {
 local file
 local option
 local state

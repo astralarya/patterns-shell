@@ -2,7 +2,16 @@
 
 **patterns-shell/templates** - Code generators for shell patterns
 
-If you wish to use a template, you should source its \*.sh file.
+Some of these scripts define template-\* functions.
+These functions take arguments and generate shell scripts
+based off templates. You can save this output, analyze it, and source it, or you
+can source it directly with process substitution:
+
+>source &lt;(template-\* arg1 arg2 ... argn)
+
+All generated functions are self documenting.  You can view this documentation with
+
+>funcname -h
 
 ## deploy
 ### template-deploy-client

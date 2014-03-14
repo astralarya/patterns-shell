@@ -25,23 +25,16 @@ see `scripts/README.md`
 
 ### Templates
 
-You can use templates to generate code. These functions take arguments and generate shell scripts
-based off templates. You can save this output, analyze it, and source it, or you
-can source it directly with process substitution:
-
->source &lt;(template-\* arg1 arg2 ... argn)
-
-All generated functions are self documenting.  You can view this documentation with
-
->funcname -h
-
-The template functions are listed below:
-
+You can use templates to generate code.
+* **deploy**
+    * **template-deploy-client** - Client side deploy methods
+    * **template-deploy-server** - Server side deploy methods
 * **pgdb**
     * *template-db* - Generate function to access a database as a user
     * *template-dbbackup* - Generate function to backup and restore a database
 * **remote**
-    * *template-remote* - Generate functions to connect to a server via SSH, push/pull files via SCP, and setup key authorization.
+    * Generate functions to connect to a server via SSH, setup public/private key authorization,
+      start a SOCKS proxy, and push/pull files via SCP.
 * **sourcedir**
     * *template-sourcedir* - Generate script to source all files in a directory
 

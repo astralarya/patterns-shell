@@ -40,20 +40,24 @@ and links a stable name to deployed program.
 [stagedir] to [livedir].
 
 ## pgdb
-### template-db
-Usage: **template-db** *name* *user* [funcname]  
-Generate function to access a database as a user  
-  * $1 database name
-  * $2 database user
-  * $3 database function name (default $1)
+Generates functions to connect to a PostgreSQL database.
 
-This template generates one function
+Source the output of pgdb.sh in your .\*rc file, passing the following arguments.
+* $1 database
+* $2 user
+* [$3] function name; default [database]
+
+Usage: **remote.sh** *name* [*user@*]*hostname* [*scpdir*]
+
+Usage: **pgdb.sh** *database* *user* [*funcname*]  
+
+This template generates the following function
   * **dbfuncname** [OPTION] [queryfile]  
     If a file is given as an argument, execute the queries in the file,  
     otherwise start a psql session connected to database.
     * -h show help  
 
-### template-dbbackup
+## pgdb-backup
 Usage: **template-dbbackup** *name* *superuser* *backupdir* [funcname]  
 Generate a function to backup a database  
   * $1 database name

@@ -44,7 +44,6 @@ This template generates one function
   * **dbfuncname** [OPTION] [queryfile]  
     If a file is given as an argument, execute the queries in the file,  
     otherwise start a psql session connected to database.
-    * -t time query or session
     * -h show help  
 
 ### template-dbbackup

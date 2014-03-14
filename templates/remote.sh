@@ -59,7 +59,7 @@ fi
 
 eval "
 # SSH connection function
-function $1 {
+$1 () {
 
 if [[ \"\$1\" = \"-*\" ]]
 then
@@ -86,7 +86,7 @@ fi
 
 
 # SSH key function
-function $1-keygen {
+$1-keygen () {
 if [ \"\$1\" = \"-h\" -o \"\$1\" = \"--help\" ]
 then
  # show help
@@ -144,7 +144,7 @@ fi
 }
 
 # SSH proxy function
-function $1-proxy {
+$1-proxy () {
 local port=\$1
 if [ -z \"\$port\" ]
 then
@@ -165,7 +165,7 @@ fi
 }
 
 # SCP push function
-function $1-push {
+$1-push () {
 local file
 local option
 local dest
@@ -236,7 +236,7 @@ scp \$option \$file \"$2:\$dest\"
 
 
 # SCP pull function
-function $1-pull {
+$1-pull () {
 local file
 local option
 local dest

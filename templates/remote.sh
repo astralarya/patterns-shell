@@ -20,7 +20,7 @@
 
 ### USAGE ###
 
-# Source this file in your shell's .*rc file
+# Source the output of this file in your shell's .*rc file
 #
 # Accepts the following arguments:
 # connection: the name of the connection
@@ -34,77 +34,80 @@
 # [connection]-proxy: start a SOCKS proxy using this connection"
 #
 # Example:
-#     source .../remote.sh "myremote" "myuser@myserver" "myscpdir"
+#     remote.sh "myremote" "myuser@myserver" "myscpdir"
 #
 # See README.md for more info
 
 if [ -z "$1" -o -z "$2" ]
 then
- echo "Usage: source .../remote.sh connection user@server [scpdir]
+ echo "Usage: remote.sh connection user@server [scpdir]
 Output code for functions to manage a remote connection.
 [connection]: to connect to server via SSH as [user@server]
 [connection]-keygen: setup key authentication for this connection
 [connection]-push, [connection]-pull: push/pull files via SCP, default remote dir [scpdir] (default ~/scp)
-[connection]-proxy: start a SOCKS proxy using this connection"
- return 0
+[connection]-proxy: start a SOCKS proxy using this connection" 1>&2
+ exit 0
 fi
 
 ### TEMPLATE ###
 
-# $1 = connection name
-# $2 = user@connection
-# $3 = scpdir
-
-eval "
-# SSH connection function
-$1 () {
-
-if [[ \"\$1\" = \"-*\" ]]
-then
- local option=\"\$1\"
- local command=\"\$2\"
-else
- local command=\"\$1\"
- local option=\"\$2\"
+NAME="$1"
+CONNECTION="$2"
+if [ -z "$3" ]
+then SCPDIR='~/scp'
+else SCPDIR="$3"
 fi
-if [ \"\$option\" = \"-h\" -o \"\$option\" = \"--help\" ]
+
+cat << TEMPLATE
+# SSH connection function
+$NAME () {
+
+if [[ "\$1" = "-*" ]]
+then
+ local option="\$1"
+ local command="\$2"
+else
+ local command="\$1"
+ local option="\$2"
+fi
+if [ "\$option" = "-h" -o "\$option" = "--help" ]
 then
  # show help
- echo \"Usage: $1 [OPTION] [command]
-Connect via SSH to $2
+ echo "Usage: $NAME [OPTION] [command]
+Connect via SSH to $CONNECTION
 If a command is given as an argument, execute it remotely,
-otherwise start an ssh session connected to $2
+otherwise start an ssh session connected to $CONNECTION
 Option		GNU long option		Meaning
 -h		--help			Show this message
--*					SSH option (see man ssh)\"
+-*					SSH option (see man ssh)"
 else
- ssh \$option \"$2\" \"\$command\"
+ ssh \$option "$CONNECTION" "\$command"
 fi
 }
 
 
 # SSH key function
-$1-keygen () {
-if [ \"\$1\" = \"-h\" -o \"\$1\" = \"--help\" ]
+$NAME-keygen () {
+if [ "\$1" = "-h" -o "\$1" = "--help" ]
 then
  # show help
- echo \"Usage: $1-keygen [OPTION]
-Check and set up key authentication for $1.
+ echo "Usage: $NAME-keygen [OPTION]
+Check and set up key authentication for $NAME.
 Option		GNU long option		Meaning
--h		--help			Show this message\"
+-h		--help			Show this message"
 else
- echo \"Testing key\"
+ echo "Testing key"
  # see if we already have a key
  ssh-add -L
  local status=\$?
  if [ \$status -eq 2 ]
  then
   # start ssh-agent if not started
-  echo \"It appears your ssh-agent does not start automatically. Put 
+  echo "It appears your ssh-agent does not start automatically. Put 
 
   eval \\\$(ssh-agent); ssh-add;
 
-in your ~/.*rc file to fix\"
+in your ~/.*rc file to fix"
   eval \$(ssh-agent)
   ssh-add -L
   local status=\$?
@@ -128,181 +131,181 @@ in your ~/.*rc file to fix\"
  fi
 
  # check if key auth already enabled
- ssh '-o PasswordAuthentication=no' "$2" ':' ||
+ ssh '-o PasswordAuthentication=no' "$CONNECTION" ':' ||
  # if not set up remote key 
- ( ssh-add -L | ssh \"$2\" '\$(: \$(mkdir -p ~/.ssh)) cat >> ~/.ssh/authorized_keys' &&
- echo \"Now try logging into the machine, with \\\"$1\\\", and check in:
+ ( ssh-add -L | ssh "$CONNECTION" '\$(: \$(mkdir -p ~/.ssh)) cat >> ~/.ssh/authorized_keys' &&
+ echo "Now try logging into the machine, with \"$NAME\", and check in:
 
   ~/.ssh/authorized_keys
 
-to make sure we haven't added extra keys that you weren't expecting.\" )
+to make sure we haven't added extra keys that you weren't expecting." )
 
- echo \"Key authentication enabled\"
+ echo "Key authentication enabled"
 fi
 }
 
 # SSH proxy function
-$1-proxy () {
+$NAME-proxy () {
 local port=\$1
-if [ -z \"\$port\" ]
+if [ -z "\$port" ]
 then
  local port=9999
 fi
-if [ \"\$1\" = \"-h\" -o \"\$1\" = \"--help\" ]
+if [ "\$1" = "-h" -o "\$1" = "--help" ]
 then
  # show help
- echo \"Usage: $1-proxy [OPTION] [PORT]
-Start a proxy on localhost using $2 on PORT (default 9999).
+ echo "Usage: $NAME-proxy [OPTION] [PORT]
+Start a proxy on localhost using $CONNECTION on PORT (default 9999).
 Option		GNU long option		Meaning
--h		--help			Show this message\"
+-h		--help			Show this message"
 else
- echo \"Starting SOCKS host to $2 on localhost:\$port (^C to STOP)\"
- ssh -D \$port -C \"$2\" \"echo 'Success!'; cat > /dev/null\"
+ echo "Starting SOCKS host to $CONNECTION on localhost:\$port (^C to STOP)"
+ ssh -D \$port -C "$CONNECTION" "echo 'Success!'; cat > /dev/null"
  true
 fi
 }
 
 # SCP push function
-$1-push () {
+$NAME-push () {
 local file
 local option
 local dest
 local state
-local good=\"good\"
-for arg in \"\$@\"
+local good="good"
+for arg in "\$@"
 do
- if [ \"\$state\" = \"file\" ]
+ if [ "\$state" = "file" ]
  then
-  if [ -e \"\$arg\" ]
+  if [ -e "\$arg" ]
   then
-   file=\"\$file \$arg\"
+   file="\$file \$arg"
   else
-   echo \"Cannot find file: \$arg\"
-   good=\"bad\"
+   echo "Cannot find file: \$arg"
+   good="bad"
   fi
- elif [ \"\$state\" = \"dest\" ]
+ elif [ "\$state" = "dest" ]
  then
-  dest=\"\$arg\"
-  state=\"\"
- elif [ \"\$arg\" = \"-h\" -o \"\$arg\" = \"--help\" ]
+  dest="\$arg"
+  state=""
+ elif [ "\$arg" = "-h" -o "\$arg" = "--help" ]
  then
   # show help
-  echo \"Usage: $1-push [OPTION] [file]...
-Push file to remote directory (default $(if [ -z "$3" ]; then printf '~/scp'; else printf "$3"; fi)) on $2
+  echo "Usage: $NAME-push [OPTION] [file]...
+Push file to remote directory (default $SCPDIR) on $CONNECTION
 Option		GNU long option		Meaning
 -h		--help			Show this message
--d		--destination		Specify the remote destination (absolute or relative to $(if [ -z "$3" ]; then printf '~/scp'; else printf "$3"; fi)/)
+-d		--destination		Specify the remote destination (absolute or relative to $SCPDIR)
 --					Treat all following arguments as files
--*					SCP option (see man scp)\"
+-*					SCP option (see man scp)"
   return 0
- elif [ \"\$arg\" = \"-d\" -o \"\$arg\" = \"--destination\" ]
+ elif [ "\$arg" = "-d" -o "\$arg" = "--destination" ]
  then
-  state=\"dest\"
- elif [ \"\$arg\" = \"--\" ]
+  state="dest"
+ elif [ "\$arg" = "--" ]
  then
-  state=\"file\"
- elif [[ \"\$arg\" = -* ]]
+  state="file"
+ elif [[ "\$arg" = -* ]]
  then
-  option=\"\$option \$arg\"
- elif [ -e \"\$arg\" ]
+  option="\$option \$arg"
+ elif [ -e "\$arg" ]
  then
-  file=\"\$file \$arg\"
+  file="\$file \$arg"
  else
-  echo \"Cannot find file: \$arg\"
-  good=\"bad\"
+  echo "Cannot find file: \$arg"
+  good="bad"
  fi
 done
 
-if [ \"\$good\" != \"good\" ]
+if [ "\$good" != "good" ]
 then
- echo \"Abort\"
+ echo "Abort"
  return 1
 fi
 
-if [ -z \"\$dest\" ]
+if [ -z "\$dest" ]
 then
- local dest=\"$(if [ -z "$3" ]; then printf '~/scp'; else printf "$3"; fi)/\"
-elif [[ \"\$dest\" = /* ]]
+ local dest="$SCPDIR/"
+elif [[ "\$dest" = /* ]]
 then
- local dest=\"\$dest\"
+ local dest="\$dest"
 else
- local dest=\"$(if [ -z "$3" ]; then printf '~/scp'; else printf "$3"; fi)/\$dest\"
+ local dest="$SCPDIR/\$dest"
 fi
 
-scp \$option \$file \"$2:\$dest\"
+scp \$option \$file "$CONNECTION:\$dest"
 }
 
 
 # SCP pull function
-$1-pull () {
+$NAME-pull () {
 local file
 local option
 local dest
 local state
-local good=\"good\"
-for arg in \"\$@\"
+local good="good"
+for arg in "\$@"
 do
- if [ \"\$state\" = \"file\" ]
+ if [ "\$state" = "file" ]
  then
-  if [[ \"\$arg\" = /* ]]
+  if [[ "\$arg" = /* ]]
   then
-   local file=\"\$file $2:\$arg\"
+   local file="\$file $CONNECTION:\$arg"
   else
-   local file=\"\$file $2:$(if [ -z "$3" ]; then printf '~/scp'; else printf "$3"; fi)/\$arg\"
+   local file="\$file $CONNECTION:$SCPDIR/\$arg"
   fi
- elif [ \"\$state\" = \"dest\" ]
+ elif [ "\$state" = "dest" ]
  then
-  if [ -d \"\$arg\" ]
+  if [ -d "\$arg" ]
   then
-   dest=\"\$arg\"
+   dest="\$arg"
   else
-   echo \"Bad destination: \$arg\"
-   good=\"bad\"
+   echo "Bad destination: \$arg"
+   good="bad"
   fi
-  state=\"\"
- elif [ \"\$arg\" = \"-h\" -o \"\$arg\" = \"--help\" ]
+  state=""
+ elif [ "\$arg" = "-h" -o "\$arg" = "--help" ]
  then
   # show help
-  echo \"Usage: $1-push [OPTION] [file]...
-Pull files from ${2}. Relative remote paths resolve from $(if [ -z "$3" ]; then printf '~/scp'; else printf "$3"; fi)/.
+  echo "Usage: $NAME-push [OPTION] [file]...
+Pull files from ${2}. Relative remote paths resolve from $SCPDIR/.
 Option		GNU long option		Meaning
 -h		--help			Show this message
 -d		--destination		Specify the local destination
 --					Treat all following arguments as files
--*					SCP option (see man scp)\"
+-*					SCP option (see man scp)"
   return 0
- elif [ \"\$arg\" = \"-d\" -o \"\$arg\" = \"--destination\" ]
+ elif [ "\$arg" = "-d" -o "\$arg" = "--destination" ]
  then
-  state=\"dest\"
- elif [ \"\$arg\" = \"--\" ]
+  state="dest"
+ elif [ "\$arg" = "--" ]
  then
-  state=\"file\"
- elif [[ \"\$arg\" = -* ]]
+  state="file"
+ elif [[ "\$arg" = -* ]]
  then
-  option=\"\$option \$arg\"
+  option="\$option \$arg"
  else
-  if [[ \"\$arg\" = /* ]]
+  if [[ "\$arg" = /* ]]
   then
-   local file=\"\$file $2:\$arg\"
+   local file="\$file $CONNECTION:\$arg"
   else
-   local file=\"\$file $2:$(if [ -z "$3" ]; then printf '~/scp'; else printf "$3"; fi)/\$arg\"
+   local file="\$file $CONNECTION:$SCPDIR/\$arg"
   fi
  fi
 done
 
-if [ \"\$good\" != \"good\" ]
+if [ "\$good" != "good" ]
 then
- echo \"Abort\"
+ echo "Abort"
  return 1
 fi
 
-if [ -z \"\$dest\" ]
+if [ -z "\$dest" ]
 then
- local dest=\".\"
+ local dest="."
 else
- local dest=\"\$dest\"
+ local dest="\$dest"
 fi
 
-scp \$option \$file \"\$dest\"
+scp \$option \$file "\$dest"
 }
-"
+TEMPLATE

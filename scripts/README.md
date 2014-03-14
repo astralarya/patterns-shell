@@ -42,20 +42,6 @@ Note that only the numerical protion of the color code is necessary.
 For more information on terminal colors, see http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
 
 
-## randpw
-
-Generate random passwords
-
-Source `randpw.sh` in your .\*rc file.
-
-Then you will have access to these two functions:
-* **randpw**
-  * Creates a SHA256 hash of /dev/urandom output.
-* **randpw-strong**
-  * Creates a SHA512 hash of /dev/random output.  
-    Note that this may block for a long time.
-
-
 ## untar
 
 Untar and unzip archives

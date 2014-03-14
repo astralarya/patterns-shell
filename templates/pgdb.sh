@@ -40,77 +40,80 @@ then
  echo "Usage: source pgdb.sh database user [FUNCNAME]
 Output code for a function [FUNCNAME] (default [database])
 to access the PostgreSQL database [database] as [user]."
- return 0
+ exit 0
 fi
 
 ### TEMPLATE ###
 
-# $1 = database
-# $2 = user
-# $3 = function name
+DATABASE="$1"
+USER="$2"
+if [ -z "$3"]
+then NAME="$DATABASE"
+else NAME="$3"
+fi
 
-eval "
+cat << TEMPLATE
 # Database access function
-$(if [ -z "$3" ]; then printf "$1"; else printf "$3"; fi) () {
+$NAME () {
 local file
 local option
 local state
-local good=\"good\"
-for arg in \"\$@\"
+local good="good"
+for arg in "\$@"
 do
- if [ \"\$state\" = \"file\" ]
+ if [ "\$state" = "file" ]
  then
-  if [ -e \"\$arg\" ]
+  if [ -e "\$arg" ]
   then
-   file+=( '-f' \"\$arg\" )
+   file+=( '-f' "\$arg" )
   else
-   echo \"Cannot find file: \$arg\"
-   good=\"bad\"
+   echo "Cannot find file: \$arg"
+   good="bad"
   fi
- elif [ \"\$arg\" = \"-h\" -o \"\$arg\" = \"--help\" ]
+ elif [ "\$arg" = "-h" -o "\$arg" = "--help" ]
  then
   # show help
-  echo \"Usage: $(if [ -z "$3" ]; then printf "$1"; else printf "$3"; fi) [OPTION] [queryfile]
-Access $1 as $2.
+  echo "Usage: $NAME [OPTION] [queryfile]
+Access $DATABASE as $USER.
 If a file is given as an argument, execute the queries in the file,
-otherwise start a psql session connected to $1. 
+otherwise start a psql session connected to $DATABASE. 
 Option		GNU long option		Meaning
 -h		--help			Show this message
--*		--*			Pass argument to psql (see man psql)\"
+-*		--*			Pass argument to psql (see man psql)"
   return 0
- elif [ \"\$arg\" = \"--\" ]
+ elif [ "\$arg" = "--" ]
  then
-  state=\"file\"
- elif [[ \"\$arg\" = -* ]]
+  state="file"
+ elif [[ "\$arg" = -* ]]
  then
-  option=( \"\$arg\" )
- elif [ -e \"\$arg\" ]
+  option=( "\$arg" )
+ elif [ -e "\$arg" ]
  then
-  file+=( '-f' \"\$arg\" )
+  file+=( '-f' "\$arg" )
  else
-  echo \"Cannot find file: \$arg\"
-  good=\"bad\"
+  echo "Cannot find file: \$arg"
+  good="bad"
  fi
 done
 
-if [ \"\$good\" != \"good\" ]
+if [ "\$good" != "good" ]
 then
- echo \"Abort\"
+ echo "Abort"
  return 1
 fi
 
 
-if [ \"\${#file[@]}\" = 0 -a \"\${#option[@]}\" = 0 ]
+if [ "\${#file[@]}" = 0 -a "\${#option[@]}" = 0 ]
 then
- psql -U \"$2\" -d \"$1\"
-elif [ \"\${#file[@]}\" = 0 ]
+ psql -U "$USER" -d "$DATABASE"
+elif [ "\${#file[@]}" = 0 ]
 then
- psql -U \"$2\" -d \"$1\" \"\${option[@]}\"
-elif [ \"\${#option[@]}\" = 0 ]
+ psql -U "$USER" -d "$DATABASE" "\${option[@]}"
+elif [ "\${#option[@]}" = 0 ]
 then
- psql -U \"$2\" -d \"$1\" \"\${file[@]}\"
+ psql -U "$USER" -d "$DATABASE" "\${file[@]}"
 else
- psql -U \"$2\" -d \"$1\" \"\${file[@]}\" \"\${option[@]}\"
+ psql -U "$USER" -d "$DATABASE" "\${file[@]}" "\${option[@]}"
 fi
 }
-"
+TEMPLATE

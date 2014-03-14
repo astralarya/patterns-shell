@@ -47,7 +47,7 @@ fi
 
 DATABASE="$1"
 USER="$2"
-if [ -z "$3"]
+if [ -z "$3" ]
 then NAME="$DATABASE"
 else NAME="$3"
 fi

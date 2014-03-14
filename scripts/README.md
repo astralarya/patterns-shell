@@ -20,7 +20,7 @@ Then you will have access to these three functions:
 
 ## prompt
 
-Pretty bash prompt that colors fields and displays custom command output.
+Pretty programmable bash prompt that colors fields and displays customizable command output.
 
 Source `prompt.sh` in your .\*rc file.
 

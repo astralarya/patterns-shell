@@ -18,6 +18,7 @@ Then you can easily get updates with
 
 ### Scripts
 * *history* - persistent shell history with advanced search
+* *prompt* - beautiful programmable prompt
 * *untar* - untar and unzip archives
 
 For detailed descriptions of these scripts,  

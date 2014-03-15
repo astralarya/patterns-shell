@@ -31,8 +31,9 @@ You can use templates to generate code.
     * **template-deploy-client** - Client side deploy methods
     * **template-deploy-server** - Server side deploy methods
 * **pgdb**
-    * *template-db* - Generate function to access a database as a user
-    * *template-dbbackup* - Generate function to backup and restore a database
+    * Generate functions to access a PosgreSQL database
+* **pgdb-backup**
+    * Generate functions to backup and restore a PostgreSQL database
 * **remote**
     * Generate functions to connect to a server via SSH, setup public/private key authorization,
       start a SOCKS proxy, and push/pull files via SCP.
@@ -46,7 +47,7 @@ see `templates/README.md`
 
 patterns-shell
 
-Copyright (C) 2013  Mara Kim, Kris McGary
+Copyright (C) 2013  Mara Kim
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

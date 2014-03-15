@@ -19,7 +19,7 @@
 
 ### USAGE ###
 
-# Source this file in your shell's .*rc file
+# Source the output of this file in your shell's .*rc file
 #
 # Accepts the following arguments:
 # database: the PostgreSQL database
@@ -30,7 +30,7 @@
 # [FUNCNAME]: connect to the PostgreSQL database
 #
 # Example:
-#     source .../pgdb.sh "database" "user" [FUNCNAME]
+#     pgdb.sh "database" "user" [FUNCNAME]
 #
 # See README.md for more info
 

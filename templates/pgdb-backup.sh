@@ -25,33 +25,31 @@
 # ex.
 # source <(template-dbbackup "mydb" "mysuperuser" "mybackupdir" "myfunc")
 #
+# output function definition
+# to backup a database
 # * myfunc [OPTION] [file]
 #
 # See README.md for more info
 
 
-# output function definition
-# to backup a database
-function template-dbbackup {
-
-if [ "$1" = "-h" -o "$1" = "--help" ]
+if [ -z "$1" -o -z "$2" -o -z "$3" ]
 then
- echo "Usage: template-dbbackup [db] [superuser] [backupdir] [FUNCNAME]
-Output code for a function named [FUNCNAME] (default [db]backup)
-to backup [db] as [superuser]. Backups placed in [backupdir] by default.
-Option		GNU long option		Meaning
--h		--help			Show this message"
- return 0
+ printf "Usage: pgdb-backup.sh database superuser backupdir [FUNCNAME]
+Output code for a function to backup a database.
+[FUNCNAME] defaults to [db]backup.
+* [FUNCNAME]: to backup [db] as [superuser]. Backups placed in [backupdir] by default.
+" >&2
+ exit 1
 fi
 
-local MYDB=$1
-local MYSUPERUSER=$2
-local MYBACKUPDIR=$3
+MYDB=$1
+MYSUPERUSER=$2
+MYBACKUPDIR=$3
 if [ "$4" ]
 then
- local MYFUNC=$4
+ MYFUNC=$4
 else
- local MYFUNC=${MYDB}backup
+ MYFUNC=${MYDB}backup
 fi
 
 cat << TEMPLATE
@@ -86,4 +84,3 @@ then
 fi
 }
 TEMPLATE
-} # function template-dbbackup

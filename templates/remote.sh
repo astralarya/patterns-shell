@@ -45,7 +45,7 @@ Output code for functions to manage a remote connection.
 [connection]: to connect to server via SSH as [user@server]
 [connection]-keygen: setup key authentication for this connection
 [connection]-push, [connection]-pull: push/pull files via SCP, default remote dir [scpdir] (default ~/scp)
-[connection]-proxy: start a SOCKS proxy using this connection" 1>&2
+[connection]-proxy: start a SOCKS proxy using this connection" >&2
  exit 0
 fi
 

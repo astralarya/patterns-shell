@@ -38,8 +38,9 @@
 if [ -z "$1" -o -z "$2" ]
 then
  printf "Usage: pgdb.sh database user [FUNCNAME]
-Output code for a function [FUNCNAME] (default [database])
-to access the PostgreSQL database [database] as [user].
+Output code for function to connect to a database.
+[FUNCNAME] defaults to [database].
+* [FUNCNAME]: access the PostgreSQL database [database] as [user].
 " >&2
  exit 0
 fi

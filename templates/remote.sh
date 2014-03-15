@@ -40,12 +40,13 @@
 
 if [ -z "$1" -o -z "$2" ]
 then
- echo "Usage: remote.sh connection user@server [scpdir]
+ printf "Usage: remote.sh connection [user@]server [scpdir]
 Output code for functions to manage a remote connection.
-[connection]: to connect to server via SSH as [user@server]
-[connection]-keygen: setup key authentication for this connection
-[connection]-push, [connection]-pull: push/pull files via SCP, default remote dir [scpdir] (default ~/scp)
-[connection]-proxy: start a SOCKS proxy using this connection" >&2
+* [connection]: to connect to server via SSH as [user@server]
+* [connection]-keygen: setup key authentication for this connection
+* [connection]-push, [connection]-pull: push/pull files via SCP, default remote dir [scpdir] (default ~/scp)
+* [connection]-proxy: start a SOCKS proxy using this connection
+" >&2
  exit 0
 fi
 

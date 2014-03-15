@@ -47,8 +47,6 @@ Source the output of pgdb.sh in your .\*rc file, passing the following arguments
 * $2 user
 * [$3] function name; default [database]
 
-Usage: **remote.sh** *name* [*user@*]*hostname* [*scpdir*]
-
 Usage: **pgdb.sh** *database* *user* [*funcname*]  
 
 This template generates the following function
@@ -58,12 +56,15 @@ This template generates the following function
     * -h show help  
 
 ## pgdb-backup
-Usage: **template-dbbackup** *name* *superuser* *backupdir* [funcname]  
-Generate a function to backup a database  
-  * $1 database name
-  * $2 database superuser
-  * $3 backup directory (absolute path, no trailing slash)
-  * $4 generated function name (default ${1}backup)
+Generates functions to backup a PostgreSQL database.
+
+Source the output of pgdb.sh in your .\*rc file, passing the following arguments.
+* $1 database name
+* $2 database superuser
+* $3 backup directory (absolute path, no trailing slash)
+* [$4] generated function name (default ${1}backup)
+
+Usage: **pgdb-backup** *name* *superuser* *backupdir* [funcname]  
 
 This template generates one function
   * **dbbackupfunc** [OPTION] [file]  

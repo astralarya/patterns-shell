@@ -47,7 +47,7 @@ Output code for functions to manage a remote connection.
 * [connection]-push, [connection]-pull: push/pull files via SCP, default remote dir [scpdir] (default ~/scp)
 * [connection]-proxy: start a SOCKS proxy using this connection
 " >&2
- exit 0
+ exit 1
 fi
 
 ### TEMPLATE ###

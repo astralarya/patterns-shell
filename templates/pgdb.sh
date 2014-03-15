@@ -42,7 +42,7 @@ Output code for function to connect to a database.
 [FUNCNAME] defaults to [database].
 * [FUNCNAME]: access the PostgreSQL database [database] as [user].
 " >&2
- exit 0
+ exit 1
 fi
 
 ### TEMPLATE ###

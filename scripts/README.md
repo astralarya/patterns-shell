@@ -10,12 +10,17 @@ Persistent shell history with advanced search
 Source `history.sh` in your .\*rc file.
 
 Then you will have access to these three functions:
-* **gh** [pattern]
+* **gh** [*TIMESPEC*] [*SEARCH*]
   * Search history for pattern
-* **dh** [pattern]
+* **dh** [*TIMESPEC] [*SEARCH*]
   * Show history of commands in this directory and subdirectories and optionally filter with pattern
-* **ldh** [pattern]
+* **ldh** [*TIMESPEC*] [*SEARCH*]
   * Show history of commands in this directory only and optionally filter with pattern
+
+TIMESPEC is an argument of the form "[START..END]", (note the square brackets)
+where START and END are strings understood by `date`.  
+SEARCH is a regular expression understood by `gawk`.
+
 
 
 ## prompt

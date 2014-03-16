@@ -23,13 +23,12 @@
 function trace {
 if [ "$1" ]
 then
-  { eval time '{' "${@:2}" $'\n' '}'; } &> "$1" &
+  { eval time '{' "${@:2}" $'\n' 'printf "\nstatus\t%b" $? 1>&2; }'; } &> "$1" &
   local pid=$!
   less +F "$1"
 
   if kill -0 $pid 2> /dev/null
-    then fg %-
+    then fg
   fi
-  true
 fi
 }

@@ -1,4 +1,4 @@
-# track
+# trace
 # trace and monitor a command
 #
 # Copyright (C) 2013 Mara Kim
@@ -20,7 +20,7 @@
 ### USAGE ###
 # Source this file in your shell's .*rc file
 
-function track {
+function trace {
 if [ "$1" ]
 then
   { eval time '{' "${@:2}" $'\n' '}'; } &> "$1" &

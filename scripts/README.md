@@ -47,6 +47,21 @@ Note that only the numerical protion of the color code is necessary.
 For more information on terminal colors, see http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
 
 
+
+## trace
+
+Log and monitor commands
+
+Source `prompt.sh` in your .\*rc file.
+
+Then you will have access to the following functions:
+* **trace** *LOGFILE*  [*COMMAND...*}
+  * Runs COMMAND asynchronously piping output to LOGFILE and
+    streams LOGFILE via `less`. Also records return status
+    and runtime.
+
+
+
 ## untar
 
 Untar and unzip archives

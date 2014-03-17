@@ -52,7 +52,7 @@ For more information on terminal colors, see http://www.tldp.org/HOWTO/Bash-Prom
 
 Log and monitor commands
 
-Source `prompt.sh` in your .\*rc file.
+Source `trace.sh` in your .\*rc file.
 
 Then you will have access to the following functions:
 * **trace** *LOGFILE*  [*COMMAND...*}

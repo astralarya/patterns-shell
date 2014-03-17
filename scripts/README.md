@@ -12,7 +12,7 @@ Source `history.sh` in your .\*rc file.
 Then you will have access to these three functions:
 * **gh** [*TIMESPEC*] [*SEARCH*]
   * Search history for pattern
-* **dh** [*TIMESPEC] [*SEARCH*]
+* **dh** [*TIMESPEC*] [*SEARCH*]
   * Show history of commands in this directory and subdirectories and optionally filter with pattern
 * **ldh** [*TIMESPEC*] [*SEARCH*]
   * Show history of commands in this directory only and optionally filter with pattern

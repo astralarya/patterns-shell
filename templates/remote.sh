@@ -226,7 +226,6 @@ _$NAME-scp () {
     local word="\${COMP_WORDS[\$COMP_CWORD]}"
     local prev_word="\${COMP_WORDS[\$(expr \$COMP_CWORD - 1)]}"
     local pprev_word="\${COMP_WORDS[\$(expr \$COMP_CWORD - 2)]}"
-    local filename
 
     local compreply
     if [ "\$word" = ':' -a "\${prev_word}" = '@' -o "\$word" -a "\${prev_word}" = ':' -a "\${pprev_word}" = '@' ]
@@ -235,23 +234,24 @@ _$NAME-scp () {
         then
             word=""
         fi
-        filename="\$word"
-        if [ -z "\$filename" -o "\${filename##/*}" ]
-        then
-            filename="~/\$filename"
-        fi
+        # files
         while read -r -d '' file
         do
-            compreply+=("\$file")
+            compreply+=("\${file#./}")
         done < <(ssh -o 'Batchmode yes' $CONNECTION \
-                   'find "\$(dirname -- "\$(readlink -f -- "\${filename}0" || printf '/dev/null')")" -mindepth 1 -maxdepth 1 -print0 2> /dev/null')
+                   'find "\$(dirname -- "\${word}0")" -mindepth 1 -maxdepth 1 -type f -print0 2> /dev/null')
+        # directories
+        while read -r -d '' file
+        do
+            compreply+=("\${file#./}/")
+        done < <(ssh -o 'Batchmode yes' $CONNECTION \
+                   'find "\$(dirname -- "\${word}0")" -mindepth 1 -maxdepth 1 -type d -print0 2> /dev/null')
     else
         while read -r -d '' file
         do
             compreply+=("\${file#./}")
         done < <(find "\$(dirname -- "\${word}0")" -mindepth 1 -maxdepth 1 -print0 2> /dev/null)
     fi
-
 
     local filter
     for completion in "\${compreply[@]}"

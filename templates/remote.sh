@@ -25,16 +25,15 @@
 # Accepts the following arguments:
 # connection: the name of the connection
 # myuser@myserver: the SSH connection string
-# scpdir: optional; default remote directory for SCP operations
 # 
 # Declares the following functions:
 # [connection]: to connect to server via SSH as [user@server]
 # [connection]-keygen: setup key authentication for this connection
-# [connection]-push, [connection]-pull: push/pull files via SCP, default remote dir [scpdir] (default ~/scp)
+# [connection]-scp: copy files via SCP
 # [connection]-proxy: start a SOCKS proxy using this connection"
 #
 # Example:
-#     remote.sh "myremote" "myuser@myserver" "myscpdir"
+#     remote.sh "myremote" "myuser@myserver"
 #
 # See README.md for more info
 
@@ -54,10 +53,6 @@ fi
 
 NAME="$1"
 CONNECTION="$2"
-if [ -z "$3" ]
-then SCPDIR='~/scp'
-else SCPDIR="$3"
-fi
 
 cat << TEMPLATE
 # SSH connection function
@@ -93,7 +88,7 @@ if [ "\$1" = "-h" -o "\$1" = "--help" ]
 then
  # show help
  echo "Usage: $NAME-keygen [OPTION]
-Check and set up key authentication for $NAME.
+Check and set up key authentication for $CONNECTION
 Option		GNU long option		Meaning
 -h		--help			Show this message"
 else
@@ -166,8 +161,8 @@ else
 fi
 }
 
-# SCP push function
-$NAME-push () {
+# SCP function
+$NAME-scp () {
 local file
 local option
 local dest
@@ -177,107 +172,24 @@ for arg in "\$@"
 do
  if [ "\$state" = "file" ]
  then
-  if [ -e "\$arg" ]
+  if [ -z "\${arg##@:*}" ]
   then
-   file="\$file \$arg"
+   file+=("$CONNECTION:\${arg#@:}")
   else
-   echo "Cannot find file: \$arg"
-   good="bad"
+   file+=("\$arg")
   fi
- elif [ "\$state" = "dest" ]
- then
-  dest="\$arg"
-  state=""
  elif [ "\$arg" = "-h" -o "\$arg" = "--help" ]
  then
   # show help
-  echo "Usage: $NAME-push [OPTION] [file]...
-Push file to remote directory (default $SCPDIR) on $CONNECTION
+  echo "Usage: $NAME-scp [OPTION] [--] FILES... DESTINATION
+Transfer files via 'scp'. Paths starting with '@:' are interpreted as
+references to $CONNECTION
+
 Option		GNU long option		Meaning
 -h		--help			Show this message
--d		--destination		Specify the remote destination (absolute or relative to $SCPDIR)
 --					Treat all following arguments as files
 -*					SCP option (see man scp)"
   return 0
- elif [ "\$arg" = "-d" -o "\$arg" = "--destination" ]
- then
-  state="dest"
- elif [ "\$arg" = "--" ]
- then
-  state="file"
- elif [[ "\$arg" = -* ]]
- then
-  option="\$option \$arg"
- elif [ -e "\$arg" ]
- then
-  file="\$file \$arg"
- else
-  echo "Cannot find file: \$arg"
-  good="bad"
- fi
-done
-
-if [ "\$good" != "good" ]
-then
- echo "Abort"
- return 1
-fi
-
-if [ -z "\$dest" ]
-then
- local dest="$SCPDIR/"
-elif [[ "\$dest" = /* ]]
-then
- local dest="\$dest"
-else
- local dest="$SCPDIR/\$dest"
-fi
-
-scp \$option \$file "$CONNECTION:\$dest"
-}
-
-
-# SCP pull function
-$NAME-pull () {
-local file
-local option
-local dest
-local state
-local good="good"
-for arg in "\$@"
-do
- if [ "\$state" = "file" ]
- then
-  if [[ "\$arg" = /* ]]
-  then
-   local file="\$file $CONNECTION:\$arg"
-  else
-   local file="\$file $CONNECTION:$SCPDIR/\$arg"
-  fi
- elif [ "\$state" = "dest" ]
- then
-  if [ -d "\$arg" ]
-  then
-   dest="\$arg"
-  else
-   echo "Bad destination: \$arg"
-   good="bad"
-  fi
-  state=""
- elif [ "\$arg" = "-h" -o "\$arg" = "--help" ]
- then
-  # show help
-  echo "Usage: $NAME-push [OPTION] [file]...
-Pull files from ${2}. Relative remote paths resolve from $SCPDIR/.
-Option		GNU long option		Meaning
--h		--help			Show this message
--d		--destination		Specify the local destination
---					Treat all following arguments as files
--*					SCP option (see man scp)"
-  return 0
- elif [ "\$arg" = "-d" -o "\$arg" = "--destination" ]
- then
-  state="dest"
  elif [ "\$arg" = "--" ]
  then
   state="file"
@@ -285,11 +197,11 @@ Option		GNU long option		Meaning
  then
   option="\$option \$arg"
  else
-  if [[ "\$arg" = /* ]]
+  if [ -z "\${arg##@:*}" ]
   then
-   local file="\$file $CONNECTION:\$arg"
+   file+=("$CONNECTION:\${arg#@:}")
   else
-   local file="\$file $CONNECTION:$SCPDIR/\$arg"
+   file+=("\$arg")
   fi
  fi
 done
@@ -299,39 +211,47 @@ then
  echo "Abort"
  return 1
 fi
-
-if [ -z "\$dest" ]
+if [ "\${#file[@]}" -lt 2 ]
 then
- local dest="."
-else
- local dest="\$dest"
+ echo "Usage: $NAME-scp [OPTION] [--] FILES... DESTINATION"
+ return 1
 fi
 
-scp \$option \$file "\$dest"
+scp \$option "\${file[@]}"
 }
 
-# SCP pull function tab completions
-_$NAME-pull () {
+# SCP file tab completions
+_$NAME-scp () {
     local IFS=\$'\\0'
     local word="\${COMP_WORDS[\$COMP_CWORD]}"
+    local prev_word="\${COMP_WORDS[\$(expr \$COMP_CWORD - 1)]}"
+    local pprev_word="\${COMP_WORDS[\$(expr \$COMP_CWORD - 2)]}"
     local filename
 
-    if [ -z "\$word" ]
+    local compreply
+    if [ "\$word" = ':' -a "\${prev_word}" = '@' -o "\$word" -a "\${prev_word}" = ':' -a "\${pprev_word}" = '@' ]
     then
-     filename="$SCPDIR/"
-    elif [ -z "\${word##/*}" ]
-    then
-     filename="\$word"
+        if [ "\$word" = ':' ]
+        then
+            word=""
+        fi
+        filename="\$word"
+        if [ -z "\$filename" -o "\${filename##/*}" ]
+        then
+            filename="~/\$filename"
+        fi
+        while read -r -d '' file
+        do
+            compreply+=("\$file")
+        done < <(ssh -o 'Batchmode yes' $CONNECTION \
+                   'find "\$(dirname -- "\$(readlink -f -- "\${filename}0" || printf '/dev/null')")" -mindepth 1 -maxdepth 1 -print0 2> /dev/null')
     else
-     filename="$SCPDIR/\$word"
+        while read -r -d '' file
+        do
+            compreply+=("\${file#./}")
+        done < <(find "\$(dirname -- "\${word}0")" -mindepth 1 -maxdepth 1 -print0 2> /dev/null)
     fi
 
-    local compreply
-    while \read -r -d '' file
-    do
-        compreply+=(\$file)
-    done < <(ssh -o 'Batchmode yes' $CONNECTION \
-               'find "\$(dirname -- "\$(readlink -f -- "\${filename}0" || printf '/dev/null')")" -mindepth 1 -maxdepth 1 -print0 2> /dev/null')
 
     local filter
     for completion in "\${compreply[@]}"
@@ -344,5 +264,5 @@ _$NAME-pull () {
     COMPREPLY=( "\${filter[@]}" )
 }
 
-complete -o filenames -o nospace -F _$NAME-pull $NAME-pull
+complete -o filenames -o nospace -F _$NAME-scp $NAME-scp
 TEMPLATE

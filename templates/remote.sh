@@ -309,4 +309,40 @@ fi
 
 scp \$option \$file "\$dest"
 }
+
+# SCP pull function tab completions
+_$NAME-pull () {
+    local IFS=\$'\\0'
+    local word="\${COMP_WORDS[\$COMP_CWORD]}"
+    local filename
+
+    if [ -z "\$word" ]
+    then
+     filename="$SCPDIR/"
+    elif [ -z "\${word##/*}" ]
+    then
+     filename="\$word"
+    else
+     filename="$SCPDIR/\$word"
+    fi
+
+    local compreply
+    while \read -r -d '' file
+    do
+        compreply+=(\$file)
+    done < <(ssh -o 'Batchmode yes' $CONNECTION \
+               'find "\$(dirname -- "\$(readlink -f -- "\${filename}0" || printf '/dev/null')")" -mindepth 1 -maxdepth 1 -print0 2> /dev/null')
+
+    local filter
+    for completion in "\${compreply[@]}"
+    do
+        if [ -z "\${completion/#\$word*}" -a "\${completion/#\$word}" ]
+        then
+            filter+=("\$completion")
+        fi
+    done
+    COMPREPLY=( "\${filter[@]}" )
+}
+
+complete -o filenames -o nospace -F _$NAME-pull $NAME-pull
 TEMPLATE

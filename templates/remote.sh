@@ -238,12 +238,12 @@ _$NAME-scp () {
         while read -r -d '' file
         do
             compreply+=("\${file#./}")
-        done < <(ssh -o 'Batchmode yes' $CONNECTION "find \\"\\\$(dirname -- \\"\${word}0\\")\\" -mindepth 1 -maxdepth 1 -type f -print0 2> /dev/null")
+        done < <(ssh -o 'Batchmode yes' $CONNECTION "find -L \\"\\\$(dirname -- \\"\${word}0\\")\\" -mindepth 1 -maxdepth 1 -type f -print0 2> /dev/null")
         # directories
         while read -r -d '' file
         do
             compreply+=("\${file#./}/")
-        done < <(ssh -o 'Batchmode yes' $CONNECTION "find \\"\\\$(dirname -- \\"\${word}0\\")\\" -mindepth 1 -maxdepth 1 -type d -print0 2> /dev/null")
+        done < <(ssh -o 'Batchmode yes' $CONNECTION "find -L \\"\\\$(dirname -- \\"\${word}0\\")\\" -mindepth 1 -maxdepth 1 -type d -print0 2> /dev/null")
     else
         while read -r -d '' file
         do

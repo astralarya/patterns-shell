@@ -184,7 +184,6 @@ do
   echo "Usage: $NAME-scp [OPTION] [--] FILES... DESTINATION
 Transfer files via 'scp'. Paths starting with '@:' are interpreted as
 references to $CONNECTION
-
 Option		GNU long option		Meaning
 -h		--help			Show this message
 --					Treat all following arguments as files

@@ -232,7 +232,8 @@ _$NAME-scp () {
         then
             word="\$arg"
             break
-        else
+        elif [ "\$iter" -ge 1 ]
+        then
             pprev_word="\$prev_word"
             prev_word="\$arg"
         fi

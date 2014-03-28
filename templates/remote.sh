@@ -259,6 +259,7 @@ _$NAME-scp () {
             compreply+=("\${file#./}")
         done < <(timeout 2 ssh -o 'Batchmode yes' \$remote "find -L \\"\\\$(dirname -- \\"\${word}0\\")\\" -mindepth 1 -maxdepth 1 '(' -type d -printf '%p/\\0' , -type f -print0 ')'")
     else
+        # local files
         while read -r -d '' file
         do
             compreply+=("\${file#./}")

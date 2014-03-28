@@ -227,18 +227,37 @@ _$NAME-scp () {
     local pprev_word="\${COMP_WORDS[\$(expr \$COMP_CWORD - 2)]}"
 
     local compreply
-    if [ "\$word" = ':' -a "\${prev_word}" = '@' -o "\$word" -a "\${prev_word}" = ':' -a "\${pprev_word}" = '@' ]
+    local remote
+    if [ "\$word" = ':' -a "\${prev_word}" = '@' ]
     then
         if [ "\$word" = ':' ]
         then
             word=""
         fi
+        remote=$CONNECTION
+    elif [ "\$word" -a "\${prev_word}" = ':' -a "\${pprev_word}" = '@' ]
+    then
+        remote=$CONNECTION
+    elif [ "\$word" = ':' -a -z "\${prev_word/*@*/}" ]
+    then
+        if [ "\$word" = ':' ]
+        then
+            word=""
+        fi
+        remote=\$prev_word
+    elif [ "\$word" -a "\${prev_word}" = ':' -a "\${pprev_word/*@*/}" = '@' ]
+    then
+        remote=\$pprev_word
+    fi
 
+
+    if [ "\$remote" ]
+    then
         # remote files
         while read -r -d '' file
         do
             compreply+=("\${file#./}")
-        done < <(timeout 2 ssh -o 'Batchmode yes' $CONNECTION "find -L \\"\\\$(dirname -- \\"\${word}0\\")\\" -mindepth 1 -maxdepth 1 '(' -type d -printf '%p/\\0' , -type f -print0 ')'")
+        done < <(timeout 2 ssh -o 'Batchmode yes' \$remote "find -L \\"\\\$(dirname -- \\"\${word}0\\")\\" -mindepth 1 -maxdepth 1 '(' -type d -printf '%p/\\0' , -type f -print0 ')'")
     else
         while read -r -d '' file
         do

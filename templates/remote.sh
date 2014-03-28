@@ -235,17 +235,17 @@ _$NAME-scp () {
             word=""
         fi
         remote=$CONNECTION
-    elif [ "\$word" -a "\${prev_word}" = ':' -a "\${pprev_word}" = '@' ]
+    elif [ "\$word" -a "\${prev_word}" = ':' -a "\$pprev_word" = '@' ]
     then
         remote=$CONNECTION
-    elif [ "\$word" = ':' -a -z "\${prev_word/*@*/}" ]
+    elif [ "\$word" = ':' -a "\$prev_word" ]
     then
         if [ "\$word" = ':' ]
         then
             word=""
         fi
         remote=\$prev_word
-    elif [ "\$word" -a "\${prev_word}" = ':' -a "\${pprev_word/*@*/}" = '@' ]
+    elif [ "\$word" -a "\${prev_word}" = ':' -a "\$pprev_word" ]
     then
         remote=\$pprev_word
     fi

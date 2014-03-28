@@ -222,9 +222,22 @@ scp \$option "\${file[@]}"
 # SCP file tab completions
 _$NAME-scp () {
     local IFS=\$'\\0'
-    local word="\${COMP_WORDS[\$COMP_CWORD]}"
-    local prev_word="\${COMP_WORDS[\$(expr \$COMP_CWORD - 1)]}"
-    local pprev_word="\${COMP_WORDS[\$(expr \$COMP_CWORD - 2)]}"
+    local word
+    local prev_word
+    local pprev_word
+    local iter=0
+    for arg in "\${COMP_WORDS[@]}"
+    do
+        if [ "\$iter" = "\$COMP_CWORD" ]
+        then
+            word="\$arg"
+            break
+        else
+            pprev_word="\$prev_word"
+            prev_word="\$arg"
+        fi
+        iter="\$(expr \$iter + 1)"
+    done
 
     local compreply
     local remote

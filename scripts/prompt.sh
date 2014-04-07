@@ -24,9 +24,9 @@ if [ -z "$PS1_COMMAND" ]
 then
     if command -v git &> /dev/null
     then
-      PS1_COMMAND='git rev-parse HEAD && git status -sb || ls -C --color'
+      PS1_COMMAND='git rev-parse HEAD && git status -sb || ls -C --group-directories-first --color'
     else
-      PS1_COMMAND='ls -C --color'
+      PS1_COMMAND='ls -C --group-directories-first --color'
     fi
 fi
 

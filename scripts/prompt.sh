@@ -20,14 +20,9 @@
 ### USAGE ###
 # Source this file in your shell's .*rc file
 
-if [ -z "$PS1_COMMAND" ]
+if [ -z "$PS1_COMMAND" ] && command -v git &> /dev/null
 then
-    if command -v git &> /dev/null
-    then
-      PS1_COMMAND='git rev-parse HEAD && git status -sb || ls -C --group-directories-first --color'
-    else
-      PS1_COMMAND='ls -C --group-directories-first --color'
-    fi
+      PS1_COMMAND='git rev-parse HEAD && git status -sb'
 fi
 
 if [ -z "$PS1_USER_COLOR" ]

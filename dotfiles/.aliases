@@ -1,42 +1,73 @@
-if command -v ls &> /dev/null
-then
-  alias l="ls --color"
-  alias la="ls -a --color"
-  alias ll="ls -la --color"
-fi
+# alias r="ssh user@hostname"
 
 if command -v vim &> /dev/null
 then
-  alias v="vim"
+  if ! command -v v &> /dev/null
+  then
+    alias v="vim"
+  fi
 fi
 
 if command -v ls &> /dev/null
 then
-  alias l="ls --color=auto"
+  if ! command -v l &> /dev/null
+  then
+    alias l="ls --color=auto"
+  fi
+  if ! command -v la &> /dev/null
+  then
+    alias la="ls -a --color"
+  fi
+  if ! command -v ll &> /dev/null
+  then
+    alias ll="ls -la --color"
+  fi
 fi
-
-# alias r="ssh user@hostname"
 
 if command -v git &> /dev/null
 then
-  alias gd="git diff"
-  alias gc="git commit"
-  alias gca="git commit -a"
-  alias gp="git push"
-  alias gg="git pull"
+  if ! command -v gd &> /dev/null
+  then
+    alias gd="git diff"
+  fi
+  if ! command -v gc &> /dev/null
+  then
+    alias gc="git commit"
+  fi
+  if ! command -v gca &> /dev/null
+  then
+    alias gca="git commit -a"
+  fi
+  if ! command -v gp &> /dev/null
+  then
+    alias gp="git push"
+  fi
+  if ! command -v gg &> /dev/null
+  then
+    alias gg="git pull"
+  fi
 fi
 
 if command -v python &> /dev/null
 then
-  alias p="python"
+  if ! command -v p &> /dev/null
+  then
+    alias p="python"
+  fi
 fi
 
 if command -v make &> /dev/null
 then
-  alias m="make"
+  if ! command -v m &> /dev/null
+  then
+    alias m="make"
+  fi
 fi
 
 if command -v xdg-open &> /dev/null
 then
-  alias o="xdg-open"
+  if ! command -v o &> /dev/null
+  then
+    alias o="xdg-open"
+  fi
 fi

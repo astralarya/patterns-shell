@@ -1,3 +1,10 @@
+if command -v ls &> /dev/null
+then
+  alias l="ls --color"
+  alias la="ls -a --color"
+  alias ll="ls -la --color"
+fi
+
 if command -v vim &> /dev/null
 then
   alias v="vim"

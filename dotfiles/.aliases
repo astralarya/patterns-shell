@@ -30,6 +30,10 @@ then
   then
     alias gd="git diff"
   fi
+  if ! command -v ga &> /dev/null
+  then
+    alias ga="git add"
+  fi
   if ! command -v gc &> /dev/null
   then
     alias gc="git commit"

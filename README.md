@@ -7,7 +7,7 @@
 
 You can manually copy this repository, but it is better to clone it via `git` with
 
->git clone https://github.com/resultsreturned/patterns-shell.git
+>git clone https://github.com/autochthe/patterns-shell.git
 
 Then you can easily get updates with
 

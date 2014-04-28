@@ -1,10 +1,10 @@
 # alias r="ssh user@hostname"
 
-if command -v vim &> /dev/null
+if command -v cd &> /dev/null
 then
-  if ! command -v v &> /dev/null
+  if ! command -v .. &> /dev/null
   then
-    alias v="vim"
+    alias ..="cd .."
   fi
 fi
 
@@ -23,6 +23,20 @@ then
     alias ll="ls -la --color"
   fi
 fi
+
+if command -v vim &> /dev/null
+then
+  if ! command -v v &> /dev/null
+  then
+    alias v="vim"
+  fi
+
+  if ! command -v v. &> /dev/null
+  then
+    alias v.="vim ."
+  fi
+fi
+
 
 if command -v git &> /dev/null
 then

@@ -46,11 +46,12 @@ Usage: cb <string>
        echo <string> | cb\n'
     else
       # Copy input to clipboard
-      echo -n "$input" | xclip -selection c
-      # Truncate text for status
-      if [ ${#input} -gt 80 ]; then input="$(echo $input | cut -c1-80)$_trn_col...\e[0m"; fi
+      printf '%s' "$input" | xclip -selection c
       # Print status.
-      echo -e "$_scs_col""Copied to clipboard:\e[0m $input"
+      if [ ${#input} -gt 80 ]
+      then printf "$_scs_col"'Copied to clipboard:\e[0m %s'"$_trn_col"'...\e[0m\n' $(cut -c1-80 <<<"$input")
+      else printf "$_scs_col"'Copied to clipboard:\e[0m %s\n' "$input"
+      fi
     fi
   fi
 }

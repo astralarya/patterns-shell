@@ -1,7 +1,7 @@
 # clip
 # A shortcut function that simplifies usage of xclip
 #
-# Copyright (C) 2014 Nathan Broadbent
+# Copyright (C) 2014 Nathan Broadbent, Mara Kim
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -57,10 +57,10 @@ cb() {
 # Aliases / functions leveraging the cb() function
 # ------------------------------------------------
 # Copy contents of a file
-function cbf() { cat "$1" | cb; }  
+function cbf() { cb < "$1"; }  
 # Copy SSH public key
 alias cbssh="cbf ~/.ssh/id_rsa.pub"  
 # Copy current working directory
-alias cbwd="pwd | cb"  
+alias cbwd="cb \"$PWD\""  
 # Copy most recent command in bash history
 alias cbhs="cat $HISTFILE | tail -n 1 | cb" 

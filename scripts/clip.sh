@@ -41,8 +41,8 @@ cb() {
       input="$*"
     fi
     if [ -z "$input" ]; then  # If no input, print usage message.
-      printf 'Copies a string to the clipboard.\n
-Usage: cb <string>\n
+      printf 'Copies a string to the clipboard.
+Usage: cb <string>
        echo <string> | cb\n'
     else
       # Copy input to clipboard

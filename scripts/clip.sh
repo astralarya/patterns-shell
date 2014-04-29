@@ -64,4 +64,4 @@ alias cbssh="cbf ~/.ssh/id_rsa.pub"
 # Copy current working directory
 alias cbwd="cb \"$PWD\""  
 # Copy most recent command in bash history
-alias cbhs="cat $HISTFILE | tail -n 1 | cb" 
+alias cbhs="fc -ln -1 | cb" 

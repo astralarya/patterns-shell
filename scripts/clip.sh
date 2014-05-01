@@ -55,6 +55,13 @@ Usage: cb <string>
     fi
   fi
 }
+
+# Output clipboard
+cbo () {
+  xclip -out -selection clipboard
+}
+
+
 # Aliases / functions leveraging the cb() function
 # ------------------------------------------------
 # Copy contents of a file

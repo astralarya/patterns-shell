@@ -49,7 +49,7 @@ Usage: cb <string>
       printf '%s' "$input" | xclip -selection c
       # Print status.
       if [ ${#input} -gt 80 ]
-      then printf "$_scs_col"'Copied to clipboard:\e[0m %s'"$_trn_col"'...\e[0m\n' $(cut -c1-80 <<<"$input")
+      then printf "$_scs_col"'Copied to clipboard:\e[0m %s'"$_trn_col"'...\e[0m\n' "$(head -c80 <<<"$input")"
       else printf "$_scs_col"'Copied to clipboard:\e[0m %s\n' "$input"
       fi
     fi

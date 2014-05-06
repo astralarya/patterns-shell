@@ -32,7 +32,7 @@ then
 Output code for two functions named [FUNCNAME] (default deploy) and [FUNCNAME]-full
 to find the name of a makefile project (via make name) and
 create a tarball of the project (via make tar) and copy to [server]
-(via [server]-push) and then call [REMOTEFUNC] (default [FUNCNAME])
+(via [server]-scp) and then call [REMOTEFUNC] (default [FUNCNAME])
 or [REMOTEFUNC]-full for [FUNCNAME]-full.
 Option		GNU long option		Meaning
 -h		--help			Show this message"
@@ -59,7 +59,7 @@ local name="\$(make name)"
 local tarname="\$(printf '%b_%b.tar.gz' \$name)"
 if [ "\$name" ] && make tar && [ -e "\$tarname" ]
 then
-  $MYSERVER-push "\$tarname" &&
+  $MYSERVER-scp "\$tarname" @:scp/ &&
   $MYSERVER "$MYREMOTEFUNC \$name"
 fi }
 
@@ -68,7 +68,7 @@ local name="\$(make name)"
 local tarname="\$(printf '%b_%b.tar.gz' \$name)"
 if [ "\$name" ] && make tar && [ -e "\$tarname" ]
 then
-  $MYSERVER-push "\$tarname" &&
+  $MYSERVER-scp "\$tarname" @:scp/ &&
   $MYSERVER "$MYREMOTEFUNC-full \$name" 
 fi }
 

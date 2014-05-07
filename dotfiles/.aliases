@@ -54,7 +54,12 @@ then
   fi
   if ! command -v gca &> /dev/null
   then
-    alias gca="git commit -a"
+    gca () {
+      if [ -z "$*" ]
+      then git commit -a
+      else git commit -am"$*"
+      fi
+    }
   fi
   if ! command -v gp &> /dev/null
   then

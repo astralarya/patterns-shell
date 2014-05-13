@@ -21,8 +21,10 @@
 # Source this file in your shell's .*rc file
 
 function trace {
-if [ "$1" ]
+if [ "$1" -a ! -e "$1" ]
 then
   { eval time '{' "${@:2}" $'\n' 'printf "\nstatus\t%b" $? 1>&2; }'; } 2>&1 | tee "$1"
+else
+  printf 'trace: cannot log to ‘%b’: file exists\n' "$1"
 fi
 }

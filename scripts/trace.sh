@@ -32,7 +32,7 @@ then
     printf " %b" "${@:2}"
     printf "\n"
     # Run command
-    eval time '{' "${@:2}" '; status=$?; printf "\nstatus\t%b" $status 1>&2; }'; } 2>&1 | tee "$1"
+    eval time '{' "${@:2}" $'\n' 'status=$?; printf "\nstatus\t%b" $status 1>&2; }'; } 2>&1 | tee "$1"
   return $status
 else
   printf 'trace: cannot log to ‘%b’: file exists\n' "$1"

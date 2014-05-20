@@ -32,7 +32,7 @@ then
     printf "\n"
     # Run command
     eval time '{' "${@:2}" $'\n' 'status=$?; printf "\nstatus\t%b" $status 1>&2; }'
-    (exit $status)
+    exit $status
   } 2>&1 | tee "$1"
   return ${PIPESTATUS[0]}
 else

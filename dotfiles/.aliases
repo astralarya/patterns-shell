@@ -40,10 +40,20 @@ fi
 
 if command -v git &> /dev/null
 then
+  if ! command -v gw &> /dev/null && [ "$(git config core.editor)" = "vim" ]
+  then
+    gw () {
+      local IFS=$'\r\n'
+      local files=($(git status --porcelain))
+      vim -p "${files[@]/#???/$(git rev-parse --show-toplevel)/}"
+    }
+  fi
+
   if ! command -v gd &> /dev/null
   then
     alias gd="git diff"
   fi
+
   if ! command -v ga &> /dev/null
   then
     alias ga="git add"
@@ -61,6 +71,7 @@ then
       fi
     }
   fi
+
   if ! command -v gp &> /dev/null
   then
     alias gp="git push"

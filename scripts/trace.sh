@@ -27,9 +27,7 @@ then
 elif [ ! -e "$1" ]
 then
   { # Echo command
-    printf "$"
-    printf " %b" "${@:2}"
-    printf "\n"
+    printf "$"; printf " %s" "${@:2}"; printf "\n"
     # Run command
     eval time '{' "${@:2}" $'\n' 'status=$?; printf "\nstatus\t%b" $status 1>&2; }'
     exit $status

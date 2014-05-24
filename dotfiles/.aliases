@@ -40,7 +40,7 @@ fi
 
 if command -v git &> /dev/null
 then
-  if ! command -v gw &> /dev/null && [ "$(git config core.editor)" = "vim" ]
+  if ! command -v gw &> /dev/null && [ "$(git config --global core.editor)" = "vim" ]
   then
     gw () {
       local IFS=$'\r\n'

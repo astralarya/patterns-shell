@@ -22,7 +22,11 @@
 
 if [ -z "$PS1_COMMAND" ] && command -v git &> /dev/null
 then
-      PS1_COMMAND='git rev-parse HEAD && git status -sb'
+      PROMPT_COMMAND='_JOBS="$(jobs)";'"${PROMPT_COMMAND}"
+      PS1_COMMAND='if [ "$_JOBS" ]
+                   then printf %s\\n "${_JOBS}"
+                   fi
+                   git rev-parse HEAD && git status -sb'
 fi
 
 if [ -z "$PS1_USER_COLOR" ]

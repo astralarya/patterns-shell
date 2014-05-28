@@ -26,12 +26,14 @@ then
   printf 'Usage: trace LOGFILE [COMMAND...]\n'
 elif [ ! -e "$1" ]
 then
-  { # Echo command
-    printf "$"; printf " %s" "${@:2}"; printf "\n"
+    # Log environment
+    printf '%s@%s:%s\n' "$USER" "$HOSTNAME" "$PWD" > "$1"
+    # Log command
+    printf '$' >> "$1"; printf ' %s' "${@:2}" >> "$1"; printf '\n' >> "$1"
     # Run command
-    eval time '{' "${@:2}" $'\n' 'status=$?; printf "\nstatus\t%b" $status 1>&2; }'
+  { eval time '{' "${@:2}" $'\n' 'status=$?; printf "\nstatus\t%b" $status 1>&2; }'
     exit $status
-  } 2>&1 | tee "$1"
+  } 2>&1 | tee -a "$1"
   return ${PIPESTATUS[0]}
 else
   printf 'trace: cannot log to ‘%b’: file exists\n' "$1"

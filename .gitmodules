@@ -1,3 +1,6 @@
 [submodule "repos/autoscreen"]
 	path = repos/autoscreen
 	url = https://github.com/autochthe/autoscreen.git
+[submodule "repos/to"]
+	path = repos/to
+	url = https://github.com/autochthe/to.git

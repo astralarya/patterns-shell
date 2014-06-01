@@ -1,0 +1,3 @@
+[submodule "repos/autoscreen"]
+	path = repos/autoscreen
+	url = https://github.com/autochthe/autoscreen.git

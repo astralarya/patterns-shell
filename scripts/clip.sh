@@ -40,10 +40,8 @@ cb() {
     else
       input="$*"
     fi
-    if [ -z "$input" ]; then  # If no input, print usage message.
-      printf 'Copies a string to the clipboard.
-Usage: cb <string>
-       echo <string> | cb\n'
+    if [ -z "$input" ]; then  # If no input, print clipboard contents
+      xclip -out -selection clipboard
     else
       # Copy input to clipboard
       printf '%s' "$input" | xclip -selection c
@@ -55,12 +53,6 @@ Usage: cb <string>
     fi
   fi
 }
-
-# Output clipboard
-cbo () {
-  xclip -out -selection clipboard
-}
-
 
 # Aliases / functions leveraging the cb() function
 # ------------------------------------------------

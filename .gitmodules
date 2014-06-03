@@ -4,3 +4,6 @@
 [submodule "repos/to"]
 	path = repos/to
 	url = https://github.com/autochthe/to.git
+[submodule "repos/seek"]
+	path = repos/seek
+	url = https://github.com/autochthe/seek.git

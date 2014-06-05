@@ -22,8 +22,16 @@
 # Source this file in your shell's .*rc file
 
 function untar {
-if [ "$1" -a -a "$1" ]
-then
- \tar -zxvf "$1"; 
-fi }
+for arg in "$@"
+do
+  if [ "$arg" -a -a "$arg" ]
+  then
+    if [ "$(file -bi "$arg")" = 'application/gzip; charset=binary' ]
+    then tar -zxvf "$arg"
+    elif [ "$(file -bi "$arg")" = 'application/x-bzip2; charset=binary' ]
+    then tar -jxvf "$arg"
+    fi
+  fi
+done
+}
 

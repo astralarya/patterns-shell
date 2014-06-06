@@ -27,7 +27,7 @@ do
   if [ "$arg" -a -a "$arg" ]
   then
     local format="$(file --brief --mime-type -- "$arg")"
-    if [ "$format" = 'application/gzip' ]
+    if [ "$format" = 'application/gzip' -o "$format" = 'application/x-gzip' ]
     then tar -zxvf "$arg"
     elif [ "$format" = 'application/x-bzip2' ]
     then tar -jxvf "$arg"

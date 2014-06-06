@@ -78,7 +78,7 @@ then
   fi
   if ! command -v gg &> /dev/null
   then
-    alias gg="git pull"
+    alias gg="git pull; git submodule update --recursive --init"
   fi
 fi
 

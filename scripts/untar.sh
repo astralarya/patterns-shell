@@ -33,6 +33,10 @@ do
     then tar -jxvf "$arg"
     elif [ "$format" = 'application/x-xz' ]
     then tar -Jxvf "$arg"
+    else
+    then
+      printf 'untar: %s: Unrecognized format: %s\n' "$arg" "$format"
+      return 1
     fi
   fi
 done

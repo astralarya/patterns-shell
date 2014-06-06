@@ -16,7 +16,7 @@ nnoremap <silent> <C-k> <C-W>W
 nnoremap <silent> <C-l> :tabnext<CR>
 nnoremap <silent> <C-h> :tabprevious<CR>
 nnoremap <silent> <C-d> :quit<CR>
-nnoremap <silent> <C-n> :cn<CR>
-nnoremap <silent> <C-b> :cp<CR>
+nnoremap <silent> ]q :cn<CR>
+nnoremap <silent> [q :cp<CR>
 nnoremap <silent> <C-c> :tabnew<CR>
 nnoremap <silent> <C-z> :split<CR>

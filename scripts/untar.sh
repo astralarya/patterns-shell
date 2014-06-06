@@ -26,11 +26,12 @@ for arg in "$@"
 do
   if [ "$arg" -a -a "$arg" ]
   then
-    if [ "$(file --brief --mime-type -- "$arg")" = 'application/gzip' ]
+    local format="$(file --brief --mime-type -- "$arg")"
+    if [ "$format" = 'application/gzip' ]
     then tar -zxvf "$arg"
-    elif [ "$(file --brief --mime-type -- "$arg")" = 'application/x-bzip2' ]
+    elif [ "$format" = 'application/x-bzip2' ]
     then tar -jxvf "$arg"
-    elif [ "$(file --brief --mime-type -- "$arg")" = 'application/x-xz' ]
+    elif [ "$format" = 'application/x-xz' ]
     then tar -Jxvf "$arg"
     fi
   fi

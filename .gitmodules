@@ -7,3 +7,6 @@
 [submodule "repos/seek"]
 	path = repos/seek
 	url = https://github.com/autochthe/seek.git
+[submodule "repos/history"]
+	path = repos/history
+	url = https://github.com/autochthe/history.git

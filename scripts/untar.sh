@@ -30,6 +30,8 @@ do
     then tar -zxvf "$arg"
     elif [ "$(file --brief --mime-type -- "$arg")" = 'application/x-bzip2' ]
     then tar -jxvf "$arg"
+    elif [ "$(file --brief --mime-type -- "$arg")" = 'application/x-xz' ]
+    then tar -Jxvf "$arg"
     fi
   fi
 done

@@ -26,9 +26,9 @@ for arg in "$@"
 do
   if [ "$arg" -a -a "$arg" ]
   then
-    if [ "$(file -bi "$arg")" = 'application/gzip; charset=binary' ]
+    if [ "$(file --brief --mime-type -- "$arg")" = 'application/gzip' ]
     then tar -zxvf "$arg"
-    elif [ "$(file -bi "$arg")" = 'application/x-bzip2; charset=binary' ]
+    elif [ "$(file --brief --mime-type -- "$arg")" = 'application/x-bzip2' ]
     then tar -jxvf "$arg"
     fi
   fi

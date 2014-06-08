@@ -28,12 +28,12 @@ if command -v vim &> /dev/null
 then
   if ! command -v v &> /dev/null
   then
-    alias v="vim"
+    alias v="vim -p"
   fi
 
   if ! command -v v. &> /dev/null
   then
-    alias v.="vim ."
+    alias v.="vim -p ."
   fi
 fi
 

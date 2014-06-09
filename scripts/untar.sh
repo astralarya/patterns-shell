@@ -37,7 +37,9 @@ do
       printf 'untar: %s: Unrecognized format: %s\n' "$arg" "$format"
       return 1
     fi
-  else printf 'untar: Cannot find file `%s`\n' "$arg"
+  else
+    printf 'untar: Cannot find file `%s`\n' "$arg"
+    return 1
   fi
 done
 }

@@ -23,20 +23,14 @@
 function trace {
 if [ -z "$1" ]
 then
-  printf 'Usage: trace LOGFILE [COMMAND...]\n'
-elif [ ! -e "$1" ]
-then
-    # Log environment
-    printf '%s@%s:%s\n' "$USER" "$HOSTNAME" "$PWD" > "$1"
-    # Log command
-    printf '$' >> "$1"; printf ' %s' "${@:2}" >> "$1"; printf '\n' >> "$1"
-    # Run command
-  { eval time '{' "${@:2}" $'\n' 'status=$?; printf "\nstatus\t%b" $status 1>&2; }'
-    exit $status
-  } 2>&1 | tee -a "$1"
-  return ${PIPESTATUS[0]}
+  printf 'Usage: trace [COMMAND...]\n'
 else
-  printf 'trace: cannot log to ‘%b’: file exists\n' "$1"
-  return 1
+  # Log environment
+  printf '%s@%s:%s\n' "$USER" "$HOSTNAME" "$PWD"
+  # Log command
+  printf '$'; printf ' %s' "$@"; printf '\n'
+  # Run command
+  eval time '{' "$@" $'\n' 'status=$?; printf "\nstatus\t%b" $status 1>&2; }'
+  return $status
 fi
 }

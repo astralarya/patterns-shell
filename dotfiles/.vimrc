@@ -6,6 +6,10 @@ set smarttab
 set shiftwidth=2
 set softtabstop=2
 
+" Show trailing whitespace
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$\| \+\ze\t/
+
 set ignorecase
 set smartcase
 set incsearch

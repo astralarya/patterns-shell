@@ -20,11 +20,19 @@
 ### USAGE ###
 # Source this file in your shell's .*rc file
 
-function trace {
-if [ -z "$1" ]
+trace () {
+if [ -z "$*" ]
 then
   printf 'Usage: trace [COMMAND...]\n'
-else
+elif [ ! -t 1 ] && [ ! -t 2 ] &&
+     [ "$(readlink /proc/$$/fd/1)" = "$(readlink /proc/$$/fd/2)" ]
+then trace_exec "$@" |& tee /dev/tty
+     return ${PIPESTATUS[0]}
+else trace_exec "$@"
+fi
+}
+
+trace_exec () {
   # Log environment
   printf '%s@%s:%s\n' "$USER" "$HOSTNAME" "$PWD"
   # Log command
@@ -32,5 +40,4 @@ else
   # Run command
   eval time '{' "$@" $'\n' 'status=$?; printf "\nstatus\t%b" $status 1>&2; }'
   return $status
-fi
 }

@@ -1,5 +1,7 @@
 syntax on
+set nohidden
 
+" Tab settings
 set autoindent
 set expandtab
 set smarttab
@@ -12,11 +14,12 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t/
 au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 au InsertLeave * match ExtraWhitespace /\s\+$\| \+\ze\t/
 
+" Smarter search
 set ignorecase
 set smartcase
 set incsearch
 
-set nohidden
+" Bindings
 nnoremap <silent> <C-j> <C-W>w
 nnoremap <silent> <C-k> <C-W>W
 nnoremap <silent> <C-l> :tabnext<CR>

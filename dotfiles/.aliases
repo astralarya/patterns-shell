@@ -78,7 +78,12 @@ then
   fi
   if ! command -v gg &> /dev/null
   then
-    alias gg="git pull; git submodule update --recursive --init"
+    gg () {
+      if [ "$*" ]
+      then git clone "$@"
+      else git pull; git submodule update --recursive --init
+      fi
+    }
   fi
 fi
 

@@ -25,6 +25,11 @@ then
       PS1_COMMAND='git rev-parse HEAD && git status -sb'
 fi
 
+if [ -z "$PS1_PROMPT_COLOR" ]
+then
+    PS1_PROMPT_COLOR='0;32;40'
+fi
+
 if [ -z "$PS1_USER_COLOR" ]
 then
     PS1_USER_COLOR='0;31;40'
@@ -48,11 +53,6 @@ fi
 if [ -z "$PS1_STATUS_BAD_COLOR" ]
 then
     PS1_STATUS_BAD_COLOR='0;31;40'
-fi
-
-if [ -z "$PS1_PROMPT_COLOR" ]
-then
-    PS1_PROMPT_COLOR='0;32;40'
 fi
 
 if [ -z "$PS1_JOB_COLOR" ]

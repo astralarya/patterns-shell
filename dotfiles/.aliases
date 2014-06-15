@@ -80,7 +80,11 @@ then
   then
     gg () {
       if [ "$*" ]
-      then git clone "$@"
+      then
+          if git rev-parse 2>/dev/null
+          then git submodule add "$@"
+          else git clone "$@"
+          fi
       else git pull; git submodule update --recursive --init
       fi
     }

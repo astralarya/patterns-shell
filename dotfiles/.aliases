@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # alias r="ssh user@hostname"
 
 if command -v cd &> /dev/null

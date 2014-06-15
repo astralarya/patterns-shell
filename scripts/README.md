@@ -41,6 +41,7 @@ You can change the colors used in the prompt at any time by adjusting the follow
 * `$PS1_STATUS_GOOD_COLOR` - status color when 0; default `0;32;40`
 * `$PS1_STATUS_BAD_COLOR` - status color when not 0; default `0;31;40`
 * `$PS1_PROMPT_COLOR` - prompt symbol color; default `0;32;40`
+* `$PS1_JOB_COLOR` - jobs list color; default `0;33;40`
 * `$PS1_COMMAND_COLOR` - color of the output of `$PS1_COMMAND`; default `$PS1_PROMPT_COLOR`
 
 Note that only the numerical protion of the color code is necessary.

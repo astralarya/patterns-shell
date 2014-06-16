@@ -32,9 +32,9 @@ Source `prompt.sh` in your .\*rc file.
 The resulting prompt looks like the following (bracketed fields displayed conditionally):
 
 ```
-USER@HOST:DIRECTORY (COMMAND_STATUS)
-[JOBS
-[PS1_COMMAND_OUTPUT
+USER@HOST:DIRECTORY (COMMAND STATUS)
+[JOBS]
+[PS1_COMMAND OUTPUT]
 $ █
 ```
 

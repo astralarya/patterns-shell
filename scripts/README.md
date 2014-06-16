@@ -38,9 +38,9 @@ USER@HOST:DIRECTORY (COMMAND STATUS)
 $ █
 ```
 
-The prompt outputs the result of executing `$PS1_COMMAND`, suppressing any error messages.
-By default, this is `git rev-parse HEAD && git status -sb` if git is installed,
-but may be adjusted at any time by changing the value of this variable.
+The prompt outputs the STDOUT of executing `$PS1_COMMAND`.
+If `git` is installed, this defaults to `git rev-parse HEAD && git status -sb`.
+You may adjust this at any time by changing the value of this variable.
 
 You can change the colors used in the prompt at any time by adjusting the following environment variables:
 

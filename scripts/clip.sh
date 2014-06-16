@@ -57,10 +57,10 @@ cb() {
 # Aliases / functions leveraging the cb() function
 # ------------------------------------------------
 # Copy contents of a file
-function cbf() { cb < "$1"; }  
+function cbf() { cb < "$1"; }
 # Copy SSH public key
-alias cbssh="cbf ~/.ssh/id_rsa.pub"  
+alias cbssh="cbf ~/.ssh/id_rsa.pub"
 # Copy current working directory
-alias cbwd="cb \"$PWD\""  
+alias cbwd="cb \"$PWD\"
 # Copy most recent command in bash history
-alias cbhs="fc -ln -1 | cb" 
+alias cbhs="fc -ln -1 | cb"

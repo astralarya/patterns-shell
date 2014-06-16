@@ -12,6 +12,27 @@ Source `autoscreen.sh` at the END of your .\*rc file.
 See https://github.com/autochthe/autoscreen
 
 
+## clip
+
+Simplified access to xclip
+
+Source `clip.sh` in your .\*rc file.
+
+Then you will have access to the following functions:
+* **cb** [TEXT]...
+  * If pipe on STDIN, copy incoming data to the clipboard,
+    else if TEXT is not empty, copy TEXT to the clipboard,
+    else outputs the current contents of the clipboard on STDOUT.
+* **cbf** [FILE]
+  * Copies the contents of FILE to the clipboard.
+* **cbssh**
+  * Copies current users SSH public key to the clipboard.
+* **cbwd**
+  * Copies current working directory to the clipboard.
+* **cbhs**
+  * Copies most recent command to the clipboard.
+
+
 ## history
 
 Persistent shell history with advanced search

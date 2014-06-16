@@ -30,9 +30,10 @@ Pretty bash prompt that colors fields and displays customizable command output.
 Source `prompt.sh` in your .\*rc file.
 
 The resulting prompt looks like the following (bracketed fields displayed conditionally):
-`USER@HOST:DIRECTORY (COMMAND_STATUS)
-[JOBS]
-[PS1_COMMAND_OUTPUT]
+
+`USER@HOST:DIRECTORY (COMMAND_STATUS)  
+[JOBS]  
+[PS1_COMMAND_OUTPUT]  
 $ █`
 
 The prompt outputs the result of executing `$PS1_COMMAND`, suppressing any error messages.

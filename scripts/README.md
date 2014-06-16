@@ -56,6 +56,9 @@ You can change the colors used in the prompt at any time by adjusting the follow
 Note that only the numerical protion of the color code is necessary.
 For more information on terminal colors, see http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
 
+Screenshot:
+
+![Prompt Screenshot](https://autochthe.github.io/images/patterns-shell/prompt.png)
 
 
 ## trace

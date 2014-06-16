@@ -19,11 +19,11 @@ Simplified access to xclip
 Source `clip.sh` in your .\*rc file.
 
 Then you will have access to the following functions:
-* **cb** [TEXT]...
+* **cb** [TEXT...]
   * If pipe on STDIN, copy incoming data to the clipboard,
     else if TEXT is not empty, copy TEXT to the clipboard,
     else outputs the current contents of the clipboard on STDOUT.
-* **cbf** [FILE]
+* **cbf** FILES...
   * Copies the contents of FILE to the clipboard.
 * **cbssh**
   * Copies current users SSH public key to the clipboard.

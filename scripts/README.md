@@ -76,6 +76,15 @@ Note that only the numerical protion of the color code is necessary.
 For more information on terminal colors, see http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
 
 
+## to
+
+Bookmark directory locations in POSIX-like systems with tab completion
+
+Source `to.sh` in your .\*rc file.
+
+See https://github.com/autochthe/to
+
+
 ## trace
 
 Log and monitor commands

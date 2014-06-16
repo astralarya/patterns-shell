@@ -42,6 +42,9 @@ cb() {
     fi
     if [ -z "$input" ]; then  # If no input, print clipboard contents
       xclip -out -selection clipboard
+      if [ -t 1 ]; then
+        printf '\n'
+      fi
     else
       # Copy input to clipboard
       printf '%s' "$input" | xclip -selection c

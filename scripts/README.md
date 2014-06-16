@@ -25,9 +25,15 @@ SEARCH is a regular expression understood by `gawk`.
 
 ## prompt
 
-Pretty programmable bash prompt that colors fields and displays customizable command output.
+Pretty bash prompt that colors fields and displays customizable command output.
 
 Source `prompt.sh` in your .\*rc file.
+
+The resulting prompt looks like the following (bracketed fields displayed conditionally):
+    USER@HOST:DIRECTORY (COMMAND_STATUS)
+    [JOBS]
+    [PS1_COMMAND_OUTPUT]
+    $ █
 
 The prompt outputs the result of executing `$PS1_COMMAND`, suppressing any error messages.
 By default, this is `git rev-parse HEAD && git status -sb` if git is installed,
@@ -35,13 +41,13 @@ but may be adjusted at any time by changing the value of this variable.
 
 You can change the colors used in the prompt at any time by adjusting the following environment variables:
 
-* `$PS1_PROMPT_COLOR` - prompt symbol color; default `0;32;40`
-* `$PS1_USER_COLOR` - username color; default `0;31;40`
-* `$PS1_HOST_COLOR` - hostname color; default `0;35;40`
-* `$PS1_PATH_COLOR` - path color; default `0;34;40`
-* `$PS1_STATUS_GOOD_COLOR` - status color when 0; default `0;32;40`
-* `$PS1_STATUS_BAD_COLOR` - status color when not 0; default `0;31;40`
-* `$PS1_JOB_COLOR` - jobs list color; default `0;33;40`
+* `$PS1_PROMPT_COLOR` - prompt symbol color; default `0;32;40` (green)
+* `$PS1_USER_COLOR` - username color; default `0;31;40` (red)
+* `$PS1_HOST_COLOR` - hostname color; default `0;35;40` (purple)
+* `$PS1_PATH_COLOR` - path color; default `0;34;40` (blue)
+* `$PS1_STATUS_GOOD_COLOR` - status color when 0; default `0;32;40` (green)
+* `$PS1_STATUS_BAD_COLOR` - status color when not 0; default `0;31;40` (red)
+* `$PS1_JOB_COLOR` - jobs list color; default `0;33;40` (yellow)
 * `$PS1_COMMAND_COLOR` - color of the output of `$PS1_COMMAND`; default `$PS1_PROMPT_COLOR`
 
 Note that only the numerical protion of the color code is necessary.

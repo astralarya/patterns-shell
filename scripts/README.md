@@ -3,6 +3,15 @@
 **patterns-shell/scripts** - Scripts for common shell tasks
 
 
+## autoscreen
+
+Automatically start GNU screen without inception
+
+Source `autoscreen.sh` at the END of your .\*rc file.
+
+See https://github.com/autochthe/autoscreen
+
+
 ## history
 
 Persistent shell history with advanced search

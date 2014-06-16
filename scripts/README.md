@@ -33,7 +33,7 @@ The resulting prompt looks like the following (bracketed fields displayed condit
 
 ```
 USER@HOST:DIRECTORY (COMMAND STATUS)
-[JOBS]
+[ACTIVE JOBS]
 [PS1_COMMAND OUTPUT]
 $ █
 ```

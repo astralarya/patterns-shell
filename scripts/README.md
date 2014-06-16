@@ -53,11 +53,10 @@ Log and monitor commands
 Source `trace.sh` in your .\*rc file.
 
 Then you will have access to the following functions:
-* **trace** *LOGFILE*  [*COMMAND...*}
-  * Runs COMMAND asynchronously piping output to LOGFILE and
-    streams LOGFILE via `less`. Also records return status
-    and runtime.
-
+* **trace** [*COMMAND...*]
+  * Runs COMMAND recording the environment, return status, and runtime.
+    If STDOUT and STDERR are redirected to the same location (for example,
+    when using `&>`), output is automatically echoed to the terminal.
 
 
 ## untar

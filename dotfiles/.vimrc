@@ -1,5 +1,6 @@
 syntax on
 set nohidden
+set autochdir
 
 " Tab settings
 set autoindent

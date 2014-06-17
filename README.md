@@ -17,8 +17,13 @@ Then you can easily get updates with
 ## Patterns
 
 ### Scripts
+* *autoscreen* - automatically start GNU screen without inception
+* *clip* - simplified access to xclip
 * *history* - persistent shell history with advanced search
 * *prompt* - pretty programmable prompt
+* *seek* - search for files and folders
+* *to* - bookmark directory locations with tab completion
+* *trace* - log and monitor commands
 * *untar* - untar and unzip archives
 
 For detailed descriptions of these scripts,  

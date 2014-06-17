@@ -46,7 +46,7 @@ You can use templates to generate code.
     * *template-sourcedir* - Generate script to source all files in a directory
 
 For detailed descriptions of these functions and the code they generate,  
-see `templates/README.md`
+see [templates/README.md](templates/README.md)
 
 ## License
 

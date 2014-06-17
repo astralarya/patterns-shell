@@ -25,7 +25,7 @@ nnoremap <silent> <C-k> <C-W>W
 nnoremap <silent> <C-l> :tabnext<CR>
 nnoremap <silent> <C-h> :tabprevious<CR>
 nnoremap <silent> <C-d> :quit<CR>
-nnoremap <silent> ]q :cn<CR>
-nnoremap <silent> [q :cp<CR>
+nnoremap <silent> ]] :cn<CR>
+nnoremap <silent> [[ :cp<CR>
 nnoremap <silent> <C-c> :Texplore<CR>
 nnoremap <silent> <C-z> :split<CR>

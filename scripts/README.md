@@ -76,6 +76,15 @@ Note that only the numerical protion of the color code is necessary.
 For more information on terminal colors, see http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
 
 
+## seek
+
+Search current directory for files and folders
+
+Source `seek.sh` in your .\*rc file.
+
+See https://github.com/autochthe/seek
+
+
 ## to
 
 Bookmark directory locations in POSIX-like systems with tab completion

@@ -22,7 +22,7 @@ Then you can easily get updates with
 * *untar* - untar and unzip archives
 
 For detailed descriptions of these scripts,  
-see `scripts/README.md`
+see https://github.com/autochthe/patterns-shell/tree/master/scripts
 
 ### Templates
 

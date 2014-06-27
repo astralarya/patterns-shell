@@ -22,7 +22,7 @@
 
 if [ -z "$PS1_COMMAND" ] && command -v git &> /dev/null
 then
-      PS1_COMMAND='git rev-parse HEAD && git status -sb'
+      PS1_COMMAND='(git rev-parse HEAD && git status -sb) || (hg identify --branch --id && hg status -q)'
 fi
 
 if [ -z "$PS1_PROMPT_COLOR" ]

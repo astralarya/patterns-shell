@@ -58,6 +58,8 @@ cat << TEMPLATE
 # Database access function
 $NAME () {
 local file
+local argc=1
+local argv
 local option
 local state
 local good="good"
@@ -68,17 +70,23 @@ do
   if [ -e "\$arg" ]
   then
    file+=( '-f' "\$arg" )
+   argv+=( '-v' "0=\$arg" )
+   state="args"
   else
    echo "Cannot find file: \$arg"
    good="bad"
   fi
+ elif [ "\$state" = "args" ]
+ then
+  argv+=( '-v' "\$argc=\$arg" )
+  argc=\$(expr $argc + 1)
  elif [ "\$arg" = "-h" -o "\$arg" = "--help" ]
  then
   # show help
-  echo "Usage: $NAME [OPTION] [queryfile]
+  echo "Usage: $NAME [OPTION] [INPUTFILE] [ARGUMENTS...]
 Access $DATABASE as $USER.
 If a file is given as an argument, execute the queries in the file,
-otherwise start a psql session connected to $DATABASE. 
+otherwise start a psql session connected to $DATABASE.
 Option		GNU long option		Meaning
 -h		--help			Show this message
 -*		--*			Pass argument to psql (see man psql)"
@@ -92,6 +100,8 @@ Option		GNU long option		Meaning
  elif [ -e "\$arg" ]
  then
   file+=( '-f' "\$arg" )
+  argv+=( '-v' "0=\$arg" )
+  state="args"
  else
   echo "Cannot find file: \$arg"
   good="bad"
@@ -113,9 +123,9 @@ then
  psql -U "$USER" -d "$DATABASE" "\${option[@]}"
 elif [ "\${#option[@]}" = 0 ]
 then
- psql -U "$USER" -d "$DATABASE" "\${file[@]}"
+ psql -U "$USER" -d "$DATABASE" "\${argv[@]}" "\${file[@]}"
 else
- psql -U "$USER" -d "$DATABASE" "\${file[@]}" "\${option[@]}"
+ psql -U "$USER" -d "$DATABASE" "\${argv[@]}" "\${file[@]}" "\${option[@]}"
 fi
 }
 TEMPLATE

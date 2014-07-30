@@ -33,10 +33,13 @@ fi
 }
 
 trace_exec () {
-  # Log environment
-  printf '%s@%s:%s\n' "$USER" "$HOSTNAME" "$PWD"
-  # Log command
-  printf '$'; printf ' %s' "$@"; printf '\n'
+  local status
+  {
+    # Log environment
+    printf '%s@%s:%s\n' "$USER" "$HOSTNAME" "$PWD"
+    # Log command
+    printf '$'; printf ' %s' "$@"; printf '\n'
+  } >&2
   # Run command
   eval time '{' "$@" $'\n' 'status=$?; printf "\nstatus\t%b" $status 1>&2; }'
   return $status

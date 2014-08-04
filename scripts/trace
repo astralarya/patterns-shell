@@ -31,7 +31,7 @@ trace_exec () {
     printf '$'; printf ' %s' "$@"; printf '\n'
   } >&2
   # Run command
-  eval time '{' "$@" $'\n' 'status=$?; printf "\nstatus\t%b" $status 1>&2; }'
+  bash -c "command time --quiet --format '\nstatus\t%x\nreal\t%e\nuser\t%U\nsys\t%S\nmem\t%M' $*"
   return $status
 }
 

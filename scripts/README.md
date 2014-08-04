@@ -98,9 +98,9 @@ See https://github.com/autochthe/to
 
 Log and monitor commands
 
-Source `trace.sh` in your .\*rc file.
+Add `patterns-shell/scripts` to your `PATH`.
 
-Then you will have access to the following functions:
+Then you will have access to the following function:
 * **trace** [*COMMAND...*]
   * Runs COMMAND recording the environment, return status, and runtime.
     If STDOUT and STDERR are redirected to the same location (for example,

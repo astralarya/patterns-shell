@@ -1,3 +1,5 @@
+#!/bin/bash
+#
 # trace
 # trace and monitor a command
 #
@@ -18,19 +20,7 @@
 
 
 ### USAGE ###
-# Source this file in your shell's .*rc file
-
-trace () {
-if [ -z "$*" ]
-then
-  printf 'Usage: trace [COMMAND...]\n'
-elif [ ! -t 1 ] && [ ! -t 2 ] &&
-     [ "$(readlink /proc/$$/fd/1)" = "$(readlink /proc/$$/fd/2)" ]
-then trace_exec "$@" |& tee /dev/tty
-     return ${PIPESTATUS[0]}
-else trace_exec "$@"
-fi
-}
+# Add this file to your path
 
 trace_exec () {
   local status
@@ -44,3 +34,13 @@ trace_exec () {
   eval time '{' "$@" $'\n' 'status=$?; printf "\nstatus\t%b" $status 1>&2; }'
   return $status
 }
+
+if [ -z "$*" ]
+then
+  printf 'Usage: trace [COMMAND...]\n'
+elif [ ! -t 1 ] && [ ! -t 2 ] &&
+     [ "$(readlink /proc/$$/fd/1)" = "$(readlink /proc/$$/fd/2)" ]
+then trace_exec "$@" |& tee /dev/tty
+     exit ${PIPESTATUS[0]}
+else trace_exec "$@"
+fi

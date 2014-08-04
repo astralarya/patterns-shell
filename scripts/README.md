@@ -111,7 +111,7 @@ Then you will have access to the following function:
 
 Untar and unzip archives
 
-Source `untar.sh` in your .\*rc file.
+Add `patterns-shell/scripts` to your `PATH`.
 
 Then you will have access to these two functions:
 * **untar** *\*tar.gz*

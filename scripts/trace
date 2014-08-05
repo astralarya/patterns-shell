@@ -23,16 +23,10 @@
 # Add this file to your path
 
 trace_exec () {
-  local status
-  {
-    # Log environment
-    printf '%s@%s:%s\n' "$USER" "$HOSTNAME" "$PWD"
-    # Log command
-    printf '$'; printf ' %s' "$@"; printf '\n'
-  } >&2
   # Run command
-  command time --quiet --format '\nstatus\t%x\nreal\t%e\nuser\t%U\nsys\t%S\nmem\t%M' -- "$@"
-  return $status
+  command time --quiet \
+    --format '\n'"$USER@$HOSTNAME:$PWD"'\n$ %C\n\nstatus\t%x\nreal\t%e\nuser\t%U\nsys\t%S\nmem\t%M' \
+    -- "$@"
 }
 
 if [ -z "$*" ]

@@ -5,13 +5,13 @@
 
 ## Installation
 
-You can manually copy this repository, but it is better to clone it via `git` with
+Clone the repository via `git`, then run the included `update.sh`:
 
->git clone https://github.com/autochthe/patterns-shell.git
-
-Then you can easily get updates by running the `update.sh` script
-
+>git clone https://github.com/autochthe/patterns-shell.git &&
+>cd patterns-shell &&
 >./update.sh
+
+Future updates can be fetched by running the `update.sh` script.
 
 
 ## Patterns

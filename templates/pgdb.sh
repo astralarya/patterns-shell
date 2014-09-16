@@ -22,10 +22,11 @@
 # Source the output of this file in your shell's .*rc file
 #
 # Accepts the following arguments:
+# funcname: the name of the generated function
 # database: the PostgreSQL database
 # user: the PostgreSQL user
-# funcname: optional; the name of the generated function, default [database]
-# 
+# host: the PostgreSQL host [default localhost]
+#
 # Declares the following function:
 # [FUNCNAME]: connect to the PostgreSQL database
 #
@@ -47,11 +48,12 @@ fi
 
 ### TEMPLATE ###
 
-DATABASE="$1"
-USER="$2"
-if [ -z "$3" ]
-then NAME="$DATABASE"
-else NAME="$3"
+NAME="$1"
+DATABASE="$2"
+USER="$3"
+if [ -z "$4" ]
+then HOST="localhost"
+else HOST="$4"
 fi
 
 cat << TEMPLATE
@@ -117,15 +119,15 @@ fi
 
 if [ "\${#file[@]}" = 0 -a "\${#option[@]}" = 0 ]
 then
- psql -U "$USER" -d "$DATABASE"
+ psql -U "$USER" -h "$HOST" -d "$DATABASE"
 elif [ "\${#file[@]}" = 0 ]
 then
- psql -U "$USER" -d "$DATABASE" "\${option[@]}"
+ psql -U "$USER" -h "$HOST" -d "$DATABASE" "\${option[@]}"
 elif [ "\${#option[@]}" = 0 ]
 then
- psql -U "$USER" -d "$DATABASE" "\${argv[@]}" "\${file[@]}"
+ psql -U "$USER" -h "$HOST" -d "$DATABASE" "\${argv[@]}" "\${file[@]}"
 else
- psql -U "$USER" -d "$DATABASE" "\${argv[@]}" "\${file[@]}" "\${option[@]}"
+ psql -U "$USER" -h "$HOST" -d "$DATABASE" "\${argv[@]}" "\${file[@]}" "\${option[@]}"
 fi
 }
 TEMPLATE

@@ -23,7 +23,7 @@
 # Then use template-dbbackup to generate your function.
 #
 # ex.
-# source <(template-dbbackup "mydb" "mysuperuser" "mybackupdir" "myfunc")
+# source <(template-dbbackup "myfunc" "mydb" "mysuperuser" "mybackupdir" "myhost")
 #
 # output function definition
 # to backup a database
@@ -34,22 +34,20 @@
 
 if [ -z "$1" -o -z "$2" -o -z "$3" ]
 then
- printf "Usage: pgdb-backup.sh database superuser backupdir [FUNCNAME]
+ printf "Usage: pgdb-backup.sh funcname database superuser backupdir [host]
 Output code for a function to backup a database.
-[FUNCNAME] defaults to [db]backup.
-* [FUNCNAME]: to backup [db] as [superuser]. Backups placed in [backupdir] by default.
+* [funcname]: to backup [db] as [superuser]. Backups placed in [backupdir] by default.
 " >&2
  exit 1
 fi
 
-MYDB=$1
-MYSUPERUSER=$2
-MYBACKUPDIR=$3
-if [ "$4" ]
-then
- MYFUNC=$4
-else
- MYFUNC=${MYDB}backup
+MYFUNC=$1
+MYDB=$2
+MYSUPERUSER=$3
+MYBACKUPDIR=$4
+if [ -z "$5" ]
+then HOST="localhost"
+else HOST="$5"
 fi
 
 cat << TEMPLATE
@@ -68,7 +66,7 @@ then
 elif [ "\$1" = "-h" ]
 then
  echo "Usage: $MYFUNC [OPTION] [file]
-Backup or restore $MYDB as $MYSUPERUSER.
+Backup or restore $MYDB@$HOST as $MYSUPERUSER.
 If no arguments given, make dated backup in $MYBACKUPDIR,
 otherwise, execute according the options below.
 Option		GNU long option		Meaning
@@ -77,10 +75,10 @@ Option		GNU long option		Meaning
 -h		--help			Show this message"
 elif [ "\$1" = "-b" -a "\$2" ]
 then
- pg_dumpall -c -U "$MYSUPERUSER" > "\$2"
+ pg_dumpall -c -U "$MYSUPERUSER" -h "$HOST" > "\$2"
 elif [ "\$1" = "-r" -a -e "\$2" ]
 then
- psql -f "\$2" -U "$MYSUPERUSER" postgres | grep ERROR
+ psql -f "\$2" -U "$MYSUPERUSER" -h "$HOST" -d "postgres" | grep ERROR
 fi
 }
 TEMPLATE

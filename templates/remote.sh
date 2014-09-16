@@ -54,6 +54,12 @@ fi
 NAME="$1"
 CONNECTION="$2"
 
+UNAME="$(uname)"
+SSH_ADD_OPTION="-L"
+if [[ "$UNAME" == "Darwin" ]]
+then SSH_ADD_OPTION="-K"
+fi
+
 cat << TEMPLATE
 # SSH connection function
 $NAME () {
@@ -94,7 +100,7 @@ Option		GNU long option		Meaning
 else
  echo "Testing key"
  # see if we already have a key
- ssh-add -L
+ ssh-add $SSH_ADD_OPTION
  local status=\$?
  if [ \$status -eq 2 ]
  then
@@ -117,7 +123,7 @@ in your ~/.*rc file to fix"
   else
    # if not, generate one
    ssh-keygen -f ~/.ssh/id_rsa
-   ssh-add -L
+   ssh-add $SSH_ADD_OPTION
    local status=\$?
    if [ \$status -eq 1 ]
    then

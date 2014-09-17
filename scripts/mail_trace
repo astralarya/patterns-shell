@@ -26,7 +26,7 @@ mail_trace_exec () {
   # Run command
   command time --quiet \
     --format '\n'"$USER@$HOSTNAME:$PWD"'\n$ %C\n-\nstatus\t%x\nreal\t%e\nuser\t%U\nsys\t%S\nmem\t%M' \
-    --output=>(mail -s "TRACE: $(date)" "$MAIL_TRACE_ADDR")
+    --output=>(mail -s "TRACE: $(date)" "$MAIL_TRACE_ADDR") \
     -- "$@"
 }
 

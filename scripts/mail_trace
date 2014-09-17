@@ -1,0 +1,41 @@
+#!/bin/bash
+#
+# trace
+# trace and monitor a command
+#
+# Copyright (C) 2013 Mara Kim
+#
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+# details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program. If not, see http://www.gnu.org/licenses/.
+
+
+### USAGE ###
+# Add this file to your path
+
+mail_trace_exec () {
+  # Run command
+  command time --quiet \
+    --format '\n'"$USER@$HOSTNAME:$PWD"'\n$ %C\n-\nstatus\t%x\nreal\t%e\nuser\t%U\nsys\t%S\nmem\t%M' \
+    --output=>(mail -s "TRACE: $(date)" "$MAIL_TRACE_ADDR")
+    -- "$@"
+}
+
+if [ -z "$*" ]
+then
+  printf 'Usage: mail_trace [COMMAND...]\n'
+elif [ ! -t 1 ] && [ ! -t 2 ] &&
+     [ "$(readlink /proc/$$/fd/1)" = "$(readlink /proc/$$/fd/2)" ]
+then mail_trace_exec "$@" |& tee /dev/tty
+     exit ${PIPESTATUS[0]}
+else mail_trace_exec "$@"
+fi

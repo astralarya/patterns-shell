@@ -1,11 +1,10 @@
 #!/bin/bash
 
 cd "$( dirname "${BASH_SOURCE[0]}" )" &&
-ref="$(git rev-parse --abbrev-ref HEAD)" &&
-if [ "$ref" = HEAD ]
-then ref="$(git rev-parse HEAD)"
-elif [ "$ref" = master ]
+ref="$(git symbolic-ref --short --quiet HEAD || git rev-parse HEAD)" &&
+if [ "$ref" = master ]
 then ref=""
+else git checkout master
 fi &&
 git pull &&
 git submodule update --recursive --init &&

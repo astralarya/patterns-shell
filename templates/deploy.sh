@@ -116,7 +116,7 @@ else
  local MYFUNC="deploy"
 fi
 
-local LOAD_AVE=2.5
+local LOAD_AVE=$(nproc)
 
 cat << TEMPLATE
 function $MYFUNC {

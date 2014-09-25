@@ -126,7 +126,7 @@ then
   rm -r "\$1" "\${1}_"*
   mv "$MYSCPDIR/\$fullname.tar.gz" .
   tar -zxvf "\$fullname.tar.gz" &&
-  cd "\$fullname" && make -j -l $LOAD_AVE &&
+  cd "\$fullname" && make -j$LOAD_AVE &&
   ln -s "\$fullname/\$1" "../\$1"
 else
   return 1

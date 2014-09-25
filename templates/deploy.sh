@@ -116,6 +116,8 @@ else
  local MYFUNC="deploy"
 fi
 
+local LOAD_AVE=2.5
+
 cat << TEMPLATE
 function $MYFUNC {
 local fullname="\${1}_\${2}"
@@ -124,7 +126,7 @@ then
   rm -r "\$1" "\${1}_"*
   mv "$MYSCPDIR/\$fullname.tar.gz" .
   tar -zxvf "\$fullname.tar.gz" &&
-  cd "\$fullname" && make &&
+  cd "\$fullname" && make -j -l $LOAD_AVE &&
   ln -s "\$fullname/\$1" "../\$1"
 else
   return 1

@@ -56,7 +56,7 @@ function $MYFUNC {
 if [ -z "\$1" ]
 then
  # make dated backup
- pg_dumpall -c -U "$MYSUPERUSER" > "$MYBACKUPDIR/${MYDB}_\$(date +%F).sql"
+ pg_dumpall -c -U "$MYSUPERUSER" -h "$HOST" > "$MYBACKUPDIR/${MYDB}_\$(date +%F).sql"
 elif [ "\$1" = "-m" ]
 then
  # move last monthly, delete previous month

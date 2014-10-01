@@ -10,4 +10,5 @@ git pull &&
 git submodule update --recursive --init &&
 if [ "$ref" ]
 then git checkout "$ref"
+git merge --strategy=recursive --strategy-option=ours --no-commit master
 fi

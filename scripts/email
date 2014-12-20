@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# email
+# Send stdin to addresses
+#
+# Copyright (C) 2014 Mara Kim
+#
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+# details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program. If not, see http://www.gnu.org/licenses/.
+
+
+### USAGE ###
+# Add this file to your path
+
+if [ "$*" ]
+then mail -s "$USER@$HOSTNAME:$PWD $(date +'%F %T')" "$@"
+else printf "USAGE: $0 ADDRESS...
+  Send contents of stdin to ADDRESSes.
+"
+fi

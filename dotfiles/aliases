@@ -1,0 +1,118 @@
+#!/bin/bash
+
+# alias r="ssh user@hostname"
+
+if command -v cd &> /dev/null
+then
+  if ! command -v .. &> /dev/null
+  then
+    alias ..="cd .."
+  fi
+fi
+
+if command -v ls &> /dev/null
+then
+  if ! command -v l &> /dev/null
+  then
+    alias l="ls --color=auto"
+  fi
+  if ! command -v la &> /dev/null
+  then
+    alias la="ls -a --color"
+  fi
+  if ! command -v ll &> /dev/null
+  then
+    alias ll="ls -la --color"
+  fi
+fi
+
+if command -v vim &> /dev/null
+then
+  if ! command -v v &> /dev/null
+  then
+    alias v="vim -p"
+  fi
+
+  if ! command -v v. &> /dev/null
+  then
+    alias v.="vim -p ."
+  fi
+fi
+
+
+if command -v git &> /dev/null
+then
+  if ! command -v gw &> /dev/null && [ "$(git config --global core.editor)" = "vim" ]
+  then
+    gw () {
+      local IFS=$'\r\n'
+      local files=($(git status --porcelain))
+      vim -p "${files[@]/#???/$(git rev-parse --show-toplevel)/}"
+    }
+  fi
+
+  if ! command -v gd &> /dev/null
+  then
+    alias gd="git diff"
+  fi
+
+  if ! command -v ga &> /dev/null
+  then
+    alias ga="git add"
+  fi
+  if ! command -v gc &> /dev/null
+  then
+    alias gc="git commit"
+  fi
+  if ! command -v gca &> /dev/null
+  then
+    gca () {
+      if [ -z "$*" ]
+      then git commit -a
+      else git commit -am"$*"
+      fi
+    }
+  fi
+
+  if ! command -v gp &> /dev/null
+  then
+    alias gp="git push"
+  fi
+  if ! command -v gg &> /dev/null
+  then
+    gg () {
+      if [ "$*" ]
+      then
+          if git rev-parse 2>/dev/null
+          then git submodule add "$@"
+          else git clone "$@"
+          fi
+      else git pull; git submodule update --recursive --init
+      fi
+    }
+  fi
+fi
+
+if command -v python &> /dev/null
+then
+  if ! command -v p &> /dev/null
+  then
+    alias p="python"
+  fi
+fi
+
+if command -v make &> /dev/null
+then
+  if ! command -v m &> /dev/null
+  then
+    alias m="make"
+  fi
+fi
+
+if command -v xdg-open &> /dev/null
+then
+  if ! command -v o &> /dev/null
+  then
+    alias o="xdg-open"
+  fi
+fi

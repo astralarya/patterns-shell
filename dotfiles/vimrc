@@ -21,12 +21,16 @@ set ignorecase
 set smartcase
 set incsearch
 
-" Bindings
+""" Bindings
+
+" Splits and tabs
 nnoremap <silent> <C-j> <C-W>w
 nnoremap <silent> <C-k> <C-W>W
 nnoremap <silent> <C-l> :tabnext<CR>
 nnoremap <silent> <C-h> :tabprevious<CR>
-nnoremap <silent> ]] :cn<CR>
-nnoremap <silent> [[ :cp<CR>
 nnoremap <silent> <C-c> :Texplore<CR>
 nnoremap <silent> <C-z> :split<CR>
+
+" Quickfix shortcuts
+nnoremap <silent> ]q :cn<CR>
+nnoremap <silent> [q :cp<CR>

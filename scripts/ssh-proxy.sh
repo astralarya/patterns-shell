@@ -1,21 +1,70 @@
 # SSH proxy function
 ssh-proxy () {
-local conn=$1
-local port=$2
-if [ -z "$port" ]
-then
- local port=9999
-fi
-if [ "$1" = "-h" -o "$1" = "--help" ]
-then
- # show help
- echo "Usage: ssh-proxy USER@HOST:PORT [LOCALPORT] [OPTION]
-Start an SSH proxy via USER@HOST:PORT on localhost:LOCALPORT (default 9999).
-Option		GNU long option		Meaning
--h		--help			Show this message"
-else
- echo "Starting SOCKS host to kimmm@rokasgate.accre.edu on localhost:$port (^C to STOP)"
- ssh -D $port -C "conn" "echo 'Success!'; cat > /dev/null"
- true
-fi
+    # read arguments
+    local option
+    local state
+	local conn
+	local port
+    for arg in "$@"
+    do
+        if [ "$state" = "input" ]
+        then
+			if [ -z "$conn" ]
+			then
+				conn="$arg"
+			elif [ -z "$port" ]
+			then
+				port="$arg"
+			else
+                \printf 'Ignored argument: %q\n' "$arg"
+			fi
+        elif [ "$state" = "option" ]
+        then
+			option+=("$arg")
+			state=""
+        elif [ "$arg" = "-h" -o "$arg" = "--help" ]
+        then
+			state="help"
+			break
+        elif [ "$arg" = "--" ]
+        then
+            state="input"
+        elif [ -z "${arg/-*/}" ]
+        then
+			option+=("$arg")
+			if [[ *"${arg:-1}"* == "bcDEeFIiLlmOopQRSWw" ]]
+			then
+				state="option"
+			fi
+        else
+			if [ -z "$conn" ]
+			then
+				conn="$arg"
+			elif [ -z "$port" ]
+			then
+				port="$arg"
+			else
+                \printf 'Ignored argument: %q\n' "$arg"
+			fi
+        fi
+    done
+
+	if [ "$state" = "help" -o -z "$conn" ]
+	then
+		\printf 'Usage: ssh-proxy [CONNECTION] [LOCALPORT] [OPTION]
+Start an SSH proxy via CONNECTION (eg. USER@HOST:PORT) on localhost:LOCALPORT (default 9999).
+Option		Meaning
+-*			SSH option (see `man ssh`)
+-h			Show this message
+'
+		return 0
+	fi
+
+	if [ -z "$port" ]
+	then
+		local port=9999
+	fi
+
+	\printf 'Starting SOCKS host to %q on localhost:%q (^C to STOP)\n' "$conn" "$port"
+	ssh "${option[@]}" -D $port -C "$conn" "\\printf 'Success!\n'; cat > /dev/null"
 }

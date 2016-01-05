@@ -93,6 +93,14 @@ then
   fi
 fi
 
+if command -v dpkg &> /dev/null &&
+command -v sed &> /dev/null &&
+command -v xargs &> /dev/null &&
+! command -v cleankernels &> /dev/null
+then
+  alias cleankernels="dpkg -l 'linux-*' | sed '/^ii/!d;/'\"\$(uname -r | sed \"s/\(.*\)-\([^0-9]\+\)/\1/\")\"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' | xargs sudo apt-get -y purge"
+fi
+
 if command -v python &> /dev/null
 then
   if ! command -v p &> /dev/null

@@ -12,4 +12,4 @@
 	url = https://github.com/autochthe/history.git
 [submodule "repos/ssh-proxy"]
 	path = repos/ssh-proxy
-	url = git@github.com:autochthe/ssh-proxy.git
+	url = https://github.com/autochthe/ssh-proxy.git

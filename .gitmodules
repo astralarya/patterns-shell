@@ -13,3 +13,6 @@
 [submodule "repos/ssh-proxy"]
 	path = repos/ssh-proxy
 	url = https://github.com/autochthe/ssh-proxy.git
+[submodule "repos/prompt"]
+	path = repos/prompt
+	url = https://github.com/autochthe/prompt.git

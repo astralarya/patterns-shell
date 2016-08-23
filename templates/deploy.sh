@@ -59,8 +59,8 @@ local name="\$(make name)"
 local tarname="\$(printf '%b_%b.tar.gz' \$name)"
 if [ "\$name" ] && make tar && [ -e "\$tarname" ]
 then
-  $MYSERVER-scp "\$tarname" @:scp/ &&
-  $MYSERVER "$MYREMOTEFUNC \$name"
+  scp "\$tarname" $MYSERVER:scp/ &&
+  ssh $MYSERVER "$MYREMOTEFUNC \$name"
 fi }
 
 function $MYFUNC-full {
@@ -68,8 +68,8 @@ local name="\$(make name)"
 local tarname="\$(printf '%b_%b.tar.gz' \$name)"
 if [ "\$name" ] && make tar && [ -e "\$tarname" ]
 then
-  $MYSERVER-scp "\$tarname" @:scp/ &&
-  $MYSERVER "$MYREMOTEFUNC-full \$name" 
+  scp "\$tarname" $MYSERVER:scp/ &&
+  ssh $MYSERVER "$MYREMOTEFUNC-full \$name"
 fi }
 
 function $MYFUNC-check {

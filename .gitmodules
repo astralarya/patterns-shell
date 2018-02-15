@@ -16,3 +16,6 @@
 [submodule "repos/prompt"]
 	path = repos/prompt
 	url = https://github.com/autochthe/prompt.git
+[submodule "repos/autotmux"]
+	path = repos/autotmux
+	url = https://github.com/autochthe/autotmux.git

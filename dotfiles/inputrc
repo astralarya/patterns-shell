@@ -1,3 +1,6 @@
+# Disable bell
+set set bell-style none
+
 # Faster tab complete
 set show-all-if-unmodified on
 set show-all-if-ambiguous on
